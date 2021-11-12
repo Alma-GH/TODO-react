@@ -1,0 +1,9 @@
+.button{
+    background-color: white;
+    height: 100%;
+    width: 100px;
+
+    border: 2px solid red;
+
+    display: inline-block;
+}

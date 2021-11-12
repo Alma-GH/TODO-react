@@ -1,14 +1,13 @@
 import React from 'react';
-import cls from "./Navbar.module.css"
-import ButtonOption from "./ButtonOption/ButtonOption";
-import {BrowserRouter, Link} from "react-router-dom";
+import ButtonOption from "../UI/ButtonOption/ButtonOption";
+import {Link} from "react-router-dom";
 
 
 const Navbar = (props) => {
 
   let arrLinks = props.links.map(link=>{
     return (
-      <div>
+      <div key={link.name}>
         <Link to={"/page/" + link.name}>
           {link.name}
         </Link>
@@ -18,7 +17,8 @@ const Navbar = (props) => {
 
 
   return (
-      <div className={cls.nav}>
+      <div className="nav">
+        <div className="navTitle">Files</div>
         {arrLinks}
         <ButtonOption cls="left"/>
         <ButtonOption cls="right"/>

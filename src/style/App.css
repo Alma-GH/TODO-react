@@ -8,3 +8,54 @@
     height: 200vh;
 }
 
+.head{
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    height: 30px;
+    width: calc(100% - 150px);
+    background-color: aqua;
+}
+
+.nav{
+    position: fixed;
+    top: 0;
+
+    background-color: grey;
+    width: 150px;
+    height: 100vh;
+}
+
+    .navTitle{
+        height: 30px;
+        width: 100%;
+        background-color: orange;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-weight: bold;
+        font-size: x-large;
+    }
+
+.body{
+    width: calc(100% - 150px);
+    height: 100%;
+
+    position: absolute;
+    top: 30px;
+    right: 0;
+
+    border: 3px solid black;
+    background-color: darkblue;
+}
+
+.page{
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 128, 0, 0.65);
+}
+

@@ -1,10 +1,12 @@
 import Navbar from "./components/Navbar/Navbar";
 import "./style/App.css"
 import Header from "./components/Header/Header";
+import MainBody from "./components/MainBody/MainBody";
+import {BrowserRouter} from "react-router-dom";
 
 function App() {
 
-  let links = [
+  let pages = [
     {name:"First"},
     {name:"Second"},
     {name:"Third"},
@@ -14,7 +16,10 @@ function App() {
   return (
       <div className="App">
         <Header />
-        <Navbar links={links}/>
+        <BrowserRouter>
+          <Navbar links={pages}/>
+          <MainBody/>
+        </BrowserRouter>
       </div>
   );
 }
