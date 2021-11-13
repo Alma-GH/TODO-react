@@ -8,9 +8,9 @@ const ButtonOption = (props) => {
   else if(props.cls === "right") cls = genCls.rightButton
 
   return (
-    <div className={`${genCls.button} ${cls}`}>
+    <button className={`${genCls.button} ${cls}`}>
 
-    </div>
+    </button>
   );
 };
 

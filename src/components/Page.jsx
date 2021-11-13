@@ -1,9 +1,10 @@
 import React from 'react';
+import ButtonCreateElement from "./UI/ButtonCreateElement/ButtonCreateElement";
 
 const Page = () => {
   return (
     <div className="page">
-      dfgihdsfgjh
+      <ButtonCreateElement/>
     </div>
   );
 };

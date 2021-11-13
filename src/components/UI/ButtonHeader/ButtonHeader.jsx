@@ -4,9 +4,9 @@ import cls from "./ButtonHeader.module.css"
 const ButtonHeader = (props) => {
 
   return (
-    <div className={cls.button}>
+    <button className={cls.button}>
 
-    </div>
+    </button>
   );
 };
 
