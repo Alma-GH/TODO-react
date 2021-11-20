@@ -2,10 +2,33 @@
     margin:0;
     padding: 0;
     box-sizing: border-box;
+
+    font-size: 16px;
 }
 
 .App{
     height: 200vh;
+}
+
+ul{
+    padding: 0;
+    margin: 0;
+}
+
+li{
+    padding: 0;
+    padding-left: 30px;
+    margin: 0;
+    list-style: none;
+}
+
+input{
+    background: none;
+    border: none;
+
+    color: black;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .head{
@@ -37,15 +60,16 @@
         align-items: center;
 
         font-weight: bold;
-        font-size: x-large;
+        font-size: 2rem;
     }
 
 .body{
-    width: calc(100% - 150px);
+    width: calc(100% - 165px);
     height: 100%;
 
     position: absolute;
     top: 30px;
+    left: 165px;
     right: 0;
 
     border: 3px solid black;
@@ -57,5 +81,18 @@
     height: 100%;
 
     background-color: rgba(0, 128, 0, 0.65);
+}
+
+.list{
+    border: 2px solid lightgreen;
+}
+.bodyList{
+    border-left: 2px dotted grey;
+}
+
+.elem{
+    border: 2px solid red;
+    min-height: 25px;
+    width: 100%;
 }
 
