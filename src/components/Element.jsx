@@ -9,7 +9,7 @@ const Element = (props) => {
 
   return (
     <div className="elem">
-      <input type="text"  value={name} disabled/>
+      <input type="text"  value={elements ? name + ":" : name} disabled/>
       {elements ? <List elements={elements}/> : ""}
     </div>
   );

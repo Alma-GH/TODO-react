@@ -1,16 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Element from "./Element";
+import ButtonCreateElement from "./UI/ButtonCreateElement/ButtonCreateElement";
 
 const List = (props) => {
 
-  let elements = props.elements;
+  // let elements = props.elements;
+  let [list,setList] = useState(props.elements)
 
   return (
     <div className="list">
       <ul className="bodyList">
-        {elements.map(el=>{
-            return <li><Element name = {el.name} elements={el.elements}/></li>
+        {list.map(el=>{
+            return <li key={el.id}><Element name = {el.name} elements={el.elements}/></li>
         })}
+        {/*<li><ButtonCreateElement/></li>*/}
       </ul>
     </div>
   );
