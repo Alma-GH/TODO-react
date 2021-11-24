@@ -20,8 +20,11 @@ const Navbar = (props) => {
       <div className="nav">
         <div className="navTitle">Files</div>
         {arrLinks}
-        <ButtonOption cls="left"/>
-        <ButtonOption cls="right"/>
+        <div className="options">
+          <ButtonOption cls="left"/>
+          <ButtonOption cls="right"/>
+        </div>
+
       </div>
   );
 };
