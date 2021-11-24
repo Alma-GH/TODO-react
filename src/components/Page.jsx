@@ -12,7 +12,7 @@ const Page = (props) => {
   return (
     <div className="page">
       {elements.map(el=>{
-        return <Element name={el.name} elements={el.elements} key={el.id}/>
+        return <Element name={el.name} elements={el.elements}   idEl={el.id} pageElements={elements} setPageElements={setElements} key={el.id}/>
       })}
       <ButtonCreateElement elements={elements} setElements={setElements}/>
     </div>
