@@ -1,26 +1,32 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import List from "./List";
-import {takeAllElements} from "../func/func.js";
+import {myCopyObj, takeAllElements} from "../tools/func.js";
+import ElemOptions from "./UI/ElemOptions/ElemOptions";
+import {typeNumberList, typeSymbolList} from "../tools/globalConstants";
 
 const Element = (props) => {
 
-  let idEl = props.idEl
-  let elements = props.elements;
+  let idEl = props.elem.id
+  let name = props.elem.name
 
+  let elements = props.elem.elements;
+  let type = props.elem.type
 
   let pageElements = props.pageElements
   let setPageElements = props.setPageElements
 
-  let [name, setName] = useState(elements ? props.name + ":" : props.name)
 
   function changeName(e){
-    setName(e.target.value)
-    takeAllElements(pageElements, (el)=>{
+    let newElements = myCopyObj(pageElements)
+
+    takeAllElements(newElements, (el)=>{
       if(el.id === idEl){
-        el.name = e.target.value
+          el.name = e.target.value
       }
+
+
     })
-    setPageElements(pageElements)
+    setPageElements(newElements)
   }
 
 
@@ -28,7 +34,10 @@ const Element = (props) => {
   return (
     <div className="elem">
       <input type="text"  value={name} onChange={changeName}/>
-      {elements ? <List  elements={elements}    pageElements={pageElements} setPageElements={setPageElements} idList={idEl}/> : ""}
+      {elements && elements.length
+        ? <List idList={idEl} list={{type:type,elements:elements}} pageElements={pageElements} setPageElements={setPageElements} />
+        : <ElemOptions id={idEl}  pageElements={pageElements} setPageElements={setPageElements}/>
+      }
     </div>
   );
 };

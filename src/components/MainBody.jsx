@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import Page from "../Page";
+import Page from "./Page";
 
 const MainBody = (props) => {
 

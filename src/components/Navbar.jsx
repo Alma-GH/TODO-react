@@ -1,5 +1,5 @@
 import React from 'react';
-import ButtonOption from "../UI/ButtonOption/ButtonOption";
+import ButtonOption from "./UI/ButtonOption/ButtonOption";
 import {Link} from "react-router-dom";
 
 

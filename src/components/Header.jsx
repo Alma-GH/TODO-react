@@ -1,6 +1,6 @@
 import React from 'react';
-import Timer from "../UI/Timer/Timer";
-import ButtonHeader from "../UI/ButtonHeader/ButtonHeader";
+import Timer from "./UI/Timer/Timer";
+import ButtonHeader from "./UI/ButtonHeader/ButtonHeader";
 
 const Header = () => {
   return (

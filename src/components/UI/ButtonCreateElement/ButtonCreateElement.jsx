@@ -1,11 +1,11 @@
 import React from 'react';
 import cls from "./ButtonCreateElement.module.css"
-import {takeAllElements} from "../../../func/func.js";
+import {myCopyObj, takeAllElements} from "../../../tools/func.js";
 
 const ButtonCreateElement = ({elements,setElements,idList}) => {
   // Math.max(...elements.map(el=>el.id))+1
   let createElementList = function (){
-    let newElements = JSON.parse(JSON.stringify(elements))
+    let newElements = myCopyObj(elements)
 
     function addEl(el){
       if(el.id === idList){

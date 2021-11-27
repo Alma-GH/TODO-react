@@ -1,0 +1,12 @@
+.block{
+    display: inline-block;
+    width: 100px;
+    height: 100%;
+    background-color: rgba(144, 238, 144, 0.45);
+}
+
+.btn{
+    height: 100%;
+    width: calc(100%/4);
+    background-color: white;
+}
