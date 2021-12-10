@@ -1,12 +1,19 @@
 .block{
     display: inline-block;
     width: 100px;
-    height: 100%;
+    height: 20px;
     background-color: rgba(144, 238, 144, 0.45);
+    opacity: 25%;
+}
+
+.block:hover{
+    opacity: 100;
 }
 
 .btn{
+
     height: 100%;
-    width: calc(100%/4);
+    width: calc(100%/5);
     background-color: white;
+    font-size: 15px;
 }

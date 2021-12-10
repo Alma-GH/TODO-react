@@ -14,14 +14,16 @@ function App(props) {
     {name:"Four"}
   ])
 
+  let [optionMod, setOptionMod] = useState(false)
+
   return (
+    <BrowserRouter>
       <div className="App">
         <Header />
-        <BrowserRouter>
-          <Navbar links={pages}/>
-          <MainBody />
-        </BrowserRouter>
+        <Navbar links={pages} mod={optionMod} setMod={setOptionMod}/>
+        <MainBody mod={optionMod}/>
       </div>
+    </BrowserRouter>
   );
 }
 

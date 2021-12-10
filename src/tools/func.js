@@ -12,6 +12,25 @@ export const myCopyObj = (obj)=>{
   return newObj
 }
 
+export const takeAllElementsWithReturn = (arr,func, consVis)=>{
+  /* res - array of results*/
+  let res = [];
+  arr.map(el=>{
+    res.push(func(el))
+    if('elements' in el && (el.visibleList || consVis))  res.push(takeAllElementsWithReturn(el.elements, func))
+  })
+  return res
+}
+
+export const deepCheck = (arr, func)=>{
+  arr.map(el=>{
+    if(Array.isArray(el) && el.length){
+      func(el)
+      deepCheck(el, func)
+    }
+  })
+}
+
 // export const returnNew = (arr, funcAdd, funcDel)=>{
 //   let newElements = JSON.parse(JSON.stringify(arr))
 //

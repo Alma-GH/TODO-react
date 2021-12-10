@@ -5,6 +5,13 @@ import {Link} from "react-router-dom";
 
 const Navbar = (props) => {
 
+  let mod = props.mod
+  let setMod = props.setMod
+
+  let changeMod = function (){
+    setMod(!mod)
+  }
+
   let arrLinks = props.links.map(link=>{
     return (
       <div key={link.name}>
@@ -20,9 +27,9 @@ const Navbar = (props) => {
       <div className="nav">
         <div className="navTitle">Files</div>
         {arrLinks}
-        <div className="options">
-          <ButtonOption cls="left"/>
-          <ButtonOption cls="right"/>
+        <div className="btnOptions">
+          <ButtonOption callback={()=>changeMod()}/>
+          <ButtonOption />
         </div>
 
       </div>
