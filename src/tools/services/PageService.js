@@ -68,9 +68,12 @@ class PageService{
     takeAllElements(this.pageElements, (el)=>{
       if(el.id === id) {
         el.visibleList = !el.visibleList
-        takeAllElements(el.elements, el=>{
-          el.visibleList = true
+
+        takeAllElements(el.elements, el=>{  //TODO:make functional
+          if(el.elements && el.elements.length)
+            el.visibleList = false
         })
+
       }
     })
   }

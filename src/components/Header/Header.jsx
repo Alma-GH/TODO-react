@@ -9,6 +9,7 @@ import Modal from "../UI/Modal/Modal";
 import Form from "../UI/Forms/Form";
 import Confirm from "../UI/Forms/Confirm";
 import cls from "./Header.module.css"
+import {orderLinks} from "../../tools/globalConstants";
 
 const Header = (props) => {
 
@@ -53,7 +54,7 @@ const Header = (props) => {
       setModal(false)
 
       await Server.addPage(input)
-      let newPages = await Server.getAllNameFiles()
+      let newPages = JSON.parse(localStorage.getItem(orderLinks))
       props.setPages(newPages)
 
       nav("./page/" + input)
@@ -63,11 +64,11 @@ const Header = (props) => {
     async function deletePage(){
       setModal(false)
       await Server.deletePage(PageService.name)
-      let newPages = await Server.getAllNameFiles()
+      let newPages = JSON.parse(localStorage.getItem(orderLinks))
       props.setPages(newPages)
 
       //MB ERROR
-      let ind = pages.indexOf(fileName)
+      let ind = pages.indexOf(PageService.name)
       let newPageName = pages[(!ind)?1:ind-1]
       nav("./page/" + newPageName)
 
@@ -77,9 +78,14 @@ const Header = (props) => {
     async function renamePage(){
       if(!input || [0,input.length-1].includes(input.indexOf(" ")) ) return
       setModal(false)
+      let posPage = JSON.parse(localStorage.getItem(orderLinks)).indexOf(PageService.name)
       await Server.deletePage(fileName)
       await Server.addPage(input, PageService.pageElements)
-      let newPages = await Server.getAllNameFiles()
+
+      let newPages = JSON.parse(localStorage.getItem(orderLinks))
+      newPages.splice(posPage,0,newPages.pop())
+      localStorage.setItem(orderLinks, JSON.stringify(newPages))
+
       props.setPages(newPages)
 
       nav("./page/" + input)

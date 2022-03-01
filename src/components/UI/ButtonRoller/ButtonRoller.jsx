@@ -11,6 +11,8 @@ const ButtonRoller = (props) => {
   let id = props.idEl
   let [isStyle, setIsStyle] = useState(null)
 
+  let cond = PageService.getPropsElement(id).visibleList
+
   function setter(){
     if(PageService.getPropsElement(id).visibleList === false) isStyle = false
     else                                                      isStyle = true
@@ -18,17 +20,18 @@ const ButtonRoller = (props) => {
   }
 
   useEffect(()=>{
-    setter()
+    // setter()
   }, [])
 
   let toggleVis = function (e){
     PageService.toggleVisibleListById(id)
     setElements(PageService.pageElements)
-    setter()
+    // setter()
   }
 
   return (
-    <button className={cls.btnRoller + " " + isStyle} onClick={toggleVis}>
+    <button className={cls.btn} onClick={toggleVis}>
+      <div className={cls.btnRoller + " " + ((!cond)?cls.btnRollerActive:null)}></div>
     </button>
   );
 };

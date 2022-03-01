@@ -1,13 +1,25 @@
+import {orderLinks} from "../globalConstants";
 
 const EMPTY_PAGE = [""]
 
 class Server{
+  async getAllFiles(){
+    let arr;
+    await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
+      .then(response=>response.json())
+      .then(res=>{
+        arr = res
+      })
+    return arr
+  }
+
   async getAllNameFiles(){
     let arr;
     await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
       .then(response=>response.json())
       .then(res=>{
         arr = Object.keys(res)
+        if(!localStorage.getItem(orderLinks)) localStorage.setItem(orderLinks, JSON.stringify(arr))
       })
     return arr
   }
@@ -44,7 +56,12 @@ class Server{
       body: JSON.stringify((elements && elements.length)?elements:EMPTY_PAGE),
     })
       .then(response=>response.json())
-      .then(res=>console.log(res))
+      .then(res=>{
+        console.log(res)
+        let oldSt = JSON.parse(localStorage.getItem(orderLinks))
+        let newSt = [...oldSt, name]
+        localStorage.setItem(orderLinks, JSON.stringify(newSt))
+      })
   }
 
   deletePage(name){
@@ -52,7 +69,17 @@ class Server{
       method: "DELETE"
     })
       .then(response=>response.json())
-      .then(res=>console.log(res))
+      .then(res=>{
+        console.log(res)
+        let oldSt = JSON.parse(localStorage.getItem(orderLinks))
+        oldSt.splice(oldSt.indexOf(name),1)
+        let newSt = oldSt
+        localStorage.setItem(orderLinks, JSON.stringify(newSt))
+      })
+  }
+
+  renamePage(){   //TODO:mb
+
   }
 }
 

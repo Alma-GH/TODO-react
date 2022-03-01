@@ -1,18 +1,21 @@
 import React, {useState} from 'react';
 import ButtonOption from "../UI/ButtonOption/ButtonOption";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import cls from "./Navbar.module.css"
+import Server from "../../tools/services/Server";
+import ButtonLink from "../UI/ButtonLink/ButtonLink";
 
 const Navbar = (props) => {
 
   let mod = props.mod
   let setMod = props.setMod
 
+
   let arrLinks = props.links.map(link=>{
     return (
       <div key={link}>
         <Link to={"/page/" + link}>
-          {link}
+          <ButtonLink>{link}</ButtonLink>
         </Link>
       </div>
     )

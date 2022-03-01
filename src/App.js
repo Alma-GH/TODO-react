@@ -4,7 +4,7 @@ import Header from "./components/Header/Header";
 import MainBody from "./components/MainBody/MainBody";
 import {BrowserRouter} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {typeNumberList, typeScheduleList} from "./tools/globalConstants";
+import {orderLinks, typeNumberList, typeScheduleList} from "./tools/globalConstants";
 import Server from "./tools/services/Server";
 
 /*STATE:
@@ -69,8 +69,9 @@ function App(props) {
         .then(response=>response.json())
         .then(res=>console.log("res from BD:",res))
     }
-    let pages = await Server.getAllNameFiles()
-    setPages(pages)
+
+    await Server.getAllNameFiles()
+    setPages(JSON.parse(localStorage.getItem(orderLinks)))
   },[])
 
   return (
