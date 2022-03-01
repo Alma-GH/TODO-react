@@ -1,0 +1,50 @@
+.elem{
+    /*border: 2px solid red;*/
+    min-height: 25px;
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: 25px 1fr;
+}
+.elemHead{
+    display: flex;
+    align-items: center;
+
+}
+
+.elemHeadHover:hover{
+    outline: 2px solid red;
+    position: relative;
+    z-index: 2;
+}
+
+.elemHeadSchedule{
+    background-color: lightgreen;
+}
+
+.elemName{
+    width: 300px;
+}
+
+.threePoint{
+    background-color: yellow;
+    height: 80%;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+.elemHead div{
+     display: flex;
+ }
+
+.elemHead div .threePoint, .elemHead div input{
+     margin-right: 15px;
+ }

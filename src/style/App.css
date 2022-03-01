@@ -7,7 +7,7 @@
 }
 
 .App{
-    height: 200vh;
+    height: 100vh;
 }
 
 ul{
@@ -22,7 +22,7 @@ li{
 
 }
 
-input{
+input, textarea{
     background: none;
     border: none;
 
@@ -31,53 +31,14 @@ input{
     font-weight: bold;
 
     height: 21px;
+
+    resize: none;
 }
-
-
-    .head{
-        position: absolute;
-        top: 0;
-        right: 0;
-
-        height: 30px;
-        width: calc(100% - 150px);
-        background-color: aqua;
-    }
-
-    .nav{
-        position: fixed;
-        top: 0;
-
-        background-color: grey;
-        width: 150px;
-        height: 100vh;
-    }
-
-        .navTitle{
-            height: 30px;
-            width: 100%;
-            background-color: orange;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            font-weight: bold;
-            font-size: 2rem;
-        }
-
-        .btnOptions{
-            display: flex;
-            height: 5%;
-            width: 100%;
-
-            position: absolute;
-            bottom: 0;
-        }
 
     .body{
         width: calc(100% - 150px);
-        height: 100%;
+        min-height: 100%;
+        padding-bottom: 100px;
 
         position: absolute;
         top: 30px;
@@ -87,78 +48,3 @@ input{
         border: 3px solid black;
         background-color: darkblue;
     }
-
-
-
-        .page{
-            width: 100%;
-            /*height: 100%;*/
-
-            background-color: rgba(0, 128, 0, 0.65);
-        }
-
-            .wrapPage{
-                display: flex;
-            }
-
-            .panel{
-                width: 50px;
-                /*border: 2px solid darkgrey;*/
-
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-
-            }
-                .panel div{
-                    display: flex;
-                    flex-direction: column;
-                }
-                .wrapNum{
-                    height: 25px;
-                    width: 100%;
-                    /*border: 2px solid white*/
-                }
-
-            .bodyPage{
-                width: 100%;
-                margin-left: 10px;
-            }
-
-                .list{
-                    /*border: 2px solid lightgreen;*/
-                }
-                .bodyList{
-                    border-left: 2px dotted grey;
-                }
-
-                .elem{
-                    /*border: 2px solid red;*/
-                    min-height: 25px;
-                    width: 100%;
-
-                    display: grid;
-                    grid-template-rows: 25px 1fr;
-                }
-                    .elemHead{
-                        display: grid;
-                        align-items: center;
-                        grid-template-columns: 150px 150px 1fr;
-                    }
-                    .description{
-                        display: flex;
-                    }
-
-
-                .prefixEl{
-                    border: 2px solid red;
-                    min-height: 25px;
-                    width: 20px;
-
-                    text-align: center;
-
-                    font-size: 1rem;
-                    font-weight: bold;
-
-                }
-
-

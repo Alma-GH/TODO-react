@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from "./ElemOptions.module.css"
-import {typeNumberList, typeSymbolList} from "../../../tools/globalConstants";
+import {typeNumberList, typeSymbolList, typeScheduleList} from "../../../tools/globalConstants";
 import PageService from "../../../tools/services/PageService";
 
 const ElemOptions = (props) => {
@@ -21,6 +21,11 @@ const ElemOptions = (props) => {
   function createSymbolList(){
     createList(typeSymbolList)
   }
+  function createScheduleList(){
+    PageService.deleteAllSchedule()
+    PageService.toTimeAllDescriptionOfList(id)
+    createList(typeScheduleList)
+  }
   function createSimpleList(){
     createList(null)
   }
@@ -35,11 +40,14 @@ const ElemOptions = (props) => {
 
   return (
     <div className={cls.block}>
-      <button className={cls.btn} onClick={createNumberedList}>1</button>
-      <button className={cls.btn} onClick={createSymbolList}>s</button>
-      <button className={cls.btn} onClick={createSimpleList}>-</button>
-      <button className={cls.btn} onClick={toggleDescription}>d</button>
-      <button className={cls.btn} onClick={deleteElem}>#</button>
+      <div className={cls.btnCreateList}>
+        <button tabIndex="1000" className={cls.btn} onClick={createNumberedList}>1</button>
+        <button tabIndex="1000" className={cls.btn} onClick={createSymbolList}>s</button>
+        <button tabIndex="1000" className={cls.btn} onClick={createSimpleList}>-</button>
+        <button tabIndex="1000" className={cls.btn + cls.wideBtn} onClick={createScheduleList}>sch</button>
+      </div>
+      <button tabIndex="1000" className={cls.btn} onClick={toggleDescription}>d</button>
+      <button tabIndex="1000" className={cls.btn} onClick={deleteElem}>#</button>
     </div>
   );
 };

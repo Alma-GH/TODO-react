@@ -1,10 +1,13 @@
 
 
-export const takeAllElements = (arr,func)=>{
+export const takeAllElements = (arr,func, depth)=>{
+  if(depth === undefined) depth = 1
+
   arr.map(el=>{
-    func(el)
-    if('elements' in el)  takeAllElements(el.elements, func)
+    func(el, depth)
+    if('elements' in el)  takeAllElements(el.elements, func, depth + 1)
   })
+
 }
 
 export const myCopyObj = (obj)=>{
@@ -17,7 +20,7 @@ export const takeAllElementsWithReturn = (arr,func, consVis)=>{
   let res = [];
   arr.map(el=>{
     res.push(func(el))
-    if('elements' in el && (el.visibleList || consVis))  res.push(takeAllElementsWithReturn(el.elements, func))
+    if('elements' in el && (el.visibleList || consVis))  res.push(takeAllElementsWithReturn(el.elements, func, consVis))
   })
   return res
 }
@@ -31,19 +34,35 @@ export const deepCheck = (arr, func)=>{
   })
 }
 
-// export const returnNew = (arr, funcAdd, funcDel)=>{
-//   let newElements = JSON.parse(JSON.stringify(arr))
-//
-//   if(funcAdd){
-//     return newElements.forEach(el=>{
-//       funcAdd(el)
-//       if('elements' in el) el.elements = returnNew(el.elements, funcAdd)
-//     })
-//   }
-//   if(funcDel){
-//     return newElements.filter(el=>{
-//       if('elements' in el)  returnNew(el.elements, 0,funcDel)
-//       return funcDel(el)
-//     })
-//   }
-// }
+export const toggleClass = (setter, style, className)=>{
+  if(!style)  setter(className)
+  else        setter(null)
+}
+
+export const isClock = (str)=>{
+  let res = true;
+  if(str.length !== 5 || str[2] !== ":") res = false
+  str.split("").forEach((el,ind)=>{
+    if(ind!==2 && !isDigit(el)) res = false
+  })
+  return res
+}
+
+export const isTime = (str)=>{
+  return (isDigit(str[0]) && isDigit(str[1]) &&
+          isDigit(str[str.length-2]) && isDigit(str[str.length-1]) &&
+          str[0]<3 && str[str.length-2]<6 && (str[0] != 2 || str[1]<5)
+  )
+}
+
+export const toTime = (val)=>{
+  if(isTime(val)) val = val.slice(0,2) + ":" + val.slice(val.length-2)
+  else            val = ""
+  return val
+}
+
+export const isDigit = (dig)=>{
+  if(!dig) return false
+  dig = dig.toString()
+  return (48<=dig.codePointAt(0) && dig.codePointAt(0)<=57)
+}

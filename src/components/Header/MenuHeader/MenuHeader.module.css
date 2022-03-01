@@ -1,0 +1,32 @@
+.popUp{
+    background-color: white;
+    height: 100%;
+    width: 100px;
+
+    border: 2px solid red;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.popUp:hover{
+    background-color: #caedfc;
+}
+
+.menu{
+    min-height: 3vh;
+    width: 10vw;
+
+    position: absolute;
+    top: 29px;
+    z-index: 3;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import Element from "./Element";
-import ButtonCreateElement from "../../UI/ButtonCreateElement/ButtonCreateElement";
-import {typeNumberList, typeSymbolList} from "../../../tools/globalConstants";
+import {typeNumberList, typeScheduleList, typeSymbolList} from "../../../tools/globalConstants";
+import cls from "./List.module.css"
 
 const List = (props) => {
 
@@ -16,33 +16,33 @@ const List = (props) => {
   let mod = props.mod
 
   function getPrefix(prefix1, prefix2){
-    if(type === typeNumberList){
-      return prefix1
-    }else if(type === typeSymbolList){
-      return prefix2
+    switch (type){
+      case typeNumberList:
+        return prefix1
+      case typeSymbolList:
+        return prefix2
     }
   }
 
   return (
-    <div className="list">
-      <ul className="bodyList">
+    <div className={cls.list}>
+      <ul className={cls.bodyList}>
         {list.map((el,ind)=>{
             return <li key={el.id} style={{display: "flex"}}>
-              {type
-                ? <span className="prefixEl">{getPrefix((ind+1) + ")", "-")}</span>
+              {type && type !== typeScheduleList
+                ? <span className={cls.prefixEl}>{getPrefix((ind+1) + ")", "-")}</span>
                 : ""
               }
               <Element
+              scheduleEl = {type === typeScheduleList}
               elem={el}
               mod={mod}
               pageElements={pageElements}
-              setPageElements={setPageElements}/>
+              setPageElements={setPageElements}
+              setAct={props.setAct}
+              />
             </li>
         })}
-        {mod
-          ?<li><ButtonCreateElement elements={pageElements} setElements={setPageElements} idList={idList}/></li>
-          :""
-        }
       </ul>
     </div>
   );

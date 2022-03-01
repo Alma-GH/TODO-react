@@ -1,0 +1,29 @@
+.nav{
+    position: fixed;
+    top: 30px;
+
+    background-color: grey;
+    width: 150px;
+    height: calc(100vh - 30px);
+}
+
+.navTitle{
+    height: 30px;
+    width: 100%;
+    background-color: orange;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.btnOptions{
+    height: 10%;
+    width: 100%;
+
+    position: absolute;
+    bottom: 0;
+}

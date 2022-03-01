@@ -1,17 +1,27 @@
-import {myCopyObj, takeAllElements} from "../func";
+import {myCopyObj, takeAllElements, takeAllElementsWithReturn, toTime} from "../func";
+import {typeScheduleList} from "../globalConstants";
 
 class PageService{
 
+  name = ""
   pageElements = []
 
-  setElements(elements){
+  setElements(elements, name){
     this.pageElements = myCopyObj(elements)
+    if(name !== undefined) this.name = name
   }
 
+  getPropsElement(id){
+    let obj = {}
+    takeAllElements(this.pageElements, el=>{
+      if(el.id === id) obj = myCopyObj(el)
+    })
+    return obj
+  }
 
   addElement(id){
 
-    const newEl = {id: Date.now(), name:"new"}
+    const newEl = {id: Date.now(), name:""}
 
     function add(el){
       if(el.id === id){
@@ -38,7 +48,6 @@ class PageService{
     this.pageElements = this.pageElements.filter(del)
   }
 
-
   addListById(id, type){
     takeAllElements(this.pageElements, (el)=>{
       if(el.id === id) {
@@ -52,9 +61,31 @@ class PageService{
     })
   }
   deleteListById(id){
+
   }
 
+  toggleVisibleListById(id){
+    takeAllElements(this.pageElements, (el)=>{
+      if(el.id === id) {
+        el.visibleList = !el.visibleList
+        takeAllElements(el.elements, el=>{
+          el.visibleList = true
+        })
+      }
+    })
+  }
+  //Need check
+  toggleVisibleListsByDepth(depth){
 
+    takeAllElements(this.pageElements, (el, depthEl)=>{
+      if(depthEl === depth && "elements" in el) {
+        el.visibleList = !el.visibleList
+        takeAllElements(el.elements, el=>{
+          el.visibleList = true
+        })
+      }
+    })
+  }
 
   setName(id, name){
     function set(el){
@@ -69,11 +100,10 @@ class PageService{
   }
 
   addDescription(id){
-    let newDes = "newDescription"
 
     function add(el){
       if(el.id === id){
-        el.description = newDes
+        el.description = ""
       }
     }
 
@@ -112,6 +142,36 @@ class PageService{
     if(id !== undefined){
       takeAllElements(this.pageElements, set)
     }
+  }
+
+
+
+  //for schedule
+  deleteAllSchedule(){
+    takeAllElements(this.pageElements, el=>{
+      if(el.type === typeScheduleList) el.type = null
+    })
+  }
+  deleteAllInnerList(id){
+    takeAllElements(this.pageElements, el=>{
+      if(el.id === id){
+        if(!("elements" in el)) return
+        takeAllElements(el.elements, el=>{
+          if("elements" in el) delete el.elements
+        })
+      }
+    })
+  }
+  toTimeAllDescriptionOfList(id){
+    takeAllElements(this.pageElements, el=>{
+      if(el.id === id){
+        if(!("elements" in el)) return
+        takeAllElements(el.elements, (el,depth)=>{
+          if(depth!==1) return
+          if("description" in el) el.description = toTime(el.description)
+        })
+      }
+    })
   }
 }
 

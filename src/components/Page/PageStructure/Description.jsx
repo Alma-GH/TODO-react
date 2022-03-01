@@ -1,5 +1,7 @@
 import React from 'react';
 import PageService from "../../../tools/services/PageService";
+import {isDigit, isTime, toTime} from "../../../tools/func";
+import cls from "./Descriptoin.module.css"
 
 const Description = (props) => {
 
@@ -10,16 +12,31 @@ const Description = (props) => {
   let pageElements = props.pageElements
   let setPageElements = props.setPageElements
 
+  let isSchedule = props.isSchedule
+
+
   function change(e){
-    PageService.setNameDescription(idEl, e.target.value)
+    let newVal = e.target.value
+
+    PageService.setNameDescription(idEl, newVal)
     setPageElements(PageService.pageElements)
   }
 
+  function setTime(e){
+    let val = e.target.value
+    if(isSchedule){
+      val = toTime(val)
+      PageService.setNameDescription(idEl, val)
+      setPageElements(PageService.pageElements)
+    }
+  }
+
+
 
   return (
-    <div className="description">
+    <div className={cls.description}>
       <span className="prefixDescription">-</span>
-      <input type="text" value={name} onChange={change} disabled={!mod}/>
+      <textarea type="text" value={name} onChange={change} onBlur={setTime} disabled={!mod}/>
     </div>
   );
 };

@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import {myCopyObj, takeAllElements} from "../../../tools/func";
+import React, {useEffect, useState} from 'react';
 import cls from "./ButtonRoller.module.css"
+import PageService from "../../../tools/services/PageService";
+import {toggleClass} from "../../../tools/func";
 
 const ButtonRoller = (props) => {
 
@@ -8,26 +9,26 @@ const ButtonRoller = (props) => {
   let setElements = props.setElements
 
   let id = props.idEl
-  let [style, setStyle] = useState(null)
+  let [isStyle, setIsStyle] = useState(null)
+
+  function setter(){
+    if(PageService.getPropsElement(id).visibleList === false) isStyle = false
+    else                                                      isStyle = true
+    toggleClass(setIsStyle, isStyle, cls.btnRollerActive)
+  }
+
+  useEffect(()=>{
+    setter()
+  }, [])
 
   let toggleVis = function (e){
-    if(style === null) setStyle(cls.btnRollerActive)
-    else               setStyle(null)
-
-    let newElements = myCopyObj(pageElements)
-    takeAllElements(newElements, (el)=>{
-      if(el.id === id) {
-        el.visibleList = !el.visibleList
-        takeAllElements(el.elements, el=>{
-          el.visibleList = true
-        })
-      }
-    })
-    setElements(newElements)
+    PageService.toggleVisibleListById(id)
+    setElements(PageService.pageElements)
+    setter()
   }
 
   return (
-    <button className={cls.btnRoller + " " + style} onClick={toggleVis}>
+    <button className={cls.btnRoller + " " + isStyle} onClick={toggleVis}>
     </button>
   );
 };

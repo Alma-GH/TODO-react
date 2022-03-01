@@ -1,0 +1,18 @@
+.list{
+    /*border: 2px solid lightgreen;*/
+}
+.bodyList{
+    border-left: 2px dotted grey;
+}
+
+.prefixEl{
+
+    height: 100%;
+    width: 20px;
+
+    text-align: center;
+
+    font-size: 1rem;
+    font-weight: bold;
+
+}

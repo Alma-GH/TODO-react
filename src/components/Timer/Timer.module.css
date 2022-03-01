@@ -1,0 +1,26 @@
+.timer{
+    background-color: chartreuse;
+    height: 100%;
+    width: 300px;
+
+    position: absolute;
+    right: 0;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.act{
+    width: 40%;
+    border: 2px solid red;
+}
+
+.time{
+    font-size: 2rem;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid red;
+}
+

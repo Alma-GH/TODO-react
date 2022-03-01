@@ -4,6 +4,7 @@ import PageService from "../../../tools/services/PageService";
 
 const ButtonCreateElement = ({elements,setElements,idList}) => {
 
+
   let createElementList = function (){
     PageService.setElements(elements)
     PageService.addElement(idList)
@@ -11,7 +12,7 @@ const ButtonCreateElement = ({elements,setElements,idList}) => {
   }
 
   return (
-    <button className={cls.button} onClick={createElementList}>
+    <button tabIndex="1000" className={cls.button} onClick={createElementList}>
     </button>
   );
 };

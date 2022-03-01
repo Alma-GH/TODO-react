@@ -1,0 +1,20 @@
+.panel{
+    width: 50px;
+    /*border: 2px solid darkgrey;*/
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+}
+.panel div{
+    display: flex;
+    flex-direction: column;
+}
+.wrapNum{
+    height: 25px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*border: 2px solid white*/
+}

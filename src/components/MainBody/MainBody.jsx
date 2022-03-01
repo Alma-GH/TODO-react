@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
-import Page from "./Page/Page";
+import Page from "../Page/Page";
 
 const MainBody = (props) => {
 
@@ -10,11 +10,11 @@ const MainBody = (props) => {
   return (
     <div className="body">
       <Routes>
-        <Route
-          exact
-          element={<Page mod={props.mod}/>}
-          path="/page/:name"
-        />
+          <Route
+            element={<Page mod={props.mod} setAct={props.setAct}/>}
+            path="/page/:name/"
+          />
+
       </Routes>
     </div>
   );

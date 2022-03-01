@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import List from "./List";
 import ElemOptions from "../../UI/ElemOptions/ElemOptions";
 import Description from "./Description";
 import PageService from "../../../tools/services/PageService";
+import ButtonCreateElement from "../../UI/ButtonCreateElement/ButtonCreateElement";
+import {typeScheduleList} from "../../../tools/globalConstants";
+import cls from "./Element.module.css"
+
 
 const Element = (props) => {
 
@@ -18,6 +22,8 @@ const Element = (props) => {
   let setPageElements = props.setPageElements
 
   let mod = props.mod
+  let isSchedule = props.scheduleEl
+  let setAct = props.setAct
 
 
   function changeName(e){
@@ -25,24 +31,55 @@ const Element = (props) => {
     setPageElements(PageService.pageElements)
   }
 
+  let [style, setStyle] = useState({opacity:"0"})
+  function setStyleForOptions(e){
+    setStyle({opacity:"100"})
+  }
+  function removeStyleForOptions(){
+    setStyle({opacity:"0"})
+  }
+
+  let styleHead = [cls.elemHead]
+  if(mod)                       styleHead.push(cls.elemHeadHover)
+  if(type === typeScheduleList) styleHead.push(cls.elemHeadSchedule)
+
   return (
-    <div className="elem">
-      <div className="elemHead">
-        <input type="text"  value={name} onChange={changeName} disabled={!mod}/>
-        {mod
-          ? <ElemOptions id={idEl}  pageElements={pageElements} setPageElements={setPageElements}/>
+    <div className={cls.elem}>
+      <div className={styleHead.join(" ")}
+           onMouseOver={setStyleForOptions} onMouseOut={removeStyleForOptions}>
+        <div>
+          <input className={cls.elemName}  type="text"  value={name} onChange={changeName} disabled={!mod}/>
+          {mod
+            ? <div style={{...style, width:"150px"}}>
+                <ElemOptions id={idEl}  pageElements={pageElements} setPageElements={setPageElements} style={style}/>
+                {elements && elements.length
+                  ? <ButtonCreateElement elements={pageElements} setElements={setPageElements} idList={idEl}/>
+                  : ""
+                }
+              </div>
+            : ""
+          }
+
+        </div>
+        <div style={{marginLeft: "30px", width: "100%"}}>
+          {vis === false
+            ?<div className={cls.threePoint}> <p>•••</p> </div>
+            :""
+          }
+          {("description" in elemProps)
+            ?<Description isSchedule={isSchedule} elem={elemProps} pageElements={pageElements}
+                          setPageElements={setPageElements} mod={mod}/>
+            :""
+          }
+        </div>
+      </div>
+      <div>
+        {elements && elements.length && vis!==false
+          ? <List idList={idEl} mod={mod} list={{type:type,elements:elements}} pageElements={pageElements} setPageElements={setPageElements} setAct={setAct} />
           : ""
         }
-        {("description" in elemProps)
-          ?<Description elem={elemProps} pageElements={pageElements} setPageElements={setPageElements} mod={mod}/>
-          :""
-        }
-
       </div>
-      {elements && elements.length && vis!==false
-        ? <List idList={idEl} mod={mod} list={{type:type,elements:elements}} pageElements={pageElements} setPageElements={setPageElements} />
-        : ""
-      }
+
     </div>
   );
 };

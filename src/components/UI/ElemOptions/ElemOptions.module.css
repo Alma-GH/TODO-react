@@ -1,19 +1,23 @@
 .block{
     display: inline-block;
-    width: 100px;
+    width: 120px;
     height: 20px;
-    background-color: rgba(144, 238, 144, 0.45);
-    opacity: 25%;
-}
-
-.block:hover{
     opacity: 100;
 }
 
-.btn{
+.btnCreateList{
+    width: calc(100%/2);
+    margin-right: 20px;
+}
 
+.btn{
+    width: 20px;
     height: 100%;
-    width: calc(100%/5);
     background-color: white;
     font-size: 15px;
+    cursor: pointer;
+}
+
+.wideBtn{
+    width: 40px;
 }

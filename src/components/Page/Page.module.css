@@ -1,0 +1,14 @@
+.page{
+    width: 100%;
+
+    background-color: rgba(0, 128, 0, 0.65);
+}
+
+.wrapPage{
+    display: flex;
+}
+
+.bodyPage{
+     width: 100%;
+     margin-left: 10px;
+ }
