@@ -8,6 +8,8 @@ const Panel = (props) => {
   let elements = props.elements
   let setElements = props.setElements
 
+  let setIsSave = props.setIsSave
+
   let mod = props.mod
 
   let count = 0
@@ -25,7 +27,7 @@ const Panel = (props) => {
     return num
   })
   let rollers = takeAllElementsWithReturn(elements, (el)=>{
-    let button = <ButtonRoller  idEl={el.id}  pageElements={elements} setElements={setElements} key={el.id}/>
+    let button = <ButtonRoller  idEl={el.id}  pageElements={elements} setElements={setElements} key={el.id} setIsSave={setIsSave}/>
     let none = <div className={cls.wrapNum}  key={el.id}></div>
 
     return (el.elements && el.elements.length) ? button : none

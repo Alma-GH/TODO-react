@@ -1,3 +1,4 @@
+import PageService from "./services/PageService";
 
 
 export const takeAllElements = (arr,func, depth)=>{
@@ -65,4 +66,12 @@ export const isDigit = (dig)=>{
   if(!dig) return false
   dig = dig.toString()
   return (48<=dig.codePointAt(0) && dig.codePointAt(0)<=57)
+}
+
+
+
+export const newSave  = (val, setter, bool=false)=>{
+  val[PageService.name] = bool
+  val = myCopyObj(val)
+  setter(val)
 }

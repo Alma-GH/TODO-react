@@ -6,6 +6,7 @@ import PageService from "../../../tools/services/PageService";
 import ButtonCreateElement from "../../UI/ButtonCreateElement/ButtonCreateElement";
 import {typeScheduleList} from "../../../tools/globalConstants";
 import cls from "./Element.module.css"
+import {myCopyObj, newSave} from "../../../tools/func";
 
 
 const Element = (props) => {
@@ -25,10 +26,13 @@ const Element = (props) => {
   let isSchedule = props.scheduleEl
   let setAct = props.setAct
 
+  let [isSave, setSave] = props.setIsSave
 
   function changeName(e){
     PageService.setName(idEl, e.target.value)
     setPageElements(PageService.pageElements)
+
+    newSave(isSave,setSave)
   }
 
   let [style, setStyle] = useState({opacity:"0"})
@@ -51,9 +55,9 @@ const Element = (props) => {
           <input className={cls.elemName}  type="text"  value={name} onChange={changeName} disabled={!mod}/>
           {mod
             ? <div style={{...style, width:"150px"}}>
-                <ElemOptions id={idEl}  pageElements={pageElements} setPageElements={setPageElements} style={style}/>
+                <ElemOptions id={idEl}  pageElements={pageElements} setPageElements={setPageElements} style={style} setIsSave={props.setIsSave}/>
                 {elements && elements.length
-                  ? <ButtonCreateElement elements={pageElements} setElements={setPageElements} idList={idEl}/>
+                  ? <ButtonCreateElement elements={pageElements} setElements={setPageElements} idList={idEl} setIsSave={props.setIsSave}/>
                   : ""
                 }
               </div>
@@ -68,14 +72,15 @@ const Element = (props) => {
           }
           {("description" in elemProps)
             ?<Description isSchedule={isSchedule} elem={elemProps} pageElements={pageElements}
-                          setPageElements={setPageElements} mod={mod}/>
+                          setPageElements={setPageElements} mod={mod} setIsSave={props.setIsSave}/>
             :""
           }
         </div>
       </div>
       <div>
         {elements && elements.length && vis!==false
-          ? <List idList={idEl} mod={mod} list={{type:type,elements:elements}} pageElements={pageElements} setPageElements={setPageElements} setAct={setAct} />
+          ? <List idList={idEl} mod={mod} list={{type:type,elements:elements}}
+                  pageElements={pageElements} setPageElements={setPageElements} setAct={setAct} setIsSave={props.setIsSave} />
           : ""
         }
       </div>

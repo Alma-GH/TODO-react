@@ -13,6 +13,8 @@ const List = (props) => {
   let pageElements = props.pageElements
   let setPageElements = props.setPageElements
 
+  let setIsSave = props.setIsSave
+
   let mod = props.mod
 
   function getPrefix(prefix1, prefix2){
@@ -40,6 +42,7 @@ const List = (props) => {
               pageElements={pageElements}
               setPageElements={setPageElements}
               setAct={props.setAct}
+              setIsSave={setIsSave}
               />
             </li>
         })}

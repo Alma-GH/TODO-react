@@ -24,7 +24,7 @@ const Page = (props) => {
    */
 
   let [elements, setElements] = useState([])
-
+  let setIsSave = props.setIsSave
   let params = useParams()
 
   //Get elements
@@ -101,13 +101,13 @@ const Page = (props) => {
     <div className={cls.page}>
       <div className={cls.wrapPage}>
 
-        <Panel mod={mod} elements={elements} setElements={setElements}/>
+        <Panel mod={mod} elements={elements} setElements={setElements} setIsSave={setIsSave}/>
 
         <div className={cls.bodyPage}>
           {elements.map(el=>
-            <Element elem={el} mod={mod} pageElements={elements} setPageElements={setElements} setAct={setAct} key={el.id}/>)}
+            <Element elem={el} mod={mod} pageElements={elements} setPageElements={setElements} setAct={setAct} key={el.id} setIsSave={setIsSave}/>)}
           {mod
-            ? <ButtonCreateElement elements={elements} setElements={setElements}/>
+            ? <ButtonCreateElement elements={elements} setElements={setElements} setIsSave={setIsSave}/>
             : ""
           }
         </div>

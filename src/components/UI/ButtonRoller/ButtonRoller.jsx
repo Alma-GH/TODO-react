@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import cls from "./ButtonRoller.module.css"
 import PageService from "../../../tools/services/PageService";
-import {toggleClass} from "../../../tools/func";
+import {myCopyObj, newSave, toggleClass} from "../../../tools/func";
 
 const ButtonRoller = (props) => {
 
   let pageElements = props.pageElements
   let setElements = props.setElements
+
+  let [isSave,setSave] = props.setIsSave
 
   let id = props.idEl
   let [isStyle, setIsStyle] = useState(null)
@@ -26,6 +28,8 @@ const ButtonRoller = (props) => {
   let toggleVis = function (e){
     PageService.toggleVisibleListById(id)
     setElements(PageService.pageElements)
+
+    newSave(isSave,setSave)
     // setter()
   }
 

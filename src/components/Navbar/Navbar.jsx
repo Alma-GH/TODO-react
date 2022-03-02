@@ -10,12 +10,13 @@ const Navbar = (props) => {
   let mod = props.mod
   let setMod = props.setMod
 
+  let isSave = props.isSave
 
   let arrLinks = props.links.map(link=>{
     return (
       <div key={link}>
         <Link to={"/page/" + link}>
-          <ButtonLink>{link}</ButtonLink>
+          <ButtonLink isSave={isSave}>{link}</ButtonLink>
         </Link>
       </div>
     )

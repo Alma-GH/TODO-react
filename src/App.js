@@ -4,7 +4,7 @@ import Header from "./components/Header/Header";
 import MainBody from "./components/MainBody/MainBody";
 import {BrowserRouter} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {orderLinks, typeNumberList, typeScheduleList} from "./tools/globalConstants";
+import {orderLinks, savePages, typeNumberList, typeScheduleList} from "./tools/globalConstants";
 import Server from "./tools/services/Server";
 
 /*STATE:
@@ -33,6 +33,8 @@ function App(props) {
 
   let [optionMod, setOptionMod] = useState(false)
   let [act, setAct] = useState(null)
+
+  let [isSave,setSave] = useState({})
 
   let send = false
   useEffect(async ()=>{
@@ -71,15 +73,18 @@ function App(props) {
     }
 
     await Server.getAllNameFiles()
-    setPages(JSON.parse(localStorage.getItem(orderLinks)))
+    let parse = JSON.parse(localStorage.getItem(orderLinks))
+    setPages(parse)
+    setSave(Object.fromEntries(parse.map(e=>[e,true])))
+
   },[])
 
   return (
     <BrowserRouter>
       <div className="App">
-        <Header act={act} setPages={setPages} pages={pages}/>
-        <Navbar links={pages} mod={optionMod} setMod={setOptionMod}/>
-        <MainBody mod={optionMod} setAct={setAct}/>
+        <Header act={act} setPages={setPages} pages={pages} setIsSave={[isSave,setSave]}/>
+        <Navbar links={pages} mod={optionMod} setMod={setOptionMod} isSave={isSave}/>
+        <MainBody mod={optionMod} setAct={setAct} setIsSave={[isSave,setSave]}/>
       </div>
     </BrowserRouter>
   );

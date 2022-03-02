@@ -10,6 +10,7 @@ import Form from "../UI/Forms/Form";
 import Confirm from "../UI/Forms/Confirm";
 import cls from "./Header.module.css"
 import {orderLinks} from "../../tools/globalConstants";
+import {newSave} from "../../tools/func";
 
 const Header = (props) => {
 
@@ -23,8 +24,11 @@ const Header = (props) => {
   let [input, setInput] = useState(null)
   let [bodyModal, setBodyModal] = useState("")
 
+  let [isSave,setSave] = props.setIsSave
+
   function save(){
     Server.saveElements(PageService.pageElements,PageService.name)
+    newSave(isSave,setSave,true)
   }
 
   function create(){
@@ -57,8 +61,9 @@ const Header = (props) => {
       let newPages = JSON.parse(localStorage.getItem(orderLinks))
       props.setPages(newPages)
 
-      nav("./page/" + input)
 
+      nav("./page/" + input)
+      newSave(isSave,setSave,true)
     }
 
     async function deletePage(){
@@ -89,6 +94,7 @@ const Header = (props) => {
       props.setPages(newPages)
 
       nav("./page/" + input)
+      newSave(isSave,setSave,true)
     }
 
     switch (par){

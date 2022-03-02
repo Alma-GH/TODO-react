@@ -1,6 +1,6 @@
 import React from 'react';
 import PageService from "../../../tools/services/PageService";
-import {isDigit, isTime, toTime} from "../../../tools/func";
+import {isDigit, isTime, newSave, toTime} from "../../../tools/func";
 import cls from "./Descriptoin.module.css"
 
 const Description = (props) => {
@@ -14,12 +14,14 @@ const Description = (props) => {
 
   let isSchedule = props.isSchedule
 
+  let [isSave,setSave] = props.setIsSave
 
   function change(e){
     let newVal = e.target.value
 
     PageService.setNameDescription(idEl, newVal)
     setPageElements(PageService.pageElements)
+    newSave(isSave,setSave)
   }
 
   function setTime(e){

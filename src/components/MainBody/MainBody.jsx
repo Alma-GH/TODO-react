@@ -6,12 +6,11 @@ const MainBody = (props) => {
 
 
 
-
   return (
     <div className="body">
       <Routes>
           <Route
-            element={<Page mod={props.mod} setAct={props.setAct}/>}
+            element={<Page mod={props.mod} setAct={props.setAct} setIsSave={props.setIsSave}/>}
             path="/page/:name/"
           />
 
