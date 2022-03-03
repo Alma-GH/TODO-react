@@ -1,4 +1,6 @@
 import PageService from "./services/PageService";
+import {unSave} from "./globalConstants";
+import SaveService from "./services/SaveService";
 
 
 export const takeAllElements = (arr,func, depth)=>{
@@ -71,7 +73,26 @@ export const isDigit = (dig)=>{
 
 
 export const newSave  = (val, setter, bool=false)=>{
-  val[PageService.name] = bool
+  if(bool) SaveService.markOut()
+  val[PageService.name] = !!bool
   val = myCopyObj(val)
   setter(val)
 }
+
+export const changeOnPage = (setElements, saveArg)=>{
+  function validArg(){
+    if(saveArg.length < 2) return false
+    if(typeof saveArg[0] !== "object" || typeof saveArg[1] !== "function") return false
+    return true
+  }
+
+
+  setElements(PageService.pageElements)   //1
+
+  if(validArg()){                         //2
+    newSave(...saveArg)
+  }
+
+  SaveService.markNotSave()               //3
+}
+

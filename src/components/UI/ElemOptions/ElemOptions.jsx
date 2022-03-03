@@ -2,7 +2,7 @@ import React from 'react';
 import cls from "./ElemOptions.module.css"
 import {typeNumberList, typeSymbolList, typeScheduleList} from "../../../tools/globalConstants";
 import PageService from "../../../tools/services/PageService";
-import {myCopyObj, newSave} from "../../../tools/func";
+import {changeOnPage, myCopyObj, newSave} from "../../../tools/func";
 
 const ElemOptions = (props) => {
 
@@ -10,14 +10,16 @@ const ElemOptions = (props) => {
   let pageElements = props.pageElements
   let setPageElements = props.setPageElements
 
-  let [isSave, setSave] = props.setIsSave
+  let setIsSave = props.setIsSave
 
   PageService.setElements(pageElements)
 
   function createList(type){
     PageService.addListById(id, type)
-    setPageElements(PageService.pageElements)
-    newSave(isSave,setSave)
+
+    changeOnPage(setPageElements,setIsSave)
+    // setPageElements(PageService.pageElements)
+    // newSave(isSave,setSave)
   }
   function createNumberedList(){
     createList(typeNumberList)
@@ -35,14 +37,15 @@ const ElemOptions = (props) => {
   }
   function deleteElem(){
     PageService.deleteElement(id)
-    setPageElements(PageService.pageElements)
-    newSave(isSave,setSave)
+    changeOnPage(setPageElements,setIsSave)
+    // setPageElements(PageService.pageElements)
+    // newSave(isSave,setSave)
   }
   function toggleDescription(){
     PageService.toggleDescription(id)
-    setPageElements(PageService.pageElements)
-
-    newSave(isSave,setSave)
+    changeOnPage(setPageElements,setIsSave)
+    // setPageElements(PageService.pageElements)
+    // newSave(isSave,setSave)
   }
 
   return (

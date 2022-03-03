@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import ButtonCreateElement from "../UI/ButtonCreateElement/ButtonCreateElement";
 import Element from "./PageStructure/Element";
-import {typeNumberList, typeScheduleList} from "../../tools/globalConstants";
+import {allData, typeNumberList, typeScheduleList} from "../../tools/globalConstants";
 import Panel from "./PageStructure/Panel";
 import PageService from "../../tools/services/PageService";
 import {useParams} from "react-router-dom";
 import {isClock, takeAllElements} from "../../tools/func";
 import Server from "../../tools/services/Server";
 import cls from "./Page.module.css"
+import SaveService from "../../tools/services/SaveService";
 
 
 const Page = (props) => {
@@ -30,7 +31,15 @@ const Page = (props) => {
   //Get elements
   useEffect(async()=>{
     setAct(null)
-    let elems = await Server.getElementsByParams(params.name)
+    let save = setIsSave[0]
+    let elems
+    let pageName = params.name
+
+    if(!save[pageName]){
+      elems = SaveService.getNotSave(pageName)
+    }else{
+      elems = await Server.getElementsByParams(pageName)
+    }
     if(Array.isArray(elems)) setElements(elems)
     else                     setElements([])
 
@@ -86,7 +95,7 @@ const Page = (props) => {
   useEffect(()=>{
     document.addEventListener("keydown", e=>{
       // e.preventDefault()
-      console.log(e.key)
+      // console.log(e.key)
     })
   }, [])
 

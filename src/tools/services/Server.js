@@ -8,6 +8,9 @@ class Server{
     await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
       .then(response=>response.json())
       .then(res=>{
+        for(let file in res){
+          if(res[file] === null || res[file][0] === "") res[file].length = 0
+        }
         arr = res
       })
     return arr

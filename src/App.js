@@ -4,8 +4,9 @@ import Header from "./components/Header/Header";
 import MainBody from "./components/MainBody/MainBody";
 import {BrowserRouter} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {orderLinks, savePages, typeNumberList, typeScheduleList} from "./tools/globalConstants";
+import {allData, orderLinks, savePages, typeNumberList, typeScheduleList, unSave} from "./tools/globalConstants";
 import Server from "./tools/services/Server";
+import SaveService from "./tools/services/SaveService";
 
 /*STATE:
 {
@@ -71,6 +72,8 @@ function App(props) {
         .then(response=>response.json())
         .then(res=>console.log("res from BD:",res))
     }
+
+    SaveService.init()
 
     await Server.getAllNameFiles()
     let parse = JSON.parse(localStorage.getItem(orderLinks))
