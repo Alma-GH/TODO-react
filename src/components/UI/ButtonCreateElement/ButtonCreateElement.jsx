@@ -17,7 +17,8 @@ const ButtonCreateElement = ({elements,setElements,idList, setIsSave}) => {
   }
 
   return (
-    <button tabIndex="1000" className={cls.button} onClick={createElementList}>
+    <button tabIndex="1000" className={cls.btn2} onClick={createElementList}>
+      +
     </button>
   );
 };

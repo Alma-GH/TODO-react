@@ -78,14 +78,11 @@ class PageService{
     })
   }
   //Need check
-  toggleVisibleListsByDepth(depth){
+  invisibleListsByDepth(depth){
 
     takeAllElements(this.pageElements, (el, depthEl)=>{
       if(depthEl === depth && "elements" in el) {
-        el.visibleList = !el.visibleList
-        takeAllElements(el.elements, el=>{
-          el.visibleList = true
-        })
+        if(el.visibleList) el.visibleList = false
       }
     })
   }

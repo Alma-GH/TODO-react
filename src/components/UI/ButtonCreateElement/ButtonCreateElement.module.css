@@ -1,9 +1,27 @@
-.button{
+
+.btn2 {
+    outline: none;
+    border: none;
     border-radius: 50%;
-    border: 2px solid black;
-
-    width: 21px;
     height: 21px;
-
+    aspect-ratio: 1/1;
+    text-transform: uppercase;
+    font-weight: normal;
+    text-decoration: none;
+    color: black;
+    background-color: white;
     cursor: pointer;
+    user-select: none;
+    appearance: none;
+    touch-action: manipulation;
+    transition: box-shadow .18s ease-out,background .18s ease-out,color .18s ease-out;
+}
+.btn2:focus-visible {
+    box-shadow: 0 0 0 3px lightskyblue;
+}
+.btn2:hover {
+    box-shadow: 0 1px 1px 0  #cfcfcf, 0 2px 5px 0  #cfcfcf;
+}
+.btn2:active {
+    background-color: #808080 !important;
 }

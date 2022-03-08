@@ -10,7 +10,9 @@ import Form from "../UI/Forms/Form";
 import Confirm from "../UI/Forms/Confirm";
 import cls from "./Header.module.css"
 import {orderLinks} from "../../tools/globalConstants";
-import {newSave} from "../../tools/func";
+import {newSave, waiter} from "../../tools/func";
+import Loader from "../UI/Loader/Loader";
+import {useFetching} from "../../hooks/useFetching";
 
 const Header = (props) => {
 
@@ -26,23 +28,88 @@ const Header = (props) => {
 
   let [isSave,setSave] = props.setIsSave
 
-  function save(){
-    Server.saveElements(PageService.pageElements,PageService.name)
+  const [fetchCreate, isCreating, errCreate] = useFetching(async ()=>{
+    //TODO: message about non valid name
+    if(!input || [0,input.length-1].includes(input.indexOf(" "))) return
+    if(JSON.parse(localStorage.getItem(orderLinks)).includes(input)) return
+    setModal(false)
+
+    await Server.addPage(input)
+    // await waiter(2000)
+    let newPages = JSON.parse(localStorage.getItem(orderLinks))
+    props.setPages(newPages)
+
+
+    nav("./page/" + input)
     newSave(isSave,setSave,true)
+
+  })
+  const [fetchRename, isRenaming, errRename] = useFetching(async ()=>{
+    if(!input || [0,input.length-1].includes(input.indexOf(" ")) ) return
+    if(JSON.parse(localStorage.getItem(orderLinks)).includes(input)) return
+    setModal(false)
+    let posPage = JSON.parse(localStorage.getItem(orderLinks)).indexOf(PageService.name)
+    await Server.deletePage(fileName)
+    await Server.addPage(input, PageService.pageElements)
+    // await waiter(2000)
+    let newPages = JSON.parse(localStorage.getItem(orderLinks))
+    newPages.splice(posPage,0,newPages.pop())
+    localStorage.setItem(orderLinks, JSON.stringify(newPages))
+
+    props.setPages(newPages)
+
+    nav("./page/" + input)
+    newSave(isSave,setSave,true)
+  })
+  const [fetchDelete, isDeleting, errDelete] = useFetching(async ()=>{
+    setModal(false)
+    await Server.deletePage(PageService.name)
+    // await waiter(2000)
+    let newPages = JSON.parse(localStorage.getItem(orderLinks))
+    props.setPages(newPages)
+
+    //MB ERROR
+    let ind = pages.indexOf(PageService.name)
+    let newPageName = pages[(!ind)?1:ind-1]
+    nav("./page/" + newPageName)
+  })
+  const [fetchSave, isSaving, errSave] = useFetching(async ()=>{
+    await Server.saveElements(PageService.pageElements,PageService.name)
+    // await waiter(2000)
+    newSave(isSave,setSave,true)
+  })
+
+
+  function save(){
+    fetchSave()
   }
 
-  function create(){
+  function createPage(){
+    fetchCreate()
+  }
+
+  function deletePage(){
+    fetchDelete()
+  }
+
+  function renamePage(){
+    fetchRename()
+  }
+
+
+
+  function createMenu(){
     setBodyModal("create")
     setInput("");
     setModal(true);
   }
 
-  async function deletePage(){
+  async function deleteMenu(){
     setBodyModal("delete")
     setModal(true);
   }
 
-  async function rename(){
+  async function renameMenu(){
     setBodyModal("rename")
     setInput(PageService.name);
     setModal(true);
@@ -53,50 +120,6 @@ const Header = (props) => {
   }
 
   function getModalBody(par){
-    async function createPage(){
-      if(!input || [0,input.length-1].includes(input.indexOf(" "))) return
-      setModal(false)
-
-      await Server.addPage(input)
-      let newPages = JSON.parse(localStorage.getItem(orderLinks))
-      props.setPages(newPages)
-
-
-      nav("./page/" + input)
-      newSave(isSave,setSave,true)
-    }
-
-    async function deletePage(){
-      setModal(false)
-      await Server.deletePage(PageService.name)
-      let newPages = JSON.parse(localStorage.getItem(orderLinks))
-      props.setPages(newPages)
-
-      //MB ERROR
-      let ind = pages.indexOf(PageService.name)
-      let newPageName = pages[(!ind)?1:ind-1]
-      nav("./page/" + newPageName)
-
-
-    }
-
-    async function renamePage(){
-      if(!input || [0,input.length-1].includes(input.indexOf(" ")) ) return
-      setModal(false)
-      let posPage = JSON.parse(localStorage.getItem(orderLinks)).indexOf(PageService.name)
-      await Server.deletePage(fileName)
-      await Server.addPage(input, PageService.pageElements)
-
-      let newPages = JSON.parse(localStorage.getItem(orderLinks))
-      newPages.splice(posPage,0,newPages.pop())
-      localStorage.setItem(orderLinks, JSON.stringify(newPages))
-
-      props.setPages(newPages)
-
-      nav("./page/" + input)
-      newSave(isSave,setSave,true)
-    }
-
     switch (par){
       case "create":
         return (<Form
@@ -136,9 +159,9 @@ const Header = (props) => {
       <div className={cls.menu}>
         <MenuHeader name="File">
           <ElemMenu func={save}>save</ElemMenu>
-          <ElemMenu func={create}>create</ElemMenu>
-          <ElemMenu func={deletePage}>delete</ElemMenu>
-          <ElemMenu func={rename}>rename</ElemMenu>
+          <ElemMenu func={createMenu}>create</ElemMenu>
+          <ElemMenu func={deleteMenu}>delete</ElemMenu>
+          <ElemMenu func={renameMenu}>rename</ElemMenu>
         </MenuHeader>
         <MenuHeader name="Options">
           <ElemMenu func={()=>console.log("HI IT IS THEME")}>theme</ElemMenu>
@@ -149,6 +172,10 @@ const Header = (props) => {
           <ElemMenu func={()=>console.log("HI IT IS ELEMMENU")}>how work</ElemMenu>
           <ElemMenu func={()=>console.log("HI IT IS ELEMMENU")}>about me</ElemMenu>
         </MenuHeader>
+        {(isCreating || isRenaming || isDeleting || isSaving) &&
+          <div className={cls.loader}><Loader/></div>
+        }
+
       </div>
       <Modal visible={modal} setVisible={setModal}>
         {getModalBody(bodyModal)}

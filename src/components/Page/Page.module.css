@@ -1,6 +1,5 @@
 .page{
     width: 100%;
-
     background-color: rgba(0, 128, 0, 0.65);
 }
 
@@ -12,3 +11,16 @@
      width: 100%;
      margin-left: 10px;
  }
+
+
+.loaderBG{
+    height: calc(100vh - 36px);
+    background-color: #1d2630;
+    display: grid;
+    place-items: center;
+}
+
+.loader{
+    width: 10%;
+    aspect-ratio: 1/1;
+}

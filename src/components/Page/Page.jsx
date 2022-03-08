@@ -5,10 +5,12 @@ import {allData, typeNumberList, typeScheduleList} from "../../tools/globalConst
 import Panel from "./PageStructure/Panel";
 import PageService from "../../tools/services/PageService";
 import {useParams} from "react-router-dom";
-import {isClock, takeAllElements} from "../../tools/func";
+import {changeOnPage, isClock, takeAllElements, waiter} from "../../tools/func";
 import Server from "../../tools/services/Server";
 import cls from "./Page.module.css"
 import SaveService from "../../tools/services/SaveService";
+import {useFetching} from "../../hooks/useFetching";
+import Loader from "../UI/Loader/Loader";
 
 
 const Page = (props) => {
@@ -24,12 +26,12 @@ const Page = (props) => {
   }
    */
 
-  let [elements, setElements] = useState([])
   let setIsSave = props.setIsSave
   let params = useParams()
 
-  //Get elements
-  useEffect(async()=>{
+  const [elements, setElements] = useState([])
+  const [isFolding, setIsFolding] = useState(false)
+  const [fetchElements, isElLoading, errEl] = useFetching(async ()=>{
     setAct(null)
     let save = setIsSave[0]
     let elems
@@ -43,7 +45,15 @@ const Page = (props) => {
     if(Array.isArray(elems)) setElements(elems)
     else                     setElements([])
 
+    // await waiter(2000)
     console.log("page load")
+  })
+
+
+
+  //Get elements
+  useEffect(()=>{
+    fetchElements()
     return ()=>console.log("unmount page")
   }, [params.name])
 
@@ -83,7 +93,6 @@ const Page = (props) => {
             }else                     act = arrDate[i][0]
           }
         }
-        console.log(act)
         setAct(act)
       }, 1000)
     })
@@ -92,36 +101,59 @@ const Page = (props) => {
   }, [elements])
 
   //TODO:Save file by keyboard
+
+  // let timeID
+  function keyDownEvent(e){
+    if(e.ctrlKey || e.metaKey){
+      e.preventDefault()
+      // if(timeID) clearTimeout(timeID)
+      if(e.key === "k"){
+        setIsFolding(true)
+        // timeID = setTimeout(()=>setIsFolding(false), 3000)
+      }else if(isFolding){
+        let res = +e.key
+        if(!isNaN(res)){
+          PageService.invisibleListsByDepth(res)
+          changeOnPage(setElements,setIsSave)
+        }
+        setIsFolding(false)
+      }
+    }
+  }
   useEffect(()=>{
-    document.addEventListener("keydown", e=>{
-      // e.preventDefault()
-      // console.log(e.key)
-    })
-  }, [])
+    document.addEventListener("keydown", keyDownEvent)
+    return ()=>document.removeEventListener("keydown",keyDownEvent)
+  }, [isFolding])
 
   let mod = props.mod
   let setAct = props.setAct
 
-  window.state = elements
+
   PageService.setElements(elements, params.name)
-  window.page = [PageService.name, PageService.pageElements]
 
   return (
-    <div className={cls.page}>
-      <div className={cls.wrapPage}>
+    <div>
+        {isElLoading
+          ?<div className={cls.loaderBG}><div className={cls.loader}><Loader/></div></div>
+          :
+          <div className={cls.page}>
+            <div className={cls.wrapPage}>
+              <Panel mod={mod} elements={elements} setElements={setElements} setIsSave={setIsSave}/>
 
-        <Panel mod={mod} elements={elements} setElements={setElements} setIsSave={setIsSave}/>
+              <div className={cls.bodyPage}>
+                {elements.map(el=>
+                  <Element elem={el} mod={mod} pageElements={elements}
+                           setPageElements={setElements} setAct={setAct}
+                           key={el.id} setIsSave={setIsSave}/>)
+                }
+                {mod &&
+                <ButtonCreateElement elements={elements} setElements={setElements} setIsSave={setIsSave}/>
+                }
+              </div>
 
-        <div className={cls.bodyPage}>
-          {elements.map(el=>
-            <Element elem={el} mod={mod} pageElements={elements} setPageElements={setElements} setAct={setAct} key={el.id} setIsSave={setIsSave}/>)}
-          {mod
-            ? <ButtonCreateElement elements={elements} setElements={setElements} setIsSave={setIsSave}/>
-            : ""
-          }
-        </div>
-
-      </div>
+            </div>
+          </div>
+        }
     </div>
   );
 };

@@ -27,3 +27,16 @@
     position: absolute;
     bottom: 0;
 }
+
+
+.loaderBG{
+    height: 90%;
+    background-color: #1d2630;
+    display: grid;
+    place-items: center;
+}
+
+.loader{
+    width: 70%;
+    aspect-ratio: 1/1;
+}

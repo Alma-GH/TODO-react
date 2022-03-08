@@ -4,6 +4,7 @@ import {Link, useParams} from "react-router-dom";
 import cls from "./Navbar.module.css"
 import Server from "../../tools/services/Server";
 import ButtonLink from "../UI/ButtonLink/ButtonLink";
+import Loader from "../UI/Loader/Loader";
 
 const Navbar = (props) => {
 
@@ -11,6 +12,7 @@ const Navbar = (props) => {
   let setMod = props.setMod
 
   let isSave = props.isSave
+  let [isLoading,err] = props.isLoading
 
   let arrLinks = props.links.map(link=>{
     return (
@@ -26,7 +28,11 @@ const Navbar = (props) => {
   return (
       <div className={cls.nav}>
         <div className={cls.navTitle}>Files</div>
-        {arrLinks}
+        {err && "ERROR LOAD"}
+        {isLoading
+          ?<div className={cls.loaderBG}> <div className={cls.loader}><Loader/></div> </div>
+          :arrLinks
+        }
         <div className={cls.btnOptions}>
             <ButtonOption data={mod} setData={setMod}/>
         </div>

@@ -1,7 +1,7 @@
 import {orderLinks} from "../globalConstants";
 
 const EMPTY_PAGE = [""]
-
+//TODO:try catch
 class Server{
   async getAllFiles(){
     let arr;

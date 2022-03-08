@@ -50,14 +50,18 @@ const ElemOptions = (props) => {
 
   return (
     <div className={cls.block}>
-      <div className={cls.btnCreateList}>
-        <button tabIndex="1000" className={cls.btn} onClick={createNumberedList}>1</button>
-        <button tabIndex="1000" className={cls.btn} onClick={createSymbolList}>s</button>
-        <button tabIndex="1000" className={cls.btn} onClick={createSimpleList}>-</button>
-        <button tabIndex="1000" className={cls.btn + cls.wideBtn} onClick={createScheduleList}>sch</button>
+      <div className={cls.wrap}>
+        <div className={cls.btnCreateList}>
+            <button tabIndex="1000" className={cls.btn} onClick={createNumberedList}>1</button>
+            <button tabIndex="1000" className={cls.btn} onClick={createSymbolList}>s</button>
+            <button tabIndex="1000" className={cls.btn} onClick={createSimpleList}>-</button>
+            <button tabIndex="1000" className={cls.btn +" "+ cls.wideBtn} onClick={createScheduleList}>sch</button>
+        </div>
+        <div>
+          <button tabIndex="1000" className={cls.btn} onClick={toggleDescription}>d</button>
+          <button tabIndex="1000" className={cls.btn} onClick={deleteElem}>x</button>
+        </div>
       </div>
-      <button tabIndex="1000" className={cls.btn} onClick={toggleDescription}>d</button>
-      <button tabIndex="1000" className={cls.btn} onClick={deleteElem}>#</button>
     </div>
   );
 };

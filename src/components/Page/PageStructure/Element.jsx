@@ -56,7 +56,7 @@ const Element = (props) => {
         <div>
           <input className={cls.elemName}  type="text"  value={name} onChange={changeName} disabled={!mod}/>
           {mod
-            ? <div style={{...style, width:"150px"}}>
+            ? <div style={{...style, width:"230px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
                 <ElemOptions id={idEl}  pageElements={pageElements} setPageElements={setPageElements} style={style} setIsSave={setIsSave}/>
                 {elements && elements.length
                   ? <ButtonCreateElement elements={pageElements} setElements={setPageElements} idList={idEl} setIsSave={setIsSave}/>

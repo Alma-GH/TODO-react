@@ -96,3 +96,6 @@ export const changeOnPage = (setElements, saveArg)=>{
   SaveService.markNotSave()               //3
 }
 
+
+export const waiter = (time)=>new Promise((res,rej)=>setTimeout(()=>res("done"),time))
+

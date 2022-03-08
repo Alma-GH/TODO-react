@@ -1,3 +1,4 @@
+
 *{
     margin:0;
     padding: 0;
@@ -37,8 +38,7 @@ input, textarea{
 
     .body{
         width: calc(100% - 150px);
-        min-height: 100%;
-        padding-bottom: 100px;
+        min-height: calc(100vh - 30px);
 
         position: absolute;
         top: 30px;
@@ -46,5 +46,7 @@ input, textarea{
         right: 0;
 
         border: 3px solid black;
-        background-color: darkblue;
+        /*background-color: darkblue;*/
+        background: url("/src/img/BlackBG.jpg");
+        background-size: 300px 300px;
     }

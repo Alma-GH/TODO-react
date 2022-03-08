@@ -1,8 +1,20 @@
 .block{
     display: inline-block;
-    width: 120px;
-    height: 20px;
+    width: 200px;
+    height: 115%;
     opacity: 100;
+    border-radius: 15px;
+    border: 2.5px solid black;
+    background-color: white;
+    position: relative;
+    /*top: -7.5%;*/
+    padding: 0 2px 0;
+}
+
+.wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .btnCreateList{
@@ -10,14 +22,48 @@
     margin-right: 20px;
 }
 
-.btn{
-    width: 20px;
-    height: 100%;
-    background-color: white;
-    font-size: 15px;
+/*.btn{*/
+/*    width: 20px;*/
+/*    height: 100%;*/
+/*    background-color: white;*/
+/*    font-size: 15px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+.btn {
+    margin-right: 5px;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    height: 21px;
+    aspect-ratio: 1/1;
+    text-transform: uppercase;
+    font-weight: normal;
+    text-decoration: none;
+    color: #444;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(65 ,132 ,144,0.10), 0 1px 3px rgba(0 ,0 ,0 , 0.8);
     cursor: pointer;
+    user-select: none;
+    appearance: none;
+    touch-action: manipulation;
+    vertical-align: top;
+    transition: box-shadow 0.2s;
+}
+.btn:focus-visible {
+    border: 1px solid #4c51f9;
+    outline: none;
+}
+.btn:hover {
+    transition: all 0.2s;
+    box-shadow: 0 7px 14px rgba(65 ,132 ,144,0.10), 0 3px 6px rgba(0 ,0 ,0 , 0.8);
+}
+.btn:active {
+    background-color: #808080;
 }
 
 .wideBtn{
     width: 40px;
+    border-radius: 3px;
+    aspect-ratio: 2/1;
 }
