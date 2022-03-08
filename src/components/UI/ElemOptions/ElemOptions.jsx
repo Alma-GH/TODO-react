@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import cls from "./ElemOptions.module.css"
 import {typeNumberList, typeSymbolList, typeScheduleList} from "../../../tools/globalConstants";
 import PageService from "../../../tools/services/PageService";
 import {changeOnPage, myCopyObj, newSave} from "../../../tools/func";
+import {SettingsContext} from "../../../context/settings";
 
 const ElemOptions = (props) => {
 
@@ -12,10 +13,12 @@ const ElemOptions = (props) => {
 
   let setIsSave = props.setIsSave
 
+  const {settings, setSettings} = useContext(SettingsContext)
+
   PageService.setElements(pageElements)
 
   function createList(type){
-    PageService.addListById(id, type)
+    PageService.addListById(id, type, settings.autoFilling)
 
     changeOnPage(setPageElements,setIsSave)
     // setPageElements(PageService.pageElements)
@@ -42,7 +45,7 @@ const ElemOptions = (props) => {
     // newSave(isSave,setSave)
   }
   function toggleDescription(){
-    PageService.toggleDescription(id)
+    PageService.toggleDescription(id, settings.autoFilling)
     changeOnPage(setPageElements,setIsSave)
     // setPageElements(PageService.pageElements)
     // newSave(isSave,setSave)

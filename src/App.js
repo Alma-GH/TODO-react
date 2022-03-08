@@ -10,6 +10,7 @@ import SaveService from "./tools/services/SaveService";
 import {useFetching} from "./hooks/useFetching";
 import PageService from "./tools/services/PageService";
 import {waiter} from "./tools/func";
+import {SettingsContext} from "./context/settings";
 
 /*STATE:
 {
@@ -37,6 +38,10 @@ function App(props) {
 
   const [optionMod, setOptionMod] = useState(false)
   const [act, setAct] = useState(null)
+  const [settings,setSettings] = useState({
+    autoFolding: true,
+    autoFilling: true,
+  })
 
   const [isSave,setSave] = useState({})
   const [fetchPagesNames, isNamesLoading, errNames] = useFetching(async ()=>{
@@ -93,13 +98,19 @@ function App(props) {
   window.page = [PageService.name, PageService.pageElements]
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Header act={act} setPages={setPages} pages={pages} setIsSave={[isSave,setSave]}/>
-        <Navbar links={pages} mod={optionMod} setMod={setOptionMod} isSave={isSave} isLoading={[isNamesLoading,errNames]}/>
-        <MainBody mod={optionMod} setAct={setAct} setIsSave={[isSave,setSave]}/>
-      </div>
-    </BrowserRouter>
+    <SettingsContext.Provider value={{
+      settings,
+      setSettings
+    }}>
+      <BrowserRouter>
+        <div className="App">
+          <Header act={act} setPages={setPages} pages={pages} setIsSave={[isSave,setSave]}/>
+          <Navbar links={pages} mod={optionMod} setMod={setOptionMod} isSave={isSave} isLoading={[isNamesLoading,errNames]}/>
+          <MainBody mod={optionMod} setAct={setAct} setIsSave={[isSave,setSave]}/>
+        </div>
+      </BrowserRouter>
+    </SettingsContext.Provider>
+
   );
 }
 

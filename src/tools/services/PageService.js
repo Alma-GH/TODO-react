@@ -48,14 +48,17 @@ class PageService{
     this.pageElements = this.pageElements.filter(del)
   }
 
-  addListById(id, type){
+  addListById(id, type,autoFill){
     takeAllElements(this.pageElements, (el)=>{
       if(el.id === id) {
         el.type = type
         if(!el.elements || !el.elements.length){
           el.visibleList = true
-          el.name += (el.name[el.name.length-1]!==":") ? ":" : ""
-          el.elements = [{id: Date.now(), name:"new"}]
+          if(autoFill){
+            if(el.name.length) el.name += (el.name[el.name.length-1]!==":") ? ":" : ""
+            else               el.name += (type===typeScheduleList)?"Schedule:":"List:"
+          }
+          el.elements = [{id: Date.now(), name:autoFill?"new":""}]
         }
       }
     })
@@ -64,15 +67,16 @@ class PageService{
 
   }
 
-  toggleVisibleListById(id){
+  toggleVisibleListById(id, autoFolding){
     takeAllElements(this.pageElements, (el)=>{
       if(el.id === id) {
         el.visibleList = !el.visibleList
 
-        takeAllElements(el.elements, el=>{  //TODO:make functional
+        if(autoFolding) takeAllElements(el.elements, el=>{
           if(el.elements && el.elements.length)
             el.visibleList = false
         })
+
 
       }
     })
@@ -99,11 +103,11 @@ class PageService{
 
   }
 
-  addDescription(id){
+  addDescription(id, autoFill){
 
     function add(el){
       if(el.id === id){
-        el.description = ""
+        el.description = autoFill ? "description" : ""
       }
     }
 
@@ -122,13 +126,13 @@ class PageService{
       takeAllElements(this.pageElements, del)
     }
   }
-  toggleDescription(id){
+  toggleDescription(id,autoFill){
     takeAllElements(this.pageElements, el=>{
       if(el.id === id){
         if("description" in el){
           this.deleteDescription(id)
         }else{
-          this.addDescription(id)
+          this.addDescription(id, autoFill)
         }
       }
     })

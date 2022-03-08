@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Timer from "../Timer/Timer";
 import MenuHeader from "./MenuHeader/MenuHeader";
 import ElemMenu from "./MenuHeader/ElemMenu/ElemMenu";
@@ -13,6 +13,8 @@ import {orderLinks} from "../../tools/globalConstants";
 import {newSave, waiter} from "../../tools/func";
 import Loader from "../UI/Loader/Loader";
 import {useFetching} from "../../hooks/useFetching";
+import Options from "../UI/Forms/Options";
+import {SettingsContext} from "../../context/settings";
 
 const Header = (props) => {
 
@@ -79,6 +81,7 @@ const Header = (props) => {
     newSave(isSave,setSave,true)
   })
 
+  const {settings, setSettings} = useContext(SettingsContext)
 
   function save(){
     fetchSave()
@@ -104,18 +107,20 @@ const Header = (props) => {
     setModal(true);
   }
 
-  async function deleteMenu(){
+  function deleteMenu(){
     setBodyModal("delete")
     setModal(true);
   }
 
-  async function renameMenu(){
+  function renameMenu(){
     setBodyModal("rename")
     setInput(PageService.name);
     setModal(true);
   }
 
-  function open(){
+  function optionsMenu(){
+    setBodyModal("options")
+    setModal(true)
     console.log("open")
   }
 
@@ -146,6 +151,8 @@ const Header = (props) => {
             onChange: e=>setInput(e.target.value)
           }}
         />)
+      case "options":
+        return (<Options settings={settings} setSettings={setSettings}/>)
       default:
         return <div></div>
     }
@@ -165,7 +172,7 @@ const Header = (props) => {
         </MenuHeader>
         <MenuHeader name="Options">
           <ElemMenu func={()=>console.log("HI IT IS THEME")}>theme</ElemMenu>
-          <ElemMenu func={()=>console.log("HI IT IS ELEMMENU")}>options</ElemMenu>
+          <ElemMenu func={optionsMenu}>options</ElemMenu>
         </MenuHeader>
         <MenuHeader name="About">
           <ElemMenu func={()=>console.log("HI IT IS ELEMMENU")}>why you need</ElemMenu>

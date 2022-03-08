@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import cls from "./ButtonRoller.module.css"
 import PageService from "../../../tools/services/PageService";
 import {changeOnPage, myCopyObj, newSave, toggleClass} from "../../../tools/func";
+import {SettingsContext} from "../../../context/settings";
 
 const ButtonRoller = (props) => {
 
@@ -15,6 +16,8 @@ const ButtonRoller = (props) => {
 
   let cond = PageService.getPropsElement(id).visibleList
 
+  const {settings,setSettings} = useContext(SettingsContext)
+
   function setter(){
     if(PageService.getPropsElement(id).visibleList === false) isStyle = false
     else                                                      isStyle = true
@@ -26,7 +29,8 @@ const ButtonRoller = (props) => {
   }, [])
 
   let toggleVis = function (e){
-    PageService.toggleVisibleListById(id)
+
+    PageService.toggleVisibleListById(id, settings.autoFolding)
 
     changeOnPage(setElements,setIsSave)
     // setElements(PageService.pageElements)

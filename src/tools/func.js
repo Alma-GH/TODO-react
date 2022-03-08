@@ -99,3 +99,17 @@ export const changeOnPage = (setElements, saveArg)=>{
 
 export const waiter = (time)=>new Promise((res,rej)=>setTimeout(()=>res("done"),time))
 
+
+export const splitCamelCase = (str)=>{
+  let arr = []
+  for(let i=0; i<str.length; i++){
+    arr.push(str[i])
+    if(str[i+1] && str[i+1] !== str[i+1].toLowerCase()){
+      arr.push(" "+str[i+1].toLowerCase())
+      i++
+    }
+  }
+  return arr.join("")
+}
+
+
