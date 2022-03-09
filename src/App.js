@@ -4,13 +4,14 @@ import Header from "./components/Header/Header";
 import MainBody from "./components/MainBody/MainBody";
 import {BrowserRouter} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {allData, orderLinks, savePages, typeNumberList, typeScheduleList, unSave} from "./tools/globalConstants";
+import {darkTheme, orderLinks, typeNumberList, typeScheduleList} from "./tools/globalConstants";
 import Server from "./tools/services/Server";
 import SaveService from "./tools/services/SaveService";
 import {useFetching} from "./hooks/useFetching";
 import PageService from "./tools/services/PageService";
 import {waiter} from "./tools/func";
 import {SettingsContext} from "./context/settings";
+import {ThemeContext} from "./context/theme";
 
 /*STATE:
 {
@@ -32,7 +33,7 @@ import {SettingsContext} from "./context/settings";
  */
 
 
-function App(props) {
+function App() {
 
   const [pages,setPages] = useState([])
 
@@ -42,6 +43,7 @@ function App(props) {
     autoFolding: true,
     autoFilling: true,
   })
+  const [lightTheme, setLightTheme] = useState(false)
 
   const [isSave,setSave] = useState({})
   const [fetchPagesNames, isNamesLoading, errNames] = useFetching(async ()=>{
@@ -86,13 +88,26 @@ function App(props) {
     setPages(parse)
     setSave(Object.fromEntries(parse.map(e=>[e,true])))
 
-    await waiter(2000)
+    // await waiter(2000)
   })
+
 
   let send = false
 
-  useEffect(()=>{
+  useEffect(async ()=>{
+
+    //page names
     fetchPagesNames()
+      .catch(err=>console.log(err.message))
+
+    //settings
+    let newSettings = await Server.getSettings()
+    setSettings(newSettings)
+
+    //theme
+    let newTheme = await Server.getTheme()
+    setLightTheme(newTheme)
+
   },[])
 
   window.page = [PageService.name, PageService.pageElements]
@@ -102,13 +117,18 @@ function App(props) {
       settings,
       setSettings
     }}>
-      <BrowserRouter>
-        <div className="App">
-          <Header act={act} setPages={setPages} pages={pages} setIsSave={[isSave,setSave]}/>
-          <Navbar links={pages} mod={optionMod} setMod={setOptionMod} isSave={isSave} isLoading={[isNamesLoading,errNames]}/>
-          <MainBody mod={optionMod} setAct={setAct} setIsSave={[isSave,setSave]}/>
-        </div>
-      </BrowserRouter>
+      <ThemeContext.Provider value={{
+        lightTheme,
+        setLightTheme
+      }}>
+        <BrowserRouter>
+          <div className="App">
+            <Header act={act} setPages={setPages} pages={pages} setIsSave={[isSave,setSave]}/>
+            <Navbar links={pages} mod={optionMod} setMod={setOptionMod} isSave={isSave} isLoading={[isNamesLoading,errNames]}/>
+            <MainBody mod={optionMod} setAct={setAct} setIsSave={[isSave,setSave]}/>
+          </div>
+        </BrowserRouter>
+      </ThemeContext.Provider>
     </SettingsContext.Provider>
 
   );

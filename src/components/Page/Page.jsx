@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import ButtonCreateElement from "../UI/ButtonCreateElement/ButtonCreateElement";
 import Element from "./PageStructure/Element";
-import {allData, typeNumberList, typeScheduleList} from "../../tools/globalConstants";
+import {typeScheduleList} from "../../tools/globalConstants";
 import Panel from "./PageStructure/Panel";
 import PageService from "../../tools/services/PageService";
 import {useParams} from "react-router-dom";
-import {changeOnPage, isClock, takeAllElements, waiter} from "../../tools/func";
+import {changeOnPage, isClock, takeAllElements} from "../../tools/func";
 import Server from "../../tools/services/Server";
 import cls from "./Page.module.css"
 import SaveService from "../../tools/services/SaveService";

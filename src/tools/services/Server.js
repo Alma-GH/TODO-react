@@ -84,6 +84,48 @@ class Server{
   renamePage(){   //TODO:mb
 
   }
+
+  async getSettings(){
+    let arr;
+    await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/settings.json")
+      .then(response=>response.json())
+      .then(res=>{
+        arr = res
+      })
+    return arr
+  }
+  saveSettings(settings){
+    return fetch(`https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/settings.json`, {
+      method: "PUT",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(settings),
+    })
+      .then(response=>response.json())
+      .then(res=>console.log(res))
+  }
+
+  async getTheme(){
+    let str;
+    await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/LTheme.json")
+      .then(response=>response.json())
+      .then(res=>{
+        str = res
+      })
+    return str
+  }
+  saveTheme(theme){
+    return fetch(`https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/LTheme.json`, {
+      method: "PUT",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(theme),
+    })
+      .then(response=>response.json())
+      .then(res=>console.log(res))
+  }
 }
 
 export default new Server()

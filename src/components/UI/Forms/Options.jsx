@@ -1,13 +1,16 @@
 import React from 'react';
 import cls from "./Options.module.css"
 import {splitCamelCase} from "../../../tools/func";
+import Server from "../../../tools/services/Server";
 
 const Options = ({settings,setSettings}) => {
 
-  function changeSettings(e){
+  async function changeSettings(e){
     let setting = e.target.value
     let newSet = !settings[setting]
-    setSettings({...settings, [setting]:newSet})
+    let newSettings = {...settings, [setting]:newSet}
+    setSettings(newSettings)
+    await Server.saveSettings(newSettings)
   }
 
   let rows = []

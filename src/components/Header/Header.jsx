@@ -9,12 +9,13 @@ import Modal from "../UI/Modal/Modal";
 import Form from "../UI/Forms/Form";
 import Confirm from "../UI/Forms/Confirm";
 import cls from "./Header.module.css"
-import {orderLinks} from "../../tools/globalConstants";
+import {orderLinks, themeList} from "../../tools/globalConstants";
 import {newSave, waiter} from "../../tools/func";
 import Loader from "../UI/Loader/Loader";
 import {useFetching} from "../../hooks/useFetching";
 import Options from "../UI/Forms/Options";
 import {SettingsContext} from "../../context/settings";
+import {ThemeContext} from "../../context/theme";
 
 const Header = (props) => {
 
@@ -24,16 +25,22 @@ const Header = (props) => {
   const fileName = path.slice(path.lastIndexOf("/")+1)
   const pages = props.pages
 
-  let [modal, setModal] = useState(false)
-  let [input, setInput] = useState(null)
-  let [bodyModal, setBodyModal] = useState("")
+  const [modal, setModal] = useState(false)
+  const [input, setInput] = useState(null)
+  const [bodyModal, setBodyModal] = useState("")
 
-  let [isSave,setSave] = props.setIsSave
+  const [isSave,setSave] = props.setIsSave
+
+  const validFileName = function(name){
+    if(!name || [0,name.length-1].includes(name.indexOf(" ")))   return false
+    if(JSON.parse(localStorage.getItem(orderLinks)).includes(name))    return false
+    if(name.includes("."))                                       return false
+    return true
+  }
 
   const [fetchCreate, isCreating, errCreate] = useFetching(async ()=>{
     //TODO: message about non valid name
-    if(!input || [0,input.length-1].includes(input.indexOf(" "))) return
-    if(JSON.parse(localStorage.getItem(orderLinks)).includes(input)) return
+    if(!validFileName(input)) return
     setModal(false)
 
     await Server.addPage(input)
@@ -47,8 +54,8 @@ const Header = (props) => {
 
   })
   const [fetchRename, isRenaming, errRename] = useFetching(async ()=>{
-    if(!input || [0,input.length-1].includes(input.indexOf(" ")) ) return
-    if(JSON.parse(localStorage.getItem(orderLinks)).includes(input)) return
+    if(!validFileName(input)) return
+
     setModal(false)
     let posPage = JSON.parse(localStorage.getItem(orderLinks)).indexOf(PageService.name)
     await Server.deletePage(fileName)
@@ -82,10 +89,9 @@ const Header = (props) => {
   })
 
   const {settings, setSettings} = useContext(SettingsContext)
+  const {lightTheme, setLightTheme} = useContext(ThemeContext)
 
-  function save(){
-    fetchSave()
-  }
+
 
   function createPage(){
     fetchCreate()
@@ -100,6 +106,10 @@ const Header = (props) => {
   }
 
 
+
+  function save(){
+    fetchSave()
+  }
 
   function createMenu(){
     setBodyModal("create")
@@ -118,11 +128,20 @@ const Header = (props) => {
     setModal(true);
   }
 
+
+
   function optionsMenu(){
     setBodyModal("options")
     setModal(true)
-    console.log("open")
   }
+
+  async function nextTheme(){
+    let newTheme = !lightTheme
+    setLightTheme(newTheme)
+    await Server.saveTheme(newTheme)
+  }
+
+
 
   function getModalBody(par){
     switch (par){
@@ -171,7 +190,7 @@ const Header = (props) => {
           <ElemMenu func={renameMenu}>rename</ElemMenu>
         </MenuHeader>
         <MenuHeader name="Options">
-          <ElemMenu func={()=>console.log("HI IT IS THEME")}>theme</ElemMenu>
+          <ElemMenu func={nextTheme}>theme</ElemMenu>
           <ElemMenu func={optionsMenu}>options</ElemMenu>
         </MenuHeader>
         <MenuHeader name="About">

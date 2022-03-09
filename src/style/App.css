@@ -46,7 +46,10 @@ input, textarea{
         right: 0;
 
         border: 3px solid black;
-        /*background-color: darkblue;*/
         background: url("/src/img/BlackBG.jpg");
         background-size: 300px 300px;
+    }
+
+    .lightBody{
+        background: url("/src/img/WhiteBG.jpg");
     }
