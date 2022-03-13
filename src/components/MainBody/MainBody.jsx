@@ -9,13 +9,23 @@ const MainBody = (props) => {
 
   return (
     <div className={`body ${lightTheme && "lightBody"}`}>
-      <Routes>
+
+        <Routes>
           <Route
             element={<Page mod={props.mod} setAct={props.setAct} setIsSave={props.setIsSave}/>}
             path="/page/:name/"
           />
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem", color: "blue" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
 
-      </Routes>
+        </Routes>
+
     </div>
   );
 };

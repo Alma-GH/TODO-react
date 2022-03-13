@@ -27,17 +27,16 @@ const Page = (props) => {
    */
 
   let setIsSave = props.setIsSave
+  let save = setIsSave[0]
   let params = useParams()
 
   const [elements, setElements] = useState([])
   const [isFolding, setIsFolding] = useState(false)
   const [fetchElements, isElLoading, errEl] = useFetching(async ()=>{
     setAct(null)
-    let save = setIsSave[0]
     let elems
     let pageName = params.name
-
-    if(!save[pageName]){
+    if(save !== null && !save[pageName]){
       elems = SaveService.getNotSave(pageName)
     }else{
       elems = await Server.getElementsByParams(pageName)

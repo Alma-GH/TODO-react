@@ -45,7 +45,7 @@ function App() {
   })
   const [lightTheme, setLightTheme] = useState(false)
 
-  const [isSave,setSave] = useState({})
+  const [isSave,setSave] = useState(null)
   const [fetchPagesNames, isNamesLoading, errNames] = useFetching(async ()=>{
     if(send){
       fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json", {
@@ -85,8 +85,9 @@ function App() {
 
     await Server.getAllNameFiles()
     let parse = JSON.parse(localStorage.getItem(orderLinks))
-    setPages(parse)
     setSave(Object.fromEntries(parse.map(e=>[e,true])))
+    setPages(parse)
+
 
     // await waiter(2000)
   })
@@ -94,19 +95,23 @@ function App() {
 
   let send = false
 
-  useEffect(async ()=>{
+  useEffect( ()=>{
 
-    //page names
-    fetchPagesNames()
-      .catch(err=>console.log(err.message))
+    async function func(){
+      //page names
+      await fetchPagesNames()
+        .catch(err=>console.log(err.message))
 
-    //settings
-    let newSettings = await Server.getSettings()
-    setSettings(newSettings)
+      //settings
+      let newSettings = await Server.getSettings()
+      setSettings(newSettings)
 
-    //theme
-    let newTheme = await Server.getTheme()
-    setLightTheme(newTheme)
+      //theme
+      let newTheme = await Server.getTheme()
+      setLightTheme(newTheme)
+    }
+
+    func()
 
   },[])
 
