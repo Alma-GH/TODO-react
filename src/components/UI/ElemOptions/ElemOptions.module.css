@@ -18,6 +18,10 @@
 }
 
 .btnCreateList{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     width: calc(100%/2);
     margin-right: 20px;
 }

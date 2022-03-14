@@ -9,13 +9,14 @@ import Modal from "../UI/Modal/Modal";
 import Form from "../UI/Forms/Form";
 import Confirm from "../UI/Forms/Confirm";
 import cls from "./Header.module.css"
-import {orderLinks, themeList} from "../../tools/globalConstants";
+import {linkGH, linkTG, linkVK, orderLinks, themeList} from "../../tools/globalConstants";
 import {newSave, waiter} from "../../tools/func";
 import Loader from "../UI/Loader/Loader";
 import {useFetching} from "../../hooks/useFetching";
 import Options from "../UI/Forms/Options";
 import {SettingsContext} from "../../context/settings";
 import {ThemeContext} from "../../context/theme";
+import Hint from "../UI/Modal/Hint/Hint";
 
 const Header = (props) => {
 
@@ -25,18 +26,15 @@ const Header = (props) => {
   const fileName = path.slice(path.lastIndexOf("/")+1)
   const pages = props.pages
 
+  const setPanel = props.setPanel
+  const sidePanel = props.sidePanel
+
   const [modal, setModal] = useState(false)
   const [input, setInput] = useState(null)
   const [bodyModal, setBodyModal] = useState("")
 
   const [isSave,setSave] = props.setIsSave
-
-  const validFileName = function(name){
-    if(!name || [0,name.length-1].includes(name.indexOf(" ")))   return false
-    if(JSON.parse(localStorage.getItem(orderLinks)).includes(name))    return false
-    if(name.includes("."))                                       return false
-    return true
-  }
+  const [hint, setHint] = useState(0)
 
   const [fetchCreate, isCreating, errCreate] = useFetching(async ()=>{
     //TODO: message about non valid name
@@ -82,7 +80,7 @@ const Header = (props) => {
     let newPageName = pages[(!ind)?1:ind-1]
     nav("./page/" + newPageName)
   })
-  const [fetchSave, isSaving, errSave] = useFetching(async ()=>{
+  const [fetchSave, isSaving, errSave]       = useFetching(async ()=>{
     await Server.saveElements(PageService.pageElements,PageService.name)
     // await waiter(2000)
     newSave(isSave,setSave,true)
@@ -91,7 +89,12 @@ const Header = (props) => {
   const {settings, setSettings} = useContext(SettingsContext)
   const {lightTheme, setLightTheme} = useContext(ThemeContext)
 
-
+  const validFileName = function(name){
+    if(!name || [0,name.length-1].includes(name.indexOf(" ")))   return false
+    if(JSON.parse(localStorage.getItem(orderLinks)).includes(name))    return false
+    if(name.includes("."))                                       return false
+    return true
+  }
 
   function createPage(){
     fetchCreate()
@@ -141,6 +144,21 @@ const Header = (props) => {
     await Server.saveTheme(newTheme)
   }
 
+  function togglePanel(){
+    setPanel(!sidePanel)
+  }
+
+
+
+
+  function aboutMenu(bodyStr){
+    setBodyModal(bodyStr)
+    setModal(true)
+  }
+
+  function hintMenu(){
+    setHint(1)
+  }
 
 
   function getModalBody(par){
@@ -156,7 +174,6 @@ const Header = (props) => {
             onChange: e=>setInput(e.target.value)
           }}
         />)
-
       case "delete":
         return (<Confirm btnFuncYES={deletePage} btnFuncNO={()=>setModal(false)} question="Are you sure?"/>)
       case "rename":
@@ -172,6 +189,20 @@ const Header = (props) => {
         />)
       case "options":
         return (<Options settings={settings} setSettings={setSettings}/>)
+
+      case "about me":
+        return (<div className={cls.aboutMe}>
+                  <a href={linkGH}>Git hub</a>
+                  <a href={linkVK}>VK</a>
+                  <a href={linkTG}>Telegram</a>
+                </div>)
+      case "why you need":
+        return (<div>
+                  YOU NEED IT!!
+                </div>)
+
+
+
       default:
         return <div></div>
     }
@@ -192,20 +223,27 @@ const Header = (props) => {
         <MenuHeader name="Options">
           <ElemMenu func={nextTheme}>theme</ElemMenu>
           <ElemMenu func={optionsMenu}>options</ElemMenu>
+          <ElemMenu func={togglePanel}>side panel</ElemMenu>
         </MenuHeader>
         <MenuHeader name="About">
-          <ElemMenu func={()=>console.log("HI IT IS ELEMMENU")}>why you need</ElemMenu>
-          <ElemMenu func={()=>console.log("HI IT IS ELEMMENU")}>how work</ElemMenu>
-          <ElemMenu func={()=>console.log("HI IT IS ELEMMENU")}>about me</ElemMenu>
+          <ElemMenu func={()=>aboutMenu("why you need")}>why you need</ElemMenu>
+          <ElemMenu func={()=>hintMenu()}>how work</ElemMenu>
+          <ElemMenu func={()=>aboutMenu("about me")}>about me</ElemMenu>
         </MenuHeader>
         {(isCreating || isRenaming || isDeleting || isSaving) &&
           <div className={cls.loader}><Loader/></div>
         }
 
       </div>
-      <Modal visible={modal} setVisible={setModal}>
-        {getModalBody(bodyModal)}
-      </Modal>
+
+      {hint
+        ?<Hint setHint={setHint} hint={hint} sidePanel={sidePanel} setPanel={setPanel}/>
+        :<Modal visible={modal} setVisible={setModal}>
+          {getModalBody(bodyModal)}
+        </Modal>
+      }
+
+
     </div>
   );
 };

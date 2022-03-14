@@ -27,3 +27,18 @@
     height: 100%;
     aspect-ratio: 1/1;
 }
+
+.aboutMe{
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items:center;
+}
+
+.aboutMe a{
+    color: red;
+    font-family: helvetica;
+    text-decoration: none;
+    text-transform: uppercase;
+}

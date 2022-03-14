@@ -1,21 +1,21 @@
 import React, {useContext} from 'react';
 import cls from "./ElemOptions.module.css"
-import {typeNumberList, typeSymbolList, typeScheduleList} from "../../../tools/globalConstants";
+import {typeNumberList, typeScheduleList, typeSymbolList} from "../../../tools/globalConstants";
 import PageService from "../../../tools/services/PageService";
-import {changeOnPage, myCopyObj, newSave} from "../../../tools/func";
+import {changeOnPage} from "../../../tools/func";
 import {SettingsContext} from "../../../context/settings";
 
 const ElemOptions = (props) => {
 
+  const disable = props.disable
+
   let id = props.id
-  let pageElements = props.pageElements
   let setPageElements = props.setPageElements
 
   let setIsSave = props.setIsSave
 
   const {settings, setSettings} = useContext(SettingsContext)
 
-  PageService.setElements(pageElements)
 
   function createList(type){
     PageService.addListById(id, type, settings.autoFilling)
@@ -38,6 +38,7 @@ const ElemOptions = (props) => {
   function createSimpleList(){
     createList(null)
   }
+
   function deleteElem(){
     PageService.deleteElement(id)
     changeOnPage(setPageElements,setIsSave)
@@ -55,14 +56,14 @@ const ElemOptions = (props) => {
     <div className={cls.block}>
       <div className={cls.wrap}>
         <div className={cls.btnCreateList}>
-            <button tabIndex="1000" className={cls.btn} onClick={createNumberedList}>1</button>
-            <button tabIndex="1000" className={cls.btn} onClick={createSymbolList}>s</button>
-            <button tabIndex="1000" className={cls.btn} onClick={createSimpleList}>-</button>
-            <button tabIndex="1000" className={cls.btn +" "+ cls.wideBtn} onClick={createScheduleList}>sch</button>
+            <button tabIndex="1000" className={cls.btn} onClick={disable?()=>console.log("not work"):createNumberedList}>1</button>
+            <button tabIndex="1000" className={cls.btn} onClick={disable?()=>console.log("not work"):createSymbolList}>s</button>
+            <button tabIndex="1000" className={cls.btn} onClick={disable?()=>console.log("not work"):createSimpleList}>-</button>
+            <button tabIndex="1000" className={cls.btn +" "+ cls.wideBtn} onClick={disable?()=>console.log("not work"):createScheduleList}>sch</button>
         </div>
         <div>
-          <button tabIndex="1000" className={cls.btn} onClick={toggleDescription}>d</button>
-          <button tabIndex="1000" className={cls.btn} onClick={deleteElem}>x</button>
+          <button tabIndex="1000" className={cls.btn} onClick={disable?()=>console.log("not work"):toggleDescription}>d</button>
+          <button tabIndex="1000" className={cls.btn} onClick={disable?()=>console.log("not work"):deleteElem}>x</button>
         </div>
       </div>
     </div>

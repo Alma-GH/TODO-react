@@ -6,7 +6,7 @@ import PageService from "../../../tools/services/PageService";
 import ButtonCreateElement from "../../UI/ButtonCreateElement/ButtonCreateElement";
 import {typeScheduleList} from "../../../tools/globalConstants";
 import cls from "./Element.module.css"
-import {changeOnPage, myCopyObj, newSave} from "../../../tools/func";
+import {changeOnPage} from "../../../tools/func";
 
 
 const Element = (props) => {
@@ -53,11 +53,11 @@ const Element = (props) => {
     <div className={cls.elem}>
       <div className={styleHead.join(" ")}
            onMouseOver={setStyleForOptions} onMouseOut={removeStyleForOptions}>
-        <div>
+        <div style={{display: "flex", alignItems:"center"}}>
           <input className={cls.elemName}  type="text"  value={name} onChange={changeName} disabled={!mod}/>
           {mod
             ? <div style={{...style, width:"230px",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                <ElemOptions id={idEl}  pageElements={pageElements} setPageElements={setPageElements} style={style} setIsSave={setIsSave}/>
+                <ElemOptions id={idEl} setPageElements={setPageElements} style={style} setIsSave={setIsSave}/>
                 {elements && elements.length
                   ? <ButtonCreateElement elements={pageElements} setElements={setPageElements} idList={idEl} setIsSave={setIsSave}/>
                   : ""

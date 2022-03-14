@@ -2,13 +2,15 @@ import React, {useContext} from 'react';
 import {Route, Routes} from "react-router-dom";
 import Page from "../Page/Page";
 import {ThemeContext} from "../../context/theme";
+import MainPage from "../Page/MainPage";
 
 const MainBody = (props) => {
 
   const {lightTheme, setLightTheme} = useContext(ThemeContext)
+  const sidePanel = props.sidePanel
 
   return (
-    <div className={`body ${lightTheme && "lightBody"}`}>
+    <div className={`body ${lightTheme && "lightBody"} ${!sidePanel && "notSidePanel"}`}>
 
         <Routes>
           <Route
@@ -17,11 +19,7 @@ const MainBody = (props) => {
           />
           <Route
             path="*"
-            element={
-              <main style={{ padding: "1rem", color: "blue" }}>
-                <p>There's nothing here!</p>
-              </main>
-            }
+            element={<MainPage/>}
           />
 
         </Routes>

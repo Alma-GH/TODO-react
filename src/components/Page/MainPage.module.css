@@ -1,0 +1,8 @@
+.main{
+    padding: 1rem;
+    background-color: dimgray;
+    color: black;
+
+    width: 100%;
+    height: calc(100vh - 36px);
+}

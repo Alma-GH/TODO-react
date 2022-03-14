@@ -39,6 +39,7 @@ input, textarea{
     .body{
         width: calc(100% - 150px);
         min-height: calc(100vh - 30px);
+        /*height: 1px;*/
 
         position: absolute;
         top: 30px;
@@ -48,8 +49,16 @@ input, textarea{
         border: 3px solid black;
         background: url("/src/img/BlackBG.jpg");
         background-size: 300px 300px;
+
+        transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
     }
 
     .lightBody{
         background: url("/src/img/WhiteBG.jpg");
+    }
+
+    .notSidePanel{
+        left: 0;
+        width: 100%;
+        transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
     }

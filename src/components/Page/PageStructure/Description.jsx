@@ -17,7 +17,8 @@ const Description = (props) => {
   let setIsSave = props.setIsSave
 
   function change(e){
-    let newVal = e.target.value
+    let TA = e.target
+    let newVal = TA.value
 
     PageService.setNameDescription(idEl, newVal)
 
@@ -40,7 +41,7 @@ const Description = (props) => {
   return (
     <div className={cls.description}>
       <span className="prefixDescription">-</span>
-      <textarea type="text" value={name} onChange={change} onBlur={setTime} disabled={!mod}/>
+      <input  type="text" value={name} onChange={change} onBlur={setTime} disabled={!mod}/>
     </div>
   );
 };

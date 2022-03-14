@@ -4,12 +4,10 @@ import Header from "./components/Header/Header";
 import MainBody from "./components/MainBody/MainBody";
 import {BrowserRouter} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {darkTheme, orderLinks, typeNumberList, typeScheduleList} from "./tools/globalConstants";
+import {orderLinks, typeNumberList, typeScheduleList} from "./tools/globalConstants";
 import Server from "./tools/services/Server";
 import SaveService from "./tools/services/SaveService";
 import {useFetching} from "./hooks/useFetching";
-import PageService from "./tools/services/PageService";
-import {waiter} from "./tools/func";
 import {SettingsContext} from "./context/settings";
 import {ThemeContext} from "./context/theme";
 
@@ -44,6 +42,7 @@ function App() {
     autoFilling: true,
   })
   const [lightTheme, setLightTheme] = useState(false)
+  const [sidePanel, setSidePanel] = useState(true)
 
   const [isSave,setSave] = useState(null)
   const [fetchPagesNames, isNamesLoading, errNames] = useFetching(async ()=>{
@@ -62,7 +61,7 @@ function App() {
                 {id:12,name:"2:2222"},{id:13,name:"2:33333"}
               ]
             },
-            {id:14,name:"Schedule",description: "MYSCHEDULE", type: typeScheduleList, visibleList: true, elements:[
+            {id:14,name:"Schedule",description: "MY schedule", type: typeScheduleList, visibleList: true, elements:[
                 {id:15,name:"WakeUp+",description: "10:00"},
                 {id:16,name:"Programming",description: "11:00"},
                 {id:17,name:""},
@@ -70,7 +69,7 @@ function App() {
               ]}
           ],
           "Second":[
-            {id:1, name:"elemONsecond"},
+            {id:1, name:"elem ON second"},
             {id:2, name:"yetELem"}
           ],
           "Third":[""],
@@ -100,7 +99,6 @@ function App() {
     async function func(){
       //page names
       await fetchPagesNames()
-        .catch(err=>console.log(err.message))
 
       //settings
       let newSettings = await Server.getSettings()
@@ -112,10 +110,10 @@ function App() {
     }
 
     func()
+      .catch(err=>console.log(err.message))
 
   },[])
 
-  window.page = [PageService.name, PageService.pageElements]
 
   return (
     <SettingsContext.Provider value={{
@@ -128,9 +126,11 @@ function App() {
       }}>
         <BrowserRouter>
           <div className="App">
-            <Header act={act} setPages={setPages} pages={pages} setIsSave={[isSave,setSave]}/>
-            <Navbar links={pages} mod={optionMod} setMod={setOptionMod} isSave={isSave} isLoading={[isNamesLoading,errNames]}/>
-            <MainBody mod={optionMod} setAct={setAct} setIsSave={[isSave,setSave]}/>
+            <Header setPanel={setSidePanel} sidePanel={sidePanel}
+                    act={act} setPages={setPages} pages={pages} setIsSave={[isSave,setSave]}/>
+            <Navbar sidePanel={sidePanel} links={pages} setLinks={setPages} mod={optionMod}
+                    setMod={setOptionMod} isSave={isSave} isLoading={[isNamesLoading,errNames]}/>
+            <MainBody mod={optionMod} setAct={setAct} setIsSave={[isSave,setSave]} sidePanel={sidePanel}/>
           </div>
         </BrowserRouter>
       </ThemeContext.Provider>

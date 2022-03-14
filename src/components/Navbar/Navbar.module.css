@@ -1,6 +1,7 @@
 .nav{
     position: fixed;
     top: 30px;
+    left: 0;
 
     background-color: #1d2630;
     width: 150px;
@@ -8,6 +9,13 @@
 
     display: flex;
     flex-direction: column;
+
+    transition: left 0.5s ease-in-out;
+}
+
+.notSidePanel{
+    left: -150px;
+    transition: left 0.5s ease-in-out;
 }
 
 .navTitle{
@@ -49,4 +57,39 @@
 
 .lightNav{
     background-color: grey;
+}
+
+.grab{
+    width: 100%;
+    height: 40px;
+    color: white;
+    background-color: darkblue;
+    display: flex;
+}
+
+.lightNav .grab{
+    background-color: white;
+    color: black;
+}
+.lightNav button{
+    background-color: white;
+    color: black;
+}
+
+.save{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    float: left;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.saveIMG{
+    height: 40%;
+    -webkit-user-drag: none;
+}
+
+.nav li {
+    padding: 0;
 }

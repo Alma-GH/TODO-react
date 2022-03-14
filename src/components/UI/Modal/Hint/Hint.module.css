@@ -1,0 +1,101 @@
+
+.activeHint{
+    display: block;
+}
+
+
+.hintDef{
+    padding: 10px 25px;
+    background-color: white;
+    min-width: 100px;
+    min-height: 100px;
+    position: fixed;
+}
+
+.hint1{
+    padding-top: 25px;
+    width: 300px;
+
+    top: 40px;
+    left: 10px;
+    clip-path: polygon(30px 15px, 100% 15px, 100% 100%, 0 100%, 0 15px, 10px 15px, 20px 0);
+}
+
+.hint2{
+    padding-left: 40px;
+    width: 350px;
+
+    bottom: 50%;
+    left: 180px;
+    clip-path: polygon(15px 0, 100% 0%, 100% 100%, 15px 100%, 15px 90%, 0 80%, 15px 70%);
+}
+
+.hint3{
+    padding-left: 40px;
+    width: 300px;
+
+    bottom: 10px;
+    left: 180px;
+    clip-path: polygon(15px 0, 100% 0%, 100% 100%, 15px 100%, 15px 90%, 0 80%, 15px 70%);
+}
+
+.hint4{
+    height: 200px;
+    width: 250px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.hint5{
+    height: 230px;
+    width: 380px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.hint5 li div{
+    width: 35px;
+    margin-right: 5px;
+}
+.hint5 li{
+    display: flex;
+}
+
+.hint6{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.hint7{
+    padding-top: 25px;
+    --width-hint: 250px;
+    width: var(--width-hint);
+    top: 40px;
+    right: 150px;
+
+    clip-path: polygon(calc(var(--width-hint) - 10px) 15px, 100% 15px,
+                100% 100%, 0 100%, 0 15px, calc(var(--width-hint) - 30px)  15px, calc(var(--width-hint) - 20px) 0);
+}
+
+
+.xCenter{
+    display:flex;
+    justify-content:center;
+}
+
+
+

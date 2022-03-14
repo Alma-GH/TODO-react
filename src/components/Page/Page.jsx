@@ -100,35 +100,39 @@ const Page = (props) => {
   }, [elements])
 
   //TODO:Save file by keyboard
+  useEffect(()=>{
 
-  // let timeID
-  function keyDownEvent(e){
-    if(e.ctrlKey || e.metaKey){
-      e.preventDefault()
-      // if(timeID) clearTimeout(timeID)
-      if(e.key === "k"){
-        setIsFolding(true)
-        // timeID = setTimeout(()=>setIsFolding(false), 3000)
-      }else if(isFolding){
-        let res = +e.key
-        if(!isNaN(res)){
-          PageService.invisibleListsByDepth(res)
-          changeOnPage(setElements,setIsSave)
+    // let timeID
+    function keyDownEvent(e){
+      if(e.ctrlKey || e.metaKey){
+        e.preventDefault()
+        // if(timeID) clearTimeout(timeID)
+        if(e.key === "k"){
+          setIsFolding(true)
+          // timeID = setTimeout(()=>setIsFolding(false), 3000)
+        }else if(isFolding){
+          let res = +e.key
+          if(!isNaN(res)){
+            PageService.invisibleListsByDepth(res)
+            changeOnPage(setElements,setIsSave)
+          }
+          setIsFolding(false)
         }
-        setIsFolding(false)
       }
     }
-  }
-  useEffect(()=>{
+
     document.addEventListener("keydown", keyDownEvent)
     return ()=>document.removeEventListener("keydown",keyDownEvent)
   }, [isFolding])
+
+
 
   let mod = props.mod
   let setAct = props.setAct
 
 
   PageService.setElements(elements, params.name)
+  window.page = [PageService.name, PageService.pageElements]
 
   return (
     <div>
