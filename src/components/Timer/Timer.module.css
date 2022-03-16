@@ -1,7 +1,7 @@
 .timer{
     background-color: chartreuse;
     height: 100%;
-    width: 400px;
+    width: 600px;
 
     position: absolute;
     right: 0;
@@ -14,14 +14,20 @@
 
 .act{
     width: 50%;
-    border: 2px solid #4c51f9;
+    border: 1px solid #4c51f9;
     display: flex;
     justify-content: space-between;
 }
 
 .actName{
     width: 90%;
-    border: 2px solid red;
+    height: 100%;
+    /*border: 2px solid red;*/
+    font-size: 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .act button{
@@ -42,5 +48,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media (max-width: 1000px) {
+    .timer{
+        width: 400px;
+    }
+}
+
+@media (max-width: 750px) {
+    .timer{
+        width: 300px;
+    }
+    .time{
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 630px) {
+    .timer {
+        display: none;
+    }
 }
 

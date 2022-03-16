@@ -23,7 +23,7 @@ const Hint = ({hint,setHint,sidePanel,setPanel}) => {
       case 1:
         styleH.push(clsHint.hint1)
         return (<div className={styleH.join(" ")}>
-          Наведите для для работы со страницами
+          Наведите для работы со страницами
           <br/> (сохранение/удаление/
           <br/> создание/переименование)
         </div>)

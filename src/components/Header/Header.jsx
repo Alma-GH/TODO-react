@@ -17,6 +17,7 @@ import Options from "../UI/Forms/Options";
 import {SettingsContext} from "../../context/settings";
 import {ThemeContext} from "../../context/theme";
 import Hint from "../UI/Modal/Hint/Hint";
+import ButtonHidePanel from "../UI/ButtonToggleBool/ButtonHidePanel/ButtonHidePanel";
 
 const Header = (props) => {
 
@@ -144,10 +145,6 @@ const Header = (props) => {
     await Server.saveTheme(newTheme)
   }
 
-  function togglePanel(){
-    setPanel(!sidePanel)
-  }
-
 
 
 
@@ -214,6 +211,11 @@ const Header = (props) => {
     <div className={cls.head}>
       <Timer act={props.act} sound={props.sound} setSound={props.setSound}/>
       <div className={cls.menu}>
+
+        <div style={{width:"30px"}}>
+          <ButtonHidePanel panel={sidePanel} setPanel={setPanel}/>
+        </div>
+
         <MenuHeader name="File">
           <ElemMenu func={save}>save</ElemMenu>
           <ElemMenu func={createMenu}>create</ElemMenu>
@@ -223,7 +225,6 @@ const Header = (props) => {
         <MenuHeader name="Options">
           <ElemMenu func={nextTheme}>theme</ElemMenu>
           <ElemMenu func={optionsMenu}>options</ElemMenu>
-          <ElemMenu func={togglePanel}>side panel</ElemMenu>
         </MenuHeader>
         <MenuHeader name="About">
           <ElemMenu func={()=>aboutMenu("why you need")}>why you need</ElemMenu>

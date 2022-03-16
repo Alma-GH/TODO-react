@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import cls from "./Timer.module.css"
-import ButtonMute from "../UI/ButtonMute/ButtonMute";
+import ButtonMute from "../UI/ButtonToggleBool/ButtonMute/ButtonMute";
 
 const Timer = (props) => {
 

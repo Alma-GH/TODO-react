@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import ButtonOption from "../UI/ButtonOption/ButtonOption";
+import ButtonOption from "../UI/ButtonToggleBool/ButtonOption/ButtonOption";
 import {Link, useParams} from "react-router-dom";
 import cls from "./Navbar.module.css"
 import Server from "../../tools/services/Server";
