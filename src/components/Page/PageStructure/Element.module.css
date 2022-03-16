@@ -19,6 +19,9 @@
 }
 
 .elemHeadSchedule{
+    background-color: rgba(62,61,60,1);
+}
+.lightElemHeadSchedule{
     background-color: lightgreen;
 }
 
@@ -26,14 +29,22 @@
     width: 300px;
 }
 
+.descBlock{
+    margin-left: 30px;
+    width: 100%;
+}
+
 .threePoint{
     background-color: yellow;
     height: 80%;
     width: 20px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     border-radius: 5px;
+    color: black;
 }
 
 
@@ -45,6 +56,6 @@
      display: flex;
  }
 
-.elemHead div .threePoint, .elemHead div input{
+.threePoint,.elemHead div input{
      margin-right: 15px;
  }

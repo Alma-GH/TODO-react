@@ -212,7 +212,7 @@ const Header = (props) => {
 
   return (
     <div className={cls.head}>
-      <Timer act={props.act}/>
+      <Timer act={props.act} sound={props.sound} setSound={props.setSound}/>
       <div className={cls.menu}>
         <MenuHeader name="File">
           <ElemMenu func={save}>save</ElemMenu>

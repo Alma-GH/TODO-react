@@ -37,6 +37,8 @@ function App() {
 
   const [optionMod, setOptionMod] = useState(false)
   const [act, setAct] = useState(null)
+  const [sound, setSound] = useState(false)
+
   const [settings,setSettings] = useState({
     autoFolding: true,
     autoFilling: true,
@@ -126,11 +128,11 @@ function App() {
       }}>
         <BrowserRouter>
           <div className="App">
-            <Header setPanel={setSidePanel} sidePanel={sidePanel}
+            <Header setPanel={setSidePanel} sidePanel={sidePanel} sound={sound} setSound={setSound}
                     act={act} setPages={setPages} pages={pages} setIsSave={[isSave,setSave]}/>
             <Navbar sidePanel={sidePanel} links={pages} setLinks={setPages} mod={optionMod}
                     setMod={setOptionMod} isSave={isSave} isLoading={[isNamesLoading,errNames]}/>
-            <MainBody mod={optionMod} setAct={setAct} setIsSave={[isSave,setSave]} sidePanel={sidePanel}/>
+            <MainBody mod={optionMod} setAct={setAct} sound={sound} setIsSave={[isSave,setSave]} sidePanel={sidePanel}/>
           </div>
         </BrowserRouter>
       </ThemeContext.Provider>

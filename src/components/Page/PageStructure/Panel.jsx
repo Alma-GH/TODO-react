@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {takeAllElements, takeAllElementsWithReturn} from "../../../tools/func";
 import ButtonRoller from "../../UI/ButtonRoller/ButtonRoller";
 import cls from "./Panel.module.css"
+import {ThemeContext} from "../../../context/theme";
 
 const Panel = (props) => {
 
@@ -11,6 +12,8 @@ const Panel = (props) => {
   let setIsSave = props.setIsSave
 
   let mod = props.mod
+
+  const {lightTheme, setLightTheme} = useContext(ThemeContext)
 
   let count = 0
   let numeration = takeAllElementsWithReturn(elements, el=>{
@@ -44,7 +47,7 @@ const Panel = (props) => {
 
 
   return (
-    <div className={cls.panel}>
+    <div className={cls.panel + ` ${lightTheme && cls.lightPanel}`}>
       <div className="numeration">{numeration}</div>
       <div className="rollers">{rollers}</div>
     </div>

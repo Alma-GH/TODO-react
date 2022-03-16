@@ -1,7 +1,7 @@
 .timer{
     background-color: chartreuse;
     height: 100%;
-    width: 300px;
+    width: 400px;
 
     position: absolute;
     right: 0;
@@ -10,17 +10,37 @@
     justify-content: space-between;
 }
 
+
+
 .act{
-    width: 40%;
+    width: 50%;
+    border: 2px solid #4c51f9;
+    display: flex;
+    justify-content: space-between;
+}
+
+.actName{
+    width: 90%;
     border: 2px solid red;
+}
+
+.act button{
+    width: 30px;
 }
 
 .time{
     font-size: 2rem;
-    width: 50%;
+    width: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 2px solid red;
+}
+
+
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 

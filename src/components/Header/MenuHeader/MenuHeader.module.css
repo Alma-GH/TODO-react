@@ -3,7 +3,7 @@
     height: 100%;
     width: 100px;
 
-    border: 2px solid red;
+    /*border: 2px solid red;*/
 
     display: flex;
     justify-content: center;
@@ -15,6 +15,7 @@
 
 .popUp:hover{
     background-color: #caedfc;
+    border: 2px solid #9ceeff;
 }
 
 .menu{

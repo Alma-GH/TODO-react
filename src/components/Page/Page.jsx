@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import ButtonCreateElement from "../UI/ButtonCreateElement/ButtonCreateElement";
 import Element from "./PageStructure/Element";
 import {typeScheduleList} from "../../tools/globalConstants";
@@ -11,6 +11,8 @@ import cls from "./Page.module.css"
 import SaveService from "../../tools/services/SaveService";
 import {useFetching} from "../../hooks/useFetching";
 import Loader from "../UI/Loader/Loader";
+import srcAudio from  "../../sound/nextAct.mp3"
+import {ThemeContext} from "../../context/theme";
 
 
 const Page = (props) => {
@@ -25,13 +27,17 @@ const Page = (props) => {
     elements:
   }
    */
+  let mod = props.mod
+  let setAct = props.setAct
 
+  let isSound = props.sound
   let setIsSave = props.setIsSave
   let save = setIsSave[0]
   let params = useParams()
 
   const [elements, setElements] = useState([])
   const [isFolding, setIsFolding] = useState(false)
+  const {lightTheme,setLightTheme} = useContext(ThemeContext)
   const [fetchElements, isElLoading, errEl] = useFetching(async ()=>{
     setAct(null)
     let elems
@@ -49,6 +55,12 @@ const Page = (props) => {
   })
 
 
+  function sound() {
+    if(!isSound) return
+    let audio = new Audio();
+    audio.src = srcAudio;
+    audio.autoplay = true;
+  }
 
   //Get elements
   useEffect(()=>{
@@ -57,15 +69,19 @@ const Page = (props) => {
   }, [params.name])
 
   //Schedule
+  //TODO: fix bag
   useEffect(()=>{
     let timer;
-    let count = 0;
+    let schElements = []
     takeAllElements(elements, el=>{
-
       if(el.type !== typeScheduleList) return
-      count++
+      schElements = el.elements
+    })
+
+    if(!schElements.length) setAct(null)
+    else{
       let arrDate = []
-      el.elements.forEach(el=>{
+      schElements.forEach(el=>{
         let desc = el.description
         if(!desc || !desc.length || !isClock(desc)) return
         let date = new Date()
@@ -76,6 +92,7 @@ const Page = (props) => {
       })
       arrDate.sort((a,b)=>a[1]-b[1])
 
+      let act
       timer = setInterval(()=>{
         if(!arrDate.length){
           setAct(null)
@@ -83,20 +100,24 @@ const Page = (props) => {
         }
         let now = new Date()
         now.setSeconds(0)
-        let act
+        let lastAct = act
         if(now<arrDate[0][1]) act = arrDate[arrDate.length-1][0]
         for(let i = 0; i<arrDate.length; i++){
           if(now>=arrDate[i][1]){
-            if(i+1 < arrDate.length){
+            if(i+1 < arrDate.length){                     //arrDate[i] not last
               if(now<arrDate[i+1][1]) act = arrDate[i][0]
             }else                     act = arrDate[i][0]
           }
         }
+        if(act !== lastAct && lastAct !== undefined){
+          console.log(act, lastAct)
+          sound()
+        }
         setAct(act)
       }, 1000)
-    })
-    if(count===0) setAct(null)
-    return ()=>clearInterval(timer)
+    }
+
+    return ()=>{clearInterval(timer); console.log("timer delete")}
   }, [elements])
 
   //TODO:Save file by keyboard
@@ -127,8 +148,7 @@ const Page = (props) => {
 
 
 
-  let mod = props.mod
-  let setAct = props.setAct
+
 
 
   PageService.setElements(elements, params.name)
@@ -139,7 +159,7 @@ const Page = (props) => {
         {isElLoading
           ?<div className={cls.loaderBG}><div className={cls.loader}><Loader/></div></div>
           :
-          <div className={cls.page}>
+          <div className={cls.page + ` ${lightTheme && cls.lightPage}`}>
             <div className={cls.wrapPage}>
               <Panel mod={mod} elements={elements} setElements={setElements} setIsSave={setIsSave}/>
 

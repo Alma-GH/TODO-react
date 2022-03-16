@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import List from "./List";
 import ElemOptions from "../../UI/ElemOptions/ElemOptions";
 import Description from "./Description";
@@ -7,6 +7,7 @@ import ButtonCreateElement from "../../UI/ButtonCreateElement/ButtonCreateElemen
 import {typeScheduleList} from "../../../tools/globalConstants";
 import cls from "./Element.module.css"
 import {changeOnPage} from "../../../tools/func";
+import {ThemeContext} from "../../../context/theme";
 
 
 const Element = (props) => {
@@ -28,6 +29,8 @@ const Element = (props) => {
 
   let setIsSave = props.setIsSave
 
+  const {lightTheme, setLightTheme} = useContext(ThemeContext)
+
   function changeName(e){
     PageService.setName(idEl, e.target.value)
 
@@ -47,7 +50,8 @@ const Element = (props) => {
 
   let styleHead = [cls.elemHead]
   if(mod)                       styleHead.push(cls.elemHeadHover)
-  if(type === typeScheduleList) styleHead.push(cls.elemHeadSchedule)
+  if(type === typeScheduleList)               styleHead.push(cls.elemHeadSchedule)
+  if(type === typeScheduleList && lightTheme) styleHead.push(cls.lightElemHeadSchedule)
 
   return (
     <div className={cls.elem}>
@@ -67,7 +71,7 @@ const Element = (props) => {
           }
 
         </div>
-        <div style={{marginLeft: "30px", width: "100%"}}>
+        <div className={cls.descBlock}>
           {vis === false
             ?<div className={cls.threePoint}> <p>•••</p> </div>
             :""
@@ -78,6 +82,7 @@ const Element = (props) => {
             :""
           }
         </div>
+
       </div>
       <div>
         {elements && elements.length && vis!==false

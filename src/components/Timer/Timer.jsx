@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import cls from "./Timer.module.css"
+import ButtonMute from "../UI/ButtonMute/ButtonMute";
 
 const Timer = (props) => {
 
@@ -12,7 +13,7 @@ const Timer = (props) => {
   },[])
 
   function timeFormat(number){
-    if(number.toString().length == 1){
+    if(number.toString().length === 1){
       return "0" + number
     }else return number
   }
@@ -29,8 +30,13 @@ const Timer = (props) => {
   return (
     <div className={cls.timer}>
       <div className={cls.act}>
-        {props.act}
+        <div className={cls.actName}>{props.act}</div>
+        <div className={cls.center}>
+          <ButtonMute sound={props.sound} setSound={props.setSound}/>
+        </div>
+
       </div>
+
       <div className={cls.time}>
         {getClock(time)}
       </div>

@@ -4,7 +4,7 @@
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-
+    color: rgba(144,145,139,1);
 }
 .panel div{
     display: flex;
@@ -17,4 +17,8 @@
     align-items: center;
     justify-content: center;
     /*border: 2px solid white*/
+}
+
+.lightPanel{
+    color: black;
 }

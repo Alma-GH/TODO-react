@@ -14,7 +14,7 @@ const MainBody = (props) => {
 
         <Routes>
           <Route
-            element={<Page mod={props.mod} setAct={props.setAct} setIsSave={props.setIsSave}/>}
+            element={<Page mod={props.mod} setAct={props.setAct} sound={props.sound} setIsSave={props.setIsSave}/>}
             path="/page/:name/"
           />
           <Route
