@@ -1,5 +1,5 @@
 .popUp{
-    background-color: white;
+    font-weight: bold;
     height: 100%;
     width: 100px;
 
@@ -17,6 +17,16 @@
     background-color: #caedfc;
     border: 2px solid #9ceeff;
 }
+
+.lightPopUp{
+    color: var(--main1-color-font);
+}
+
+.lightPopUp:hover{
+    background-color: var(--color-head-menu1);
+    border: 2px solid var(--color-head-menu2);
+}
+
 
 .menu{
     min-height: 3vh;

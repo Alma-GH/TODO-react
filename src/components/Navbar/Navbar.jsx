@@ -1,16 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import ButtonOption from "../UI/ButtonToggleBool/ButtonOption/ButtonOption";
-import {Link, useParams} from "react-router-dom";
 import cls from "./Navbar.module.css"
-import Server from "../../tools/services/Server";
-import ButtonLink from "../UI/ButtonLink/ButtonLink";
 import Loader from "../UI/Loader/Loader";
 import {ThemeContext} from "../../context/theme";
-import {Reorder} from "framer-motion";
-import {AnimatePresence} from "framer-motion";
-import imgSave from "../../img/menu.png";
-import imgNotSave from "../../img/black-circle.png";
+import {AnimatePresence, Reorder} from "framer-motion";
 import {orderLinks} from "../../tools/globalConstants";
+import MyLink from "../UI/MyLink/MyLink";
+import PageService from "../../tools/services/PageService";
 
 const Navbar = (props) => {
 
@@ -21,7 +17,12 @@ const Navbar = (props) => {
   let isSave = props.isSave
   let [isLoading,err] = props.isLoading
 
-  const {lightTheme, setLightTheme} = useContext(ThemeContext)
+  let takeArr = props.takeArr
+
+  const {lightTheme} = useContext(ThemeContext)
+  let style = [cls.nav]
+  if(!sidePanel) style.push(cls.notSidePanel)
+  if(lightTheme) style.push(cls.lightNav)
 
   const varsAnimation = {
     initial: {
@@ -42,24 +43,13 @@ const Navbar = (props) => {
     return (
       <Reorder.Item key={link} value={link}
                     whileDrag={{
-                      borderWidth:"2px",
-                      borderColor:"rgb(255,0,0)",
-                      borderStyle:"solid",
+                      // outline:"2px",
+                      // outlineColor:"blue",
+                      // outlineStyle:"solid"
                     }}
                     {...varsAnimation}
       >
-        <div className={cls.grab}>
-          <span className={cls.save}>
-            {isSave[link]
-              ? <img src={imgSave} alt="☺" className={cls.saveIMG}/>
-              : <img src={imgNotSave} alt="☻" className={cls.saveIMG}/>
-            }
-          </span>
-          <Link to={"/page/" + link} style={{width:"100%"}}>
-            <ButtonLink isSave={isSave}>{link}</ButtonLink>
-          </Link>
-        </div>
-
+        <MyLink link={link} isSave={isSave} takeArr={takeArr}/>
       </Reorder.Item>
     )
   })
@@ -70,8 +60,8 @@ const Navbar = (props) => {
   }, [props.links])
 
   return (
-      <div className={cls.nav + ` ${lightTheme?cls.lightNav:""} ${!sidePanel && cls.notSidePanel}`}>
-        <div className={cls.navTitle}>Files</div>
+      <div className={style.join(" ")}>
+        {/*<div className={cls.navTitle}>Files</div>*/}
         <div className={cls.navBody}>
           {err && "ERROR LOAD"}
           {isLoading
@@ -84,9 +74,12 @@ const Navbar = (props) => {
             </Reorder.Group>
           }
         </div>
-        <div className={cls.btnOptions}>
+        <div className={cls.wrapBtnOptions}>
+          <div className={cls.btnOptions}>
             <ButtonOption data={mod} setData={setMod}/>
+          </div>
         </div>
+
 
       </div>
   );

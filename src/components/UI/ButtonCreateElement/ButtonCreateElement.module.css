@@ -31,3 +31,8 @@
 .btn2:active {
     background-color: #808080 !important;
 }
+
+.lightBtn2{
+    border-color: var(--color-border-l);
+    background-color: var(--color1-bg-take-l);
+}

@@ -9,6 +9,10 @@
     background-color: white;
 }
 
+.lightHead{
+    background-color: var(--color-head-l);
+}
+
 .menu{
     display: flex;
     height: 100%;
@@ -41,4 +45,9 @@
     font-family: helvetica;
     text-decoration: none;
     text-transform: uppercase;
+}
+
+.btnHidePanel{
+    width: 30px;
+    background-color: rgba(0,0,0,0.2);
 }

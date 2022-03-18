@@ -208,11 +208,10 @@ const Header = (props) => {
 
 
   return (
-    <div className={cls.head}>
-      <Timer act={props.act} sound={props.sound} setSound={props.setSound}/>
+    <div className={cls.head + ` ${lightTheme && cls.lightHead}`}>
       <div className={cls.menu}>
 
-        <div style={{width:"30px"}}>
+        <div className={cls.btnHidePanel}>
           <ButtonHidePanel panel={sidePanel} setPanel={setPanel}/>
         </div>
 
@@ -234,8 +233,9 @@ const Header = (props) => {
         {(isCreating || isRenaming || isDeleting || isSaving) &&
           <div className={cls.loader}><Loader/></div>
         }
-
+        <Timer act={props.act} sound={props.sound} setSound={props.setSound}/>
       </div>
+
 
       {hint
         ?<Hint setHint={setHint} hint={hint} sidePanel={sidePanel} setPanel={setPanel}/>

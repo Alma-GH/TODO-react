@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import ButtonCreateElement from "../UI/ButtonCreateElement/ButtonCreateElement";
 import Element from "./PageStructure/Element";
-import {typeScheduleList} from "../../tools/globalConstants";
+import {orderLinks, typeScheduleList} from "../../tools/globalConstants";
 import Panel from "./PageStructure/Panel";
 import PageService from "../../tools/services/PageService";
 import {useParams} from "react-router-dom";
@@ -29,6 +29,8 @@ const Page = (props) => {
    */
   let mod = props.mod
   let setAct = props.setAct
+
+  const setTakeArr = props.setTakeArr
 
   let isSound = props.sound
   let setIsSave = props.setIsSave
@@ -65,6 +67,10 @@ const Page = (props) => {
   //Get elements
   useEffect(()=>{
     fetchElements()
+      .catch(e=>console.log(e.message))
+    let str = localStorage.getItem(orderLinks)?localStorage.getItem(orderLinks):"[]"
+    let links = Object.fromEntries(JSON.parse(str).map(link=>[link, false]))
+    setTakeArr({...links, [params.name]:true})
     return ()=>console.log("unmount page")
   }, [params.name])
 
@@ -117,7 +123,7 @@ const Page = (props) => {
       }, 1000)
     }
 
-    return ()=>{clearInterval(timer); console.log("timer delete")}
+    return ()=>clearInterval(timer)
   }, [elements])
 
   //TODO:Save file by keyboard
@@ -145,11 +151,6 @@ const Page = (props) => {
     document.addEventListener("keydown", keyDownEvent)
     return ()=>document.removeEventListener("keydown",keyDownEvent)
   }, [isFolding])
-
-
-
-
-
 
   PageService.setElements(elements, params.name)
   window.page = [PageService.name, PageService.pageElements]

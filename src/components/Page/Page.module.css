@@ -10,12 +10,12 @@
 }
 
 .page.lightPage{
-    background-color: rgba(0, 128, 0, 0.65);
-    color: black;
+    background-color: rgba(255,248,247,1);
+    color: var(--main1-color-font);
 }
 
 .page.lightPage input{
-    color: black !important;
+    color: var(--main1-color-font) !important;
 }
 
 

@@ -1,5 +1,5 @@
 .timer{
-    background-color: chartreuse;
+    --shadow-pow: 0.3;
     height: 100%;
     width: 600px;
 
@@ -7,44 +7,75 @@
     right: 0;
 
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
+}
+
+.lightTimer{
+    color: white;
 }
 
 
 
-.act{
-    width: 50%;
-    border: 1px solid #4c51f9;
-    display: flex;
-    justify-content: space-between;
+.timer>div:nth-child(1){
+    border-left: 8px solid rgba(0,0,0,var(--shadow-pow));
+    border-right: 4px solid rgba(0,0,0,var(--shadow-pow));
 }
+
+.timer>div:nth-child(2){
+    border-left: 4px solid rgba(0,0,0,var(--shadow-pow));
+    border-right: 4px solid rgba(0,0,0,var(--shadow-pow));
+}
+
+.timer>div:nth-child(3){
+    border-left: 4px solid rgba(0,0,0,var(--shadow-pow));
+    /*border-right: 4px solid rgba(0,0,0,var(--shadow-pow);*/
+}
+
+
+/*.lightTimer{*/
+/*    color: white;*/
+/*}*/
+
+/*.lightTimer>div>div,.lightTimer>div:last-child{*/
+/*    border-left: 4px solid rgb(112,62,);*/
+/*}*/
+
+
+/*.act{*/
+/*    width: 50%;*/
+
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*}*/
+/*.act button{*/
+/*    width: 30px;*/
+/*}*/
 
 .actName{
-    width: 90%;
+    width: 50%;
     height: 100%;
+    padding-bottom: 5px;
     /*border: 2px solid red;*/
-    font-size: 2rem;
+    font-size: 1.8rem;
 
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.act button{
-    width: 30px;
-}
+
 
 .time{
-    font-size: 2rem;
     width: 40%;
+    font-size: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid red;
 }
 
 
 .center{
+    width: 10%;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -29,15 +29,11 @@ const Element = (props) => {
 
   let setIsSave = props.setIsSave
 
-  const {lightTheme, setLightTheme} = useContext(ThemeContext)
+  const {lightTheme} = useContext(ThemeContext)
 
   function changeName(e){
     PageService.setName(idEl, e.target.value)
-
     changeOnPage(setPageElements,setIsSave)
-    // setPageElements(PageService.pageElements)
-    //
-    // newSave(isSave,setSave)
   }
 
   let [style, setStyle] = useState({opacity:"0"})
@@ -49,9 +45,9 @@ const Element = (props) => {
   }
 
   let styleHead = [cls.elemHead]
-  if(mod)                       styleHead.push(cls.elemHeadHover)
+  if(mod)                                     styleHead.push(cls.elemHeadHover)
   if(type === typeScheduleList)               styleHead.push(cls.elemHeadSchedule)
-  if(type === typeScheduleList && lightTheme) styleHead.push(cls.lightElemHeadSchedule)
+  if(lightTheme)                              styleHead.push(cls.lightElemHead)
 
   return (
     <div className={cls.elem}>

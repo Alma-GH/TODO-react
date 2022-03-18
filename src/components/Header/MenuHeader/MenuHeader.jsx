@@ -1,9 +1,16 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import cls from "./MenuHeader.module.css"
+import {ThemeContext} from "../../../context/theme";
 
 const MenuHeader = (props) => {
 
   let [isShow, setIsShow] = useState(null)
+
+  const {lightTheme, setLightTheme} = useContext(ThemeContext)
+  let style = [cls.popUp]
+
+
+  if(lightTheme) style.push(cls.lightPopUp)
 
   function showMenu(){
     setIsShow(true)
@@ -16,7 +23,7 @@ const MenuHeader = (props) => {
 
   return (
     <div onMouseOver={showMenu} onMouseLeave={hideMenu}>
-      <div className={cls.popUp} >
+      <div className={style.join(" ")} >
         {props.name}
       </div>
       {isShow

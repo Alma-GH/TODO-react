@@ -6,7 +6,7 @@ import MainPage from "../Page/MainPage";
 
 const MainBody = (props) => {
 
-  const {lightTheme, setLightTheme} = useContext(ThemeContext)
+  const {lightTheme} = useContext(ThemeContext)
   const sidePanel = props.sidePanel
 
   return (
@@ -14,7 +14,7 @@ const MainBody = (props) => {
 
         <Routes>
           <Route
-            element={<Page mod={props.mod} setAct={props.setAct} sound={props.sound} setIsSave={props.setIsSave}/>}
+            element={<Page setTakeArr={props.setTakeArr} mod={props.mod} setAct={props.setAct} sound={props.sound} setIsSave={props.setIsSave}/>}
             path="/page/:name/"
           />
           <Route

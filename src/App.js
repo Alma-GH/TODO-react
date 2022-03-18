@@ -45,6 +45,7 @@ function App() {
   })
   const [lightTheme, setLightTheme] = useState(false)
   const [sidePanel, setSidePanel] = useState(true)
+  const [takeArr, setTakeArr] = useState(null)
 
   const [isSave,setSave] = useState(null)
   const [fetchPagesNames, isNamesLoading, errNames] = useFetching(async ()=>{
@@ -130,9 +131,9 @@ function App() {
           <div className="App">
             <Header setPanel={setSidePanel} sidePanel={sidePanel} sound={sound} setSound={setSound}
                     act={act} setPages={setPages} pages={pages} setIsSave={[isSave,setSave]}/>
-            <Navbar sidePanel={sidePanel} links={pages} setLinks={setPages} mod={optionMod}
+            <Navbar sidePanel={sidePanel} takeArr={takeArr} links={pages} setLinks={setPages} mod={optionMod}
                     setMod={setOptionMod} isSave={isSave} isLoading={[isNamesLoading,errNames]}/>
-            <MainBody mod={optionMod} setAct={setAct} sound={sound} setIsSave={[isSave,setSave]} sidePanel={sidePanel}/>
+            <MainBody setTakeArr={setTakeArr} mod={optionMod} setAct={setAct} sound={sound} setIsSave={[isSave,setSave]} sidePanel={sidePanel}/>
           </div>
         </BrowserRouter>
       </ThemeContext.Provider>

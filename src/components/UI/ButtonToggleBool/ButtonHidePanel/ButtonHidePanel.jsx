@@ -1,6 +1,6 @@
 import React from 'react';
 import ButtonToggleBool from "../ButtonToggleBool";
-import img from "../../../../img/menu.png";
+import img from "../../../../img_svg/menu.png";
 import cls from "./ButtonHidePanel.module.css"
 
 const ButtonHidePanel = ({panel, setPanel}) => {
