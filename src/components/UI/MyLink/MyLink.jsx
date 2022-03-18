@@ -10,7 +10,7 @@ const MyLink = ({isSave,link, takeArr}) => {
 
 
   let styleLink = [cls.grab]
-  if(takeArr[link]) styleLink.push(cls.take)
+  if(takeArr && takeArr[link]) styleLink.push(cls.take)
 
 
   return (
