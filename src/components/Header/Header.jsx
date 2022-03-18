@@ -6,11 +6,11 @@ import {useLocation, useNavigate} from "react-router-dom";
 import Server from "../../tools/services/Server";
 import PageService from "../../tools/services/PageService";
 import Modal from "../UI/Modal/Modal";
-import Form from "../UI/Forms/Form";
+import SimpleForm from "../UI/Forms/SimpleForm";
 import Confirm from "../UI/Forms/Confirm";
 import cls from "./Header.module.css"
-import {linkGH, linkTG, linkVK, orderLinks, themeList} from "../../tools/globalConstants";
-import {newSave, waiter} from "../../tools/func";
+import {linkGH, linkTG, linkVK, orderLinks} from "../../tools/globalConstants";
+import {newSave} from "../../tools/func";
 import Loader from "../UI/Loader/Loader";
 import {useFetching} from "../../hooks/useFetching";
 import Options from "../UI/Forms/Options";
@@ -18,6 +18,7 @@ import {SettingsContext} from "../../context/settings";
 import {ThemeContext} from "../../context/theme";
 import Hint from "../UI/Modal/Hint/Hint";
 import ButtonHidePanel from "../UI/ButtonToggleBool/ButtonHidePanel/ButtonHidePanel";
+import ButtonExit from "../UI/ButtonToggleBool/ButtonExit/ButtonExit";
 
 const Header = (props) => {
 
@@ -83,6 +84,7 @@ const Header = (props) => {
   })
   const [fetchSave, isSaving, errSave]       = useFetching(async ()=>{
     await Server.saveElements(PageService.pageElements,PageService.name)
+
     // await waiter(2000)
     newSave(isSave,setSave,true)
   })
@@ -93,7 +95,7 @@ const Header = (props) => {
   const validFileName = function(name){
     if(!name || [0,name.length-1].includes(name.indexOf(" ")))   return false
     if(JSON.parse(localStorage.getItem(orderLinks)).includes(name))    return false
-    if(name.includes("."))                                       return false
+    if(name.includes(".") || name.includes("/"))            return false
     return true
   }
 
@@ -141,8 +143,9 @@ const Header = (props) => {
 
   async function nextTheme(){
     let newTheme = !lightTheme
-    setLightTheme(newTheme)
+    setLightTheme(null)
     await Server.saveTheme(newTheme)
+    setLightTheme(newTheme)
   }
 
 
@@ -161,7 +164,7 @@ const Header = (props) => {
   function getModalBody(par){
     switch (par){
       case "create":
-        return (<Form
+        return (<SimpleForm
           btnFunc={createPage}
           btnName="Create"
 
@@ -174,7 +177,7 @@ const Header = (props) => {
       case "delete":
         return (<Confirm btnFuncYES={deletePage} btnFuncNO={()=>setModal(false)} question="Are you sure?"/>)
       case "rename":
-        return (<Form
+        return (<SimpleForm
           btnFunc={renamePage}
           btnName="Rename"
 
@@ -201,7 +204,7 @@ const Header = (props) => {
 
 
       default:
-        return <div></div>
+        return <div>NONE</div>
     }
   }
 
@@ -230,10 +233,20 @@ const Header = (props) => {
           <ElemMenu func={()=>hintMenu()}>how work</ElemMenu>
           <ElemMenu func={()=>aboutMenu("about me")}>about me</ElemMenu>
         </MenuHeader>
+
         {(isCreating || isRenaming || isDeleting || isSaving) &&
           <div className={cls.loader}><Loader/></div>
         }
-        <Timer act={props.act} sound={props.sound} setSound={props.setSound}/>
+        {(errRename || errSave || errDelete || errCreate) &&
+          <div style={{color:"red"}}>HAVE PROBLEM</div>
+        }
+        <div className={cls.timerAndExit}>
+          <Timer act={props.act} sound={props.sound} setSound={props.setSound}/>
+          <div className={cls.exit}>
+            <ButtonExit/>
+          </div>
+        </div>
+
       </div>
 
 
@@ -243,7 +256,6 @@ const Header = (props) => {
           {getModalBody(bodyModal)}
         </Modal>
       }
-
 
     </div>
   );

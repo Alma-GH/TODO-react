@@ -17,8 +17,6 @@
 }
 
 .img:active{
-    border: 2px solid black;
-    border-radius: 50%;
-    transition: border-bottom-width 0.3s ease-in-out,border-right-width 0.3s ease-in-out,
-    border-top-width 0.3s ease-in-out,border-left-width 0.3s ease-in-out;
+    width: 55%;
+    transition: width 0.3s ease-in-out;
 }

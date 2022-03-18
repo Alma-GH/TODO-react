@@ -11,6 +11,7 @@ export const useFetching = (cb)=>{
       await cb()
     }catch(e){
       setErr(e.message)
+      setTimeout(()=>setErr(""), 4000)
     }finally {
       setIsLoading(false)
     }

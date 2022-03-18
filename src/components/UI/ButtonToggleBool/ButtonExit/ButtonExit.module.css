@@ -1,0 +1,22 @@
+.inBtnExit{
+  display:grid;
+  place-items:center;
+  height: 100%;
+  width: 100%;
+}
+
+.inBtnExit img{
+  width: 70%;
+  aspect-ratio: 1/1;
+  transition: width 0.2s ease-in-out;
+}
+
+.inBtnExit:hover img{
+  width: 90%;
+  transition: width 0.2s ease-in-out;
+}
+
+.inBtnExit:active{
+  width: 50%;
+  transition: width 0.2s ease-in-out;
+}

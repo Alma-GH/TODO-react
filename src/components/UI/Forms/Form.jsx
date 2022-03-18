@@ -3,14 +3,23 @@ import InputApply from "../Apply/InputApply/InputApply";
 import ButtonApply from "../Apply/ButtonApply/ButtonApply";
 import cls from "./Form.module.css"
 
-const Form = ({inputProps, btnFunc, btnName}) => {
+const Form = ({btnFunc, btnName, children}) => {
+
+  function submit(e){
+    e.preventDefault()
+    if(btnFunc !== undefined) btnFunc()
+  }
+
   return (
-    <div className={cls.form}>
-      <InputApply {...inputProps}/>
-      <ButtonApply func={btnFunc}>
-        {btnName}
-      </ButtonApply>
-    </div>
+    <form action="" onSubmit={submit}>
+      <div className={cls.form}>
+        {children}
+        <ButtonApply>
+          {btnName}
+        </ButtonApply>
+      </div>
+    </form>
+
   );
 };
 

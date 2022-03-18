@@ -3,8 +3,8 @@
     height: 100%;
     width: 600px;
 
-    position: absolute;
-    right: 0;
+    /*position: absolute;*/
+    /*right: 0;*/
 
     display: flex;
     /*justify-content: space-between;*/
@@ -87,7 +87,7 @@
     }
 }
 
-@media (max-width: 750px) {
+@media (max-width: 780px) {
     .timer{
         width: 300px;
     }
@@ -96,7 +96,7 @@
     }
 }
 
-@media (max-width: 630px) {
+@media (max-width: 670px) {
     .timer {
         display: none;
     }
