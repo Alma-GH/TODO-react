@@ -1,0 +1,247 @@
+{
+  "LTheme" : false,
+  "files" : {
+    "12343253" : [ "" ],
+    "First" : [ {
+      "description" : "myDesc",
+      "id" : 1,
+      "name" : "justElem"
+    }, {
+      "elements" : [ {
+        "description" : "d",
+        "id" : 3,
+        "name" : "11111"
+      }, {
+        "id" : 4,
+        "name" : "2222"
+      }, {
+        "id" : 5,
+        "name" : "33333"
+      } ],
+      "id" : 2,
+      "name" : "FIRST",
+      "type" : "num",
+      "visibleList" : true
+    }, {
+      "elements" : [ {
+        "id" : 7,
+        "name" : "IN_ELEM"
+      }, {
+        "description" : "dod",
+        "elements" : [ {
+          "id" : 9,
+          "name" : "in:11111"
+        }, {
+          "id" : 10,
+          "name" : "in:2222"
+        }, {
+          "id" : 11,
+          "name" : "in:33333"
+        } ],
+        "id" : 8,
+        "name" : "IN",
+        "visibleList" : true
+      }, {
+        "id" : 12,
+        "name" : "2:2222"
+      }, {
+        "id" : 13,
+        "name" : "2:33333"
+      } ],
+      "id" : 6,
+      "name" : "SECOND",
+      "visibleList" : true
+    }, {
+      "description" : "MY schedule",
+      "elements" : [ {
+        "description" : "10:00",
+        "id" : 15,
+        "name" : "WakeUp+"
+      }, {
+        "description" : "11:00",
+        "id" : 16,
+        "name" : "Programming"
+      }, {
+        "id" : 17,
+        "name" : ""
+      }, {
+        "description" : "15:00",
+        "id" : 18,
+        "name" : "+"
+      } ],
+      "id" : 14,
+      "name" : "Schedule",
+      "type" : "sch",
+      "visibleList" : true
+    } ],
+    "Second" : [ {
+      "id" : 1,
+      "name" : "elem ON second"
+    }, {
+      "id" : 2,
+      "name" : "yetELem"
+    } ],
+    "Third" : [ {
+      "id" : 1647733774293,
+      "name" : ""
+    }, {
+      "id" : 1647733774685,
+      "name" : "elemName"
+    }, {
+      "description" : "my description",
+      "id" : 1647733775165,
+      "name" : ""
+    }, {
+      "elements" : [ {
+        "id" : 1647733829935,
+        "name" : "new"
+      } ],
+      "id" : 1647733775645,
+      "name" : "",
+      "type" : "num",
+      "visibleList" : true
+    }, {
+      "elements" : [ {
+        "id" : 1647733833391,
+        "name" : "new"
+      }, {
+        "id" : 1647733863599,
+        "name" : "ww"
+      } ],
+      "id" : 1647733811783,
+      "name" : "",
+      "type" : "sym",
+      "visibleList" : true
+    }, {
+      "elements" : [ {
+        "id" : 1647733835615,
+        "name" : ""
+      } ],
+      "id" : 1647733812254,
+      "name" : "",
+      "visibleList" : true
+    }, {
+      "elements" : [ {
+        "id" : 1647733840247,
+        "name" : "new"
+      } ],
+      "id" : 1647733836871,
+      "name" : "",
+      "type" : "sch",
+      "visibleList" : true
+    }, {
+      "description" : "descriptionff",
+      "id" : 1647733837510,
+      "name" : "fff"
+    }, {
+      "description" : "rrrrrrrr",
+      "elements" : [ {
+        "description" : "description",
+        "id" : 1647733898047,
+        "name" : "new"
+      }, {
+        "elements" : [ {
+          "id" : 1647733914735,
+          "name" : "new"
+        }, {
+          "id" : 1647733916679,
+          "name" : ""
+        } ],
+        "id" : 1647733907815,
+        "name" : "ret:",
+        "type" : "num",
+        "visibleList" : true
+      }, {
+        "id" : 1647733907975,
+        "name" : "drt"
+      }, {
+        "id" : 1647733908175,
+        "name" : "dgd"
+      } ],
+      "id" : 1647733838103,
+      "name" : "ffdf:",
+      "visibleList" : true
+    }, {
+      "id" : 1647733885206,
+      "name" : ""
+    }, {
+      "id" : 1647733886335,
+      "name" : ""
+    } ],
+    "ere" : [ "" ],
+    "rr" : [ {
+      "id" : 1647713361931,
+      "name" : ""
+    }, {
+      "id" : 1647713362394,
+      "name" : ""
+    } ],
+    "График" : [ {
+      "id" : 1647712482979,
+      "name" : ""
+    }, {
+      "elements" : [ {
+        "description" : "21:10",
+        "id" : 1647712496131,
+        "name" : "1"
+      }, {
+        "description" : "21:11",
+        "id" : 1647713379827,
+        "name" : "2"
+      }, {
+        "description" : "21:12",
+        "id" : 1647713379981,
+        "name" : "3"
+      }, {
+        "description" : "21:13",
+        "id" : 1647713380130,
+        "name" : "4"
+      }, {
+        "description" : "21:14",
+        "id" : 1647713380378,
+        "name" : "5"
+      }, {
+        "description" : "21:20",
+        "id" : 1647713380531,
+        "name" : "6"
+      }, {
+        "description" : "21:21",
+        "id" : 1647713380666,
+        "name" : "7"
+      }, {
+        "id" : 1647713380796,
+        "name" : ""
+      }, {
+        "id" : 1647713380930,
+        "name" : ""
+      }, {
+        "id" : 1647713381051,
+        "name" : ""
+      }, {
+        "id" : 1647713381196,
+        "name" : ""
+      } ],
+      "id" : 1647712483715,
+      "name" : "График:",
+      "type" : "sch",
+      "visibleList" : true
+    }, {
+      "id" : 1647712484266,
+      "name" : ""
+    }, {
+      "id" : 1647712484938,
+      "name" : ""
+    }, {
+      "id" : 1647712485826,
+      "name" : ""
+    }, {
+      "id" : 1647712487706,
+      "name" : ""
+    } ],
+    "выва" : [ "" ]
+  },
+  "settings" : {
+    "autoFilling" : true,
+    "autoFolding" : true
+  }
+}

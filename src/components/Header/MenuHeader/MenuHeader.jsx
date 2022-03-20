@@ -6,7 +6,7 @@ const MenuHeader = (props) => {
 
   let [isShow, setIsShow] = useState(null)
 
-  const {lightTheme, setLightTheme} = useContext(ThemeContext)
+  const {lightTheme} = useContext(ThemeContext)
   let style = [cls.popUp]
 
 

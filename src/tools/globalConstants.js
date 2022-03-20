@@ -52,6 +52,8 @@ export const example = {
   "Third": [""],
 }
 
+export const NF = ()=>{}
+
 // export const mainColor = "#1d2630"
 
 

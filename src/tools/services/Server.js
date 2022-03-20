@@ -4,27 +4,38 @@ const EMPTY_PAGE = [""]
 //TODO:try catch
 class Server{
   async getAllFiles(){
-    let arr;
-    await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
-      .then(response=>response.json())
-      .then(res=>{
-        for(let file in res){
-          if(res[file] === null || res[file][0] === "") res[file].length = 0
-        }
-        arr = res
-      })
-    return arr
+    try {
+      let arr;
+      await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
+        .then(response=>response.json())
+        .then(res=>{
+          for(let file in res){
+            if(res[file] === null || res[file][0] === "") res[file].length = 0
+          }
+          arr = res
+        })
+      return arr
+    }catch (e){
+      console.log(e.message)
+      return []
+    }
+
   }
 
   async getAllNameFiles(){
-    let arr;
-    await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
-      .then(response=>response.json())
-      .then(res=>{
-        arr = Object.keys(res)
-        if(!localStorage.getItem(orderLinks)) localStorage.setItem(orderLinks, JSON.stringify(arr))
-      })
-    return arr
+    try {
+      let arr;
+      await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
+        .then(response=>response.json())
+        .then(res=>{
+          arr = Object.keys(res)
+          if(!localStorage.getItem(orderLinks)) localStorage.setItem(orderLinks, JSON.stringify(arr))
+        })
+      return arr
+    }catch (e){
+      console.log(e.message)
+      return []
+    }
   }
   async getElementsByParams(name){
     let arr;

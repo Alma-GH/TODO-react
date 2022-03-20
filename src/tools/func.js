@@ -1,12 +1,11 @@
 import PageService from "./services/PageService";
-import {unSave} from "./globalConstants";
 import SaveService from "./services/SaveService";
 
 
 export const takeAllElements = (arr,func, depth)=>{
   if(depth === undefined) depth = 1
 
-  arr.map(el=>{
+  arr.forEach(el=>{
     func(el, depth)
     if('elements' in el)  takeAllElements(el.elements, func, depth + 1)
   })
@@ -21,7 +20,7 @@ export const myCopyObj = (obj)=>{
 export const takeAllElementsWithReturn = (arr,func, consVis)=>{
   /* res - array of results*/
   let res = [];
-  arr.map(el=>{
+  arr.forEach(el=>{
     res.push(func(el))
     if('elements' in el && (el.visibleList || consVis))  res.push(takeAllElementsWithReturn(el.elements, func, consVis))
   })
@@ -29,7 +28,7 @@ export const takeAllElementsWithReturn = (arr,func, consVis)=>{
 }
 
 export const deepCheck = (arr, func)=>{
-  arr.map(el=>{
+  arr.forEach(el=>{
     if(Array.isArray(el) && el.length){
       func(el)
       deepCheck(el, func)

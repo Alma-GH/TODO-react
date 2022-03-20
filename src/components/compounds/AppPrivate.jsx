@@ -11,8 +11,6 @@ import {SettingsContext} from "../../context/settings";
 const AppPrivate = () => {
 
   const {setSettings} = useContext(SettingsContext)
-  const {lightTheme, setLightTheme} = useContext(ThemeContext)
-
 
   const [pages, setPages] = useState([])
   const [optionMod, setOptionMod] = useState(false)
@@ -57,10 +55,6 @@ const AppPrivate = () => {
       //settings
       let newSettings = await Server.getSettings()
       setSettings(newSettings)
-
-      //theme
-      let newTheme = await Server.getTheme()
-      setLightTheme(newTheme)
     }
 
     func()
@@ -68,10 +62,27 @@ const AppPrivate = () => {
 
   }, [])
 
+  useEffect(()=>{
+
+    function event(){
+      if(isSave === null) return
+      let f = false
+      for(let page in isSave){
+        if(!isSave[page]) f = true
+      }
+      if(f){
+        window.onbeforeunload = function() {
+          return false;
+        };
+      }
+    }
+    event()
+
+  }, [isSave])
+
+
   return (
-    <div className="App">
-      {lightTheme !== null
-        ? <AppMain pages={pages} setPages={setPages}
+        <AppMain pages={pages} setPages={setPages}
                    optionMod={optionMod} setOptionMod={setOptionMod}
                    act={act} setAct={setAct}
                    sidePanel={sidePanel} setSidePanel={setSidePanel}
@@ -80,9 +91,6 @@ const AppPrivate = () => {
                    isSave={isSave} setSave={setSave}
                    isNamesLoading={isNamesLoading} errNames={errNames}
         />
-        : <AppLoad/>
-      }
-    </div>
   );
 };
 

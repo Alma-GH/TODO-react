@@ -3,14 +3,20 @@ import ButtonToggleBool from "../ButtonToggleBool";
 import {AuthContext} from "../../../../context/auth";
 import cls from "./ButtonExit.module.css"
 import cancel from "./../../../../img_svg/cancel.png"
+import {DatabaseContext} from "../../../../context/db";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 
 const ButtonExit = X => {
 
-  const {isAuth, setIsAuth} = useContext(AuthContext)
+  const {auth} = useContext(DatabaseContext)
+
+  function logout(){
+    auth.signOut()
+  }
 
   return (
-    <ButtonToggleBool setter={setIsAuth} now={isAuth}>
+    <ButtonToggleBool effect={logout}>
       <div className={cls.inBtnExit}>
         <img src={cancel} alt="X"/>
       </div>

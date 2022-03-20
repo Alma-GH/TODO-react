@@ -4,7 +4,7 @@
     height: 3vh;
     border: 2px solid grey;
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
 }
 

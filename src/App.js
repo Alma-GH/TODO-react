@@ -1,10 +1,14 @@
 import "./style/App.css"
 import {Route, Routes} from "react-router-dom";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {SettingsContext} from "./context/settings";
 import {ThemeContext} from "./context/theme";
-import {AuthContext} from "./context/auth";
 import {privateRoutes, publicRoutes} from "./router/routes";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {DatabaseContext} from "./context/db";
+import AppLoad from "./components/compounds/AppLoad";
+import Server from "./tools/services/Server";
+
 
 /*STATE:
 {
@@ -28,22 +32,31 @@ import {privateRoutes, publicRoutes} from "./router/routes";
 
 function App() {
 
-  let b = null
+  const {auth} = useContext(DatabaseContext)
+  const [user,loader,err] = useAuthState(auth)
 
-  const [isAuth, setIsAuth] = useState(b)
   const [lightTheme, setLightTheme] = useState(null)
   const [settings, setSettings] = useState({
     autoFolding: true,
     autoFilling: true,
   })
 
-  let routes = isAuth?privateRoutes:publicRoutes
+  useEffect(()=>{
+    async function loadTheme(){
+      //theme
+      let newTheme = await Server.getTheme()
+      setLightTheme(newTheme)
+    }
+    loadTheme()
+      .catch(e=>console.log(e.message))
+  })
+
+  let routes = user?privateRoutes:publicRoutes
+
+  if(err) console.log(err)
+  if(loader || lightTheme===null) return <div className="App"><AppLoad/></div>
 
   return (
-    <AuthContext.Provider value={{
-      isAuth,
-      setIsAuth
-    }}>
       <SettingsContext.Provider value={{
         settings,
         setSettings
@@ -52,7 +65,7 @@ function App() {
           lightTheme,
           setLightTheme
         }}>
-
+          <div className="App">
             <Routes>
               {routes.map(route=>(
                 <Route
@@ -63,12 +76,9 @@ function App() {
                 />))
               }
             </Routes>
-
+          </div>
         </ThemeContext.Provider>
       </SettingsContext.Provider>
-    </AuthContext.Provider>
-
-
   );
 }
 

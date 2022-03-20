@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import ButtonOption from "../UI/ButtonToggleBool/ButtonOption/ButtonOption";
 import cls from "./Navbar.module.css"
 import Loader from "../UI/Loader/Loader";
@@ -6,7 +6,6 @@ import {ThemeContext} from "../../context/theme";
 import {AnimatePresence, Reorder} from "framer-motion";
 import {orderLinks} from "../../tools/globalConstants";
 import MyLink from "../UI/MyLink/MyLink";
-import PageService from "../../tools/services/PageService";
 
 const Navbar = (props) => {
 

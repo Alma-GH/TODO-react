@@ -9,7 +9,6 @@ const Description = (props) => {
   let idEl = props.elem.id
   let mod = props.mod
 
-  let pageElements = props.pageElements
   let setPageElements = props.setPageElements
 
   let isSchedule = props.isSchedule
@@ -21,10 +20,8 @@ const Description = (props) => {
     let newVal = TA.value
 
     PageService.setNameDescription(idEl, newVal)
-
     changeOnPage(setPageElements,setIsSave)
-    // setPageElements(PageService.pageElements)
-    // newSave(isSave,setSave)
+
   }
 
   function setTime(e){
@@ -32,7 +29,7 @@ const Description = (props) => {
     if(isSchedule){
       val = toTime(val)
       PageService.setNameDescription(idEl, val)
-      setPageElements(PageService.pageElements)
+      changeOnPage(setPageElements,setIsSave)
     }
   }
 
