@@ -10,6 +10,7 @@ export const useFetching = (cb)=>{
       setIsLoading(true)
       await cb()
     }catch(e){
+      console.log(e.message)
       setErr(e.message)
       setTimeout(()=>setErr(""), 4000)
     }finally {

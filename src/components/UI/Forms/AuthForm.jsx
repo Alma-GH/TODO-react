@@ -15,14 +15,14 @@ const AuthForm = ({reg}) => {
   const [err, setErr] = useState("")
 
   async function enter(){
-    // console.log("enter")
-    // setIsAuth(true)
-    // localStorage.setItem("auth", "true")
     try{
       let {user} = await signInWithEmailAndPassword(auth, userN, pass)
       console.log(user)
     }catch (e){
-      setErr(e.code)
+      setErr(e.code.slice(e.code.indexOf("/")+1).split("").map(ch=>{
+        if(ch==="-") return " "
+        return ch
+      }).join(""))
       console.log(e.message)
     }
 
@@ -34,7 +34,10 @@ const AuthForm = ({reg}) => {
       let {user} = await createUserWithEmailAndPassword(auth,userN,pass)
       console.log(user)
     }catch (e){
-      setErr(e.code)
+      setErr(e.code.slice(e.code.indexOf("/")+1).split("").map(ch=>{
+        if(ch==="-") return " "
+        return ch
+      }).join(""))
       console.log(e.message)
     }
   }
@@ -44,7 +47,7 @@ const AuthForm = ({reg}) => {
       <h1>{reg?"Register":"Login"}</h1>
       <InputApply type="text" autoComplete={reg?"off":"username"} value={userN} onChange={(e)=>setUserN(e.target.value)} placeholder="email"/>
       <InputApply type="password" autoComplete={reg?"off":"current-password"} value={pass} onChange={(e)=>setPass(e.target.value)} placeholder="password"/>
-      <div>
+      <div style={{color:"red"}}>
         {err}
       </div>
 

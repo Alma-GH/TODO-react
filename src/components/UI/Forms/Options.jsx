@@ -1,16 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import cls from "./Options.module.css"
 import {splitCamelCase} from "../../../tools/func";
 import Server from "../../../tools/services/Server";
+import {DatabaseContext} from "../../../context/db";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 const Options = ({settings,setSettings}) => {
+
+  const {auth,db} = useContext(DatabaseContext)
+  const [user] = useAuthState(auth)
 
   async function changeSettings(e){
     let setting = e.target.value
     let newSet = !settings[setting]
     let newSettings = {...settings, [setting]:newSet}
     setSettings(newSettings)
-    await Server.saveSettings(newSettings)
+    await Server.saveSettings(db,user.uid, newSettings)
   }
 
   let rows = []

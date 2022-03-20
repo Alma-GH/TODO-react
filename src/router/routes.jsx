@@ -4,8 +4,8 @@ import AppPrivate from "../components/compounds/AppPrivate";
 
 
 export const publicRoutes = [
-  {path:"/*", element: <Auth><AuthForm reg={true}/></Auth>, exact: false},
-  {path:"/auth/login", element: <Auth><AuthForm reg={false}/></Auth>, exact: false}
+  {path:"/auth/registration", element: <Auth><AuthForm reg={true}/></Auth>, exact: false},
+  {path:"*", element: <Auth><AuthForm reg={false}/></Auth>, exact: false}
 ]
 
 export const privateRoutes = [

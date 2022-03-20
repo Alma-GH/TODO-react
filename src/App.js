@@ -10,6 +10,7 @@ import AppLoad from "./components/compounds/AppLoad";
 import Server from "./tools/services/Server";
 
 
+
 /*STATE:
 {
   pages:{
@@ -32,7 +33,7 @@ import Server from "./tools/services/Server";
 
 function App() {
 
-  const {auth} = useContext(DatabaseContext)
+  const {auth,db} = useContext(DatabaseContext)
   const [user,loader,err] = useAuthState(auth)
 
   const [lightTheme, setLightTheme] = useState(null)
@@ -41,11 +42,16 @@ function App() {
     autoFilling: true,
   })
 
+  //TODO: fix theme delay
   useEffect(()=>{
     async function loadTheme(){
       //theme
-      let newTheme = await Server.getTheme()
-      setLightTheme(newTheme)
+      if(user === null) setLightTheme(false)
+      else{
+        let newTheme = await Server.getTheme(db,user.uid)
+        setLightTheme(newTheme)
+      }
+
     }
     loadTheme()
       .catch(e=>console.log(e.message))

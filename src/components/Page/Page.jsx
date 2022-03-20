@@ -13,6 +13,8 @@ import {useFetching} from "../../hooks/useFetching";
 import Loader from "../UI/Loader/Loader";
 import srcAudio from  "../../sound/nextAct.mp3"
 import {ThemeContext} from "../../context/theme";
+import {DatabaseContext} from "../../context/db";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 
 const Page = (props) => {
@@ -27,6 +29,10 @@ const Page = (props) => {
     elements:
   }
    */
+
+  const {auth,db} = useContext(DatabaseContext)
+  const [user] = useAuthState(auth)
+
   let mod = props.mod
   let setAct = props.setAct
 
@@ -47,7 +53,7 @@ const Page = (props) => {
     if(save !== null && !save[pageName]){
       elems = SaveService.getNotSave(pageName)
     }else{
-      elems = await Server.getElementsByParams(pageName)
+      elems = await Server.getElementsByParams(db,user.uid, pageName)
     }
     if(Array.isArray(elems)) setElements(elems)
     else                     setElements([])

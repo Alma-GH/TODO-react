@@ -1,9 +1,13 @@
 import {orderLinks} from "../globalConstants";
+import {child, get, ref, set} from "firebase/database";
 
 const EMPTY_PAGE = [""]
 //TODO:try catch
+//TODO: fix save with order
 class Server{
-  async getAllFiles(){
+
+ //WARNING: no use
+  async getAllFiles(){ //TODO: mb
     try {
       let arr;
       await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
@@ -22,13 +26,19 @@ class Server{
 
   }
 
-  async getAllNameFiles(){
+
+
+  async getAllNameFiles(db,user){
     try {
       let arr;
-      await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
-        .then(response=>response.json())
+      await get(child(ref(db),`users/${user}/data/files`))
         .then(res=>{
-          arr = Object.keys(res)
+          if(!res.exists()){
+            arr = []
+            console.log(`NO FILES FOR USER ${user}`)
+          }else{
+            arr = Object.keys(res.val())
+          }
           if(!localStorage.getItem(orderLinks)) localStorage.setItem(orderLinks, JSON.stringify(arr))
         })
       return arr
@@ -37,58 +47,41 @@ class Server{
       return []
     }
   }
-  async getElementsByParams(name){
+
+
+  async getElementsByParams(db,user,name){
     let arr;
-    await fetch(`https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files/${name}.json`)
-      .then(response=>response.json())
+    await get(child(ref(db),`users/${user}/data/files/${name}`))
       .then(res=>{
-        if(res === null || res[0] === "") arr = []
-        else                              arr = res
+        if(!res.exists() || (res.val())[0] === "") arr = []
+        else                                       arr = res.val()
       })
+      .catch(e=>console.log(e.message))
     return arr
   }
 
-  saveElements(elements, file){
+
+
+  saveElements(db,user,elements, file){
     if(!elements.length) elements = EMPTY_PAGE
-    return fetch(`https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files/${file}.json`, {
-      method: "PUT",
-      headers:{
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(elements),
-    })
-      .then(response=>response.json())
-      .then(res=>console.log(res))
+    return set(ref(db,`users/${user}/data/files/${file}`), elements)
   }
 
-  addPage(name, elements){
-    return fetch(`https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files/${name}.json`,{
-      method: "PUT",
-      headers:{
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify((elements && elements.length)?elements:EMPTY_PAGE),
-    })
-      .then(response=>response.json())
-      .then(res=>{
-        console.log(res)
+  addPage(db,user, name, elements){
+    return set(ref(db,`users/${user}/data/files/${name}`), (elements && elements.length)?elements:EMPTY_PAGE)
+      .then(()=>{
         let oldSt = JSON.parse(localStorage.getItem(orderLinks))
         let newSt = [...oldSt, name]
         localStorage.setItem(orderLinks, JSON.stringify(newSt))
       })
   }
 
-  deletePage(name){
-    return fetch(`https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files/${name}.json`,{
-      method: "DELETE"
-    })
-      .then(response=>response.json())
-      .then(res=>{
-        console.log(res)
+  deletePage(db,user,name){
+    return set(ref(db,`users/${user}/data/files/${name}`), null)
+      .then(()=>{
         let oldSt = JSON.parse(localStorage.getItem(orderLinks))
         oldSt.splice(oldSt.indexOf(name),1)
-        let newSt = oldSt
-        localStorage.setItem(orderLinks, JSON.stringify(newSt))
+        localStorage.setItem(orderLinks, JSON.stringify(oldSt))
       })
   }
 
@@ -96,46 +89,46 @@ class Server{
 
   }
 
-  async getSettings(){
+  async getSettings(db,user){
     let arr;
-    await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/settings.json")
-      .then(response=>response.json())
+    await get(child(ref(db),`users/${user}/data/settings`))
       .then(res=>{
-        arr = res
+        if(res.exists()){
+          arr = res.val()
+        }else{
+          arr = {
+            autoFolding: true,
+            autoFilling: true,
+          }
+          console.log(`NO SETTINGS FOR USER ${user}`)
+        }
+
       })
     return arr
   }
-  saveSettings(settings){
-    return fetch(`https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/settings.json`, {
-      method: "PUT",
-      headers:{
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(settings),
-    })
-      .then(response=>response.json())
-      .then(res=>console.log(res))
+
+  saveSettings(db,user, settings){
+    return set(ref(db,`users/${user}/data/settings`), settings)
   }
 
-  async getTheme(){
+
+
+  async getTheme(db,user){
     let str;
-    await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/LTheme.json")
-      .then(response=>response.json())
+    await get(child(ref(db),`users/${user}/data/LTheme`))
       .then(res=>{
-        str = res
+        if(res.exists()){
+          str = res.val()
+        }else{
+          str = false
+          console.log(`NO THEME FOR USER ${user}`)
+        }
       })
     return str
   }
-  saveTheme(theme){
-    return fetch(`https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/LTheme.json`, {
-      method: "PUT",
-      headers:{
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(theme),
-    })
-      .then(response=>response.json())
-      .then(res=>console.log(res))
+
+  saveTheme(db,user, theme){
+    return set(ref(db,`users/${user}/data/LTheme`), theme)
   }
 }
 

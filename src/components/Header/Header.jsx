@@ -19,8 +19,13 @@ import {ThemeContext} from "../../context/theme";
 import Hint from "../UI/Modal/Hint/Hint";
 import ButtonHidePanel from "../UI/ButtonToggleBool/ButtonHidePanel/ButtonHidePanel";
 import ButtonExit from "../UI/ButtonToggleBool/ButtonExit/ButtonExit";
+import {DatabaseContext} from "../../context/db";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 const Header = (props) => {
+
+  const {auth,db} = useContext(DatabaseContext)
+  const [user] = useAuthState(auth)
 
   const nav = useNavigate()
 
@@ -43,7 +48,8 @@ const Header = (props) => {
     if(!validFileName(input)) return
     setModal(false)
 
-    await Server.addPage(input)
+    await Server.addPage(db,user.uid, input)
+      .catch(e=>console.log(e.message))
     // await waiter(2000)
     let newPages = JSON.parse(localStorage.getItem(orderLinks))
     props.setPages(newPages)
@@ -58,8 +64,8 @@ const Header = (props) => {
 
     setModal(false)
     let posPage = JSON.parse(localStorage.getItem(orderLinks)).indexOf(PageService.name)
-    await Server.deletePage(fileName)
-    await Server.addPage(input, PageService.pageElements)
+    await Server.deletePage(db,user.uid, fileName)
+    await Server.addPage(db,user.uid, input, PageService.pageElements)
     // await waiter(2000)
     let newPages = JSON.parse(localStorage.getItem(orderLinks))
     newPages.splice(posPage,0,newPages.pop())
@@ -72,7 +78,7 @@ const Header = (props) => {
   })
   const [fetchDelete, isDeleting, errDelete] = useFetching(async ()=>{
     setModal(false)
-    await Server.deletePage(PageService.name)
+    await Server.deletePage(db,user.uid, PageService.name)
     // await waiter(2000)
     let newPages = JSON.parse(localStorage.getItem(orderLinks))
     props.setPages(newPages)
@@ -83,7 +89,7 @@ const Header = (props) => {
     nav("./page/" + newPageName)
   })
   const [fetchSave, isSaving, errSave]       = useFetching(async ()=>{
-    await Server.saveElements(PageService.pageElements,PageService.name)
+    await Server.saveElements(db,user.uid, PageService.pageElements,PageService.name)
 
     // await waiter(2000)
     newSave(isSave,setSave,true)
@@ -144,7 +150,7 @@ const Header = (props) => {
   async function nextTheme(){
     let newTheme = !lightTheme
     setLightTheme(null)
-    await Server.saveTheme(newTheme)
+    await Server.saveTheme(db,user.uid, newTheme)
     setLightTheme(newTheme)
   }
 

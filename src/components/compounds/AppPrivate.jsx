@@ -7,8 +7,13 @@ import SaveService from "../../tools/services/SaveService";
 import Server from "../../tools/services/Server";
 import {ThemeContext} from "../../context/theme";
 import {SettingsContext} from "../../context/settings";
+import {DatabaseContext} from "../../context/db";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 const AppPrivate = () => {
+
+  const {auth,db} = useContext(DatabaseContext)
+  const [user] = useAuthState(auth)
 
   const {setSettings} = useContext(SettingsContext)
 
@@ -37,7 +42,7 @@ const AppPrivate = () => {
     SaveService.init()
 
 
-    await Server.getAllNameFiles()
+    await Server.getAllNameFiles(db,user.uid)
     let parse = JSON.parse(localStorage.getItem(orderLinks))
     setSave(Object.fromEntries(parse.map(e => [e, true])))
     setPages(parse)
@@ -53,7 +58,7 @@ const AppPrivate = () => {
       await fetchPagesNames()
 
       //settings
-      let newSettings = await Server.getSettings()
+      let newSettings = await Server.getSettings(db,user.uid)
       setSettings(newSettings)
     }
 
@@ -62,7 +67,12 @@ const AppPrivate = () => {
 
   }, [])
 
+  //TODO: fix bag
   useEffect(()=>{
+
+    function question() {
+      return "are u sure&";
+    }
 
     function event(){
       if(isSave === null) return
@@ -71,13 +81,11 @@ const AppPrivate = () => {
         if(!isSave[page]) f = true
       }
       if(f){
-        window.onbeforeunload = function() {
-          return false;
-        };
+        window.onbeforeunload = question
       }
     }
     event()
-
+    // return ()=>{console.log("del"); window.removeEventListener("beforeunload",question)}
   }, [isSave])
 
 
