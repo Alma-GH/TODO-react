@@ -1,5 +1,5 @@
 import React from 'react';
-import Loader from "../UI/Loader/Loader";
+import Loader from "../../UI/Loader/Loader";
 
 const AppLoad = () => {
   return (

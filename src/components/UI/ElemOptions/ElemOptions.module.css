@@ -1,7 +1,7 @@
 .block{
     display: inline-block;
-    width: 200px;
-    height: 115%;
+    min-width: 150px;
+    height: 30px;
     opacity: 100;
     border-radius: 15px;
     border: 2.5px solid black;
@@ -14,16 +14,16 @@
 .wrap{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    /*justify-content: space-around;*/
+    height:100%;
+    width: 100%;
+    position: relative;
+    /*top: 50%;*/
+    /*transform: translate(0,-50%);*/
 }
 
-.btnCreateList{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: calc(100%/2);
-    margin-right: 20px;
+.btns{
+    margin-left: 10px;
 }
 
 /*.btn{*/
@@ -71,3 +71,73 @@
     border-radius: 3px;
     aspect-ratio: 2/1;
 }
+
+.test{
+    display:flex;
+    align-items: center;
+    min-width:50px;
+    color:black;
+    height: 100%;
+
+    margin-left: 10px;
+}
+
+.headList{
+    width: 50px;
+    background-color: rgba(0,0,0,0);
+    position: relative;
+    height: 95%;
+    cursor: pointer;
+}
+.headList div{
+    height: 100%;
+    width: 100%;
+}
+
+.headList .textHead{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border: 2px solid black;
+    z-index: 2;
+}
+
+.headList .bgHead{
+    border-radius: 5px;
+    position: absolute;
+    height: calc(100% - 4px);
+    top: 2px;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.19);
+    width: 0;
+    transition: all 0.7s ease-in-out;
+}
+.test:hover .bgHead,.test.active .bgHead{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    transition: all 0.7s ease-in-out;
+}
+
+
+.test ul{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    width: 0;
+    transition: width 0.2s 0.5s  ease-in-out, padding 0.2s 0.5s  ease-in-out;
+    overflow: hidden;
+
+}
+
+.test:hover ul, .test.active ul{
+    width: 125px;
+    padding: 0 5px;
+    transition: width 0.2s 0.5s  ease-in-out, padding 0.2s 0.5s  ease-in-out;
+}
+
+.test li{
+    padding: 0;
+}
+

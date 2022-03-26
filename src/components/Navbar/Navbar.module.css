@@ -47,22 +47,27 @@
 .grab{
     height: 40px;
     color: white;
-    /*background-color: darkblue;*/
+    background-color: var(--color1-bg-d);
     font-weight: bold;
 
     display: grid;
     grid-template-columns: 25px 1fr;
     grid-template-rows: 100%;
 
-    border-bottom: 2px solid black;
-    border-top: 2px solid black;
+    border-bottom: 2px solid;
+    border-top: 2px solid;
+    border-color: var(--color-border-d);
 
 }
+
+.grab span{
+    background-color: var(--color2-bg-d);
+}
 .navBody li:last-child .grab{
-    border-bottom: 4px solid black;
+    border-bottom: 4px solid var(--color-border-d);
 }
 .navBody li:first-child .grab{
-    border-top: 4px solid black;
+    border-top: 4px solid var(--color-border-d);
 }
 
 .save{
@@ -81,6 +86,14 @@
 
 .pageName{
     height: 100%;
+}
+
+.grab.take span{
+    background-color: var(--color2-bg-take-d);
+}
+
+.grab.take .pageName{
+    background-color: var(--color1-bg-take-d);
 }
 
 
@@ -130,11 +143,15 @@
 }
 
 .wrapBtnOptions{
-    height: 10%;
+    height: 80px;
+    max-height: 50%;
     display: flex;
     justify-content: center;
+    padding: 5px;
 
 }
+
+
 
 .btnOptions{
     height: 100%;
@@ -143,16 +160,31 @@
 
     border-radius: 50%;
     overflow: hidden;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btnOptions:hover{
+    background-color: rgba(255, 255, 255, 0.15);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btnOptions:active{
+    background-color: rgba(255, 255, 255, 0.4);
+    /*transition: background-color 0.4s ease-in-out;*/
 }
 
 .lightNav .btnOptions:hover{
-    background-color: var(--color1-bg-body-l);
+    background-color: rgba(196, 146, 135, 0.57);
+}
+
+.lightNav .btnOptions:active{
+    background-color: rgba(196, 146, 135, 0.9);
 }
 
 
 .loaderBG{
     height: 90%;
-    background-color: #1d2630;
+    background-color: var(--color-bg-loader);
     display: grid;
     place-items: center;
 }

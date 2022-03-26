@@ -85,6 +85,9 @@
     .timer{
         width: 400px;
     }
+    .time{
+        font-size: 1.4rem;
+    }
 }
 
 @media (max-width: 780px) {
@@ -92,7 +95,7 @@
         width: 300px;
     }
     .time{
-        font-size: 1.5rem;
+        font-size: 1rem;
     }
 }
 

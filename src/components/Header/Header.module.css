@@ -6,7 +6,7 @@
 
     height: 30px;
     width: 100%;
-    background-color: white;
+    background-color: var(--color-head-d);
 }
 
 .lightHead{
@@ -30,6 +30,10 @@
 .loader{
     height: 100%;
     aspect-ratio: 1/1;
+}
+
+.error{
+    color: red;
 }
 
 .aboutMe{
@@ -64,4 +68,10 @@
     height:100%;
     aspect-ratio:1/1;
     background-color:rgba(0,0,0,0.2);
+}
+
+@media (max-width:1100px) {
+    .error{
+        display: none;
+    }
 }

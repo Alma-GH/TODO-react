@@ -1,219 +1,193 @@
-import React, {useContext, useState} from 'react';
-import Timer from "../Timer/Timer";
-import MenuHeader from "./MenuHeader/MenuHeader";
-import ElemMenu from "./MenuHeader/ElemMenu/ElemMenu";
-import {useLocation, useNavigate} from "react-router-dom";
+import React, {useContext, useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import Server from "../../tools/services/Server";
 import PageService from "../../tools/services/PageService";
 import Modal from "../UI/Modal/Modal";
 import SimpleForm from "../UI/Forms/SimpleForm";
 import Confirm from "../UI/Forms/Confirm";
 import cls from "./Header.module.css"
-import {linkGH, linkTG, linkVK, orderLinks} from "../../tools/globalConstants";
-import {newSave} from "../../tools/func";
-import Loader from "../UI/Loader/Loader";
+import {
+  aboutMB,
+  createMB,
+  deleteMB,
+  linkGH,
+  linkTG,
+  linkVK,
+  needMB,
+  optionsMB,
+  orderLinks,
+  renameMB
+} from "../../tools/globalConstants";
+import {newSave} from "../../tools/utils/func";
 import {useFetching} from "../../hooks/useFetching";
-import Options from "../UI/Forms/Options";
+import Options from "../UI/Modal/Options/Options";
 import {SettingsContext} from "../../context/settings";
 import {ThemeContext} from "../../context/theme";
 import Hint from "../UI/Modal/Hint/Hint";
 import ButtonHidePanel from "../UI/ButtonToggleBool/ButtonHidePanel/ButtonHidePanel";
-import ButtonExit from "../UI/ButtonToggleBool/ButtonExit/ButtonExit";
 import {DatabaseContext} from "../../context/db";
 import {useAuthState} from "react-firebase-hooks/auth";
+import HeaderAllMenu from "../compounds/Header/HeaderAllMenu";
+import HeaderTimer from "../compounds/Header/HeaderTimer";
+import HeaderNotification from "../compounds/Header/HeaderNotification";
 
-const Header = (props) => {
+const Header = ({ pages,setPanel,sidePanel,
+                  setIsSave:[isSave,setSave],
+                  setPages,act,sound,setSound}) => {
 
-  const {auth,db} = useContext(DatabaseContext)
+  const {auth, db} = useContext(DatabaseContext)
   const [user] = useAuthState(auth)
+
+  const {settings, setSettings} = useContext(SettingsContext)
+  const {lightTheme} = useContext(ThemeContext)
 
   const nav = useNavigate()
 
-  const path = useLocation().pathname
-  const fileName = path.slice(path.lastIndexOf("/")+1)
-  const pages = props.pages
-
-  const setPanel = props.setPanel
-  const sidePanel = props.sidePanel
+  // const path = useLocation().pathname
+  // const fileName = path.slice(path.lastIndexOf("/") + 1)
 
   const [modal, setModal] = useState(false)
-  const [input, setInput] = useState(null)
+  const [inputName, setInputName] = useState(null)
   const [bodyModal, setBodyModal] = useState("")
 
-  const [isSave,setSave] = props.setIsSave
   const [hint, setHint] = useState(0)
 
-  const [fetchCreate, isCreating, errCreate] = useFetching(async ()=>{
-    //TODO: message about non valid name
-    if(!validFileName(input)) return
-    setModal(false)
 
-    await Server.addPage(db,user.uid, input)
-      .catch(e=>console.log(e.message))
-    // await waiter(2000)
-    let newPages = JSON.parse(localStorage.getItem(orderLinks))
-    props.setPages(newPages)
-
-
-    nav("./page/" + input)
-    newSave(isSave,setSave,true)
-
-  })
-  const [fetchRename, isRenaming, errRename] = useFetching(async ()=>{
-    if(!validFileName(input)) return
+  const messageForInvalidFileName = function (name) {
+    if (!name || [name[0], name[name.length - 1]].includes(" ")) return "name must not contain spaces at the end and beginning"
+    if (JSON.parse(localStorage.getItem(orderLinks)).includes(name)) return "name must be unique"
+    if (name.includes(".") || name.includes("/")) return "name must not contain '.' or '/'"
+    return false
+  }
+  function start_operation() {
+    let message = messageForInvalidFileName(inputName)
+    if (message) throw new Error(message)
 
     setModal(false)
-    let posPage = JSON.parse(localStorage.getItem(orderLinks)).indexOf(PageService.name)
-    await Server.deletePage(db,user.uid, fileName)
-    await Server.addPage(db,user.uid, input, PageService.pageElements)
-    // await waiter(2000)
+    setBodyModal("")
+  }
+  function end_operation(where) {
     let newPages = JSON.parse(localStorage.getItem(orderLinks))
-    newPages.splice(posPage,0,newPages.pop())
-    localStorage.setItem(orderLinks, JSON.stringify(newPages))
-
-    props.setPages(newPages)
-
-    nav("./page/" + input)
-    newSave(isSave,setSave,true)
-  })
-  const [fetchDelete, isDeleting, errDelete] = useFetching(async ()=>{
-    setModal(false)
-    await Server.deletePage(db,user.uid, PageService.name)
-    // await waiter(2000)
-    let newPages = JSON.parse(localStorage.getItem(orderLinks))
-    props.setPages(newPages)
-
-    //MB ERROR
-    let ind = pages.indexOf(PageService.name)
-    let newPageName = pages[(!ind)?1:ind-1]
-    nav("./page/" + newPageName)
-  })
-  const [fetchSave, isSaving, errSave]       = useFetching(async ()=>{
-    await Server.saveElements(db,user.uid, PageService.pageElements,PageService.name)
-
-    // await waiter(2000)
-    newSave(isSave,setSave,true)
-  })
-
-  const {settings, setSettings} = useContext(SettingsContext)
-  const {lightTheme, setLightTheme} = useContext(ThemeContext)
-
-  const validFileName = function(name){
-    if(!name || [0,name.length-1].includes(name.indexOf(" ")))   return false
-    if(JSON.parse(localStorage.getItem(orderLinks)).includes(name))    return false
-    if(name.includes(".") || name.includes("/"))            return false
-    return true
+    setPages(newPages)
+    nav("./page/" + where)
+    newSave(isSave, setSave, true)
   }
 
-  function createPage(){
+
+  const [fetchCreate, isCreating, errCreate] = useFetching(async () => {
+
+    let initElems = []
+    for (let i = 0; i < settings.initialNumberElement; i++) initElems.push({"id": Date.now() + i, "name": ""})
+    start_operation()
+    await Server.addPage(db, user.uid, inputName, initElems)
+      .catch(e => console.log(e.message))
+    end_operation(inputName)
+  })
+  const [fetchRename, isRenaming, errRename] = useFetching(async () => {
+    start_operation()
+    await Server.renamePage(db, user.uid, PageService.name, inputName)
+      .catch(e => console.log(e.message))
+    end_operation(inputName)
+  })
+  const [fetchDelete, isDeleting, errDelete] = useFetching(async () => {
+    setModal(false)
+    setBodyModal("")
+    await Server.deletePage(db, user.uid, PageService.name)
+
+    let newPages = JSON.parse(localStorage.getItem(orderLinks))
+    setPages(newPages)
+
+    let ind = pages.indexOf(PageService.name)
+    let newPageName = pages[(!ind) ? 1 : ind - 1]
+    nav("./page/" + newPageName)
+  })
+  const [fetchSave, isSaving, errSave] = useFetching(async () => {
+    await Server.saveElements(db, user.uid, PageService.pageElements, PageService.name)
+    newSave(isSave, setSave, true)
+  })
+
+  //Save on "ctrl + s"
+  useEffect(() => {
+
+    function keyDownEventSave(e) {
+      if (e.ctrlKey || e.metaKey) {
+
+        if (e.key === "s") {
+          e.preventDefault()
+          save()
+        }
+      }
+    }
+
+    document.addEventListener("keydown", keyDownEventSave)
+    return () => document.removeEventListener("keydown", keyDownEventSave)
+  }, [save])
+
+
+
+  function createPage() {
     fetchCreate()
   }
 
-  function deletePage(){
+  function deletePage() {
     fetchDelete()
   }
 
-  function renamePage(){
+  function renamePage() {
     fetchRename()
   }
 
 
-
-  function save(){
+  function save() {
     fetchSave()
   }
 
-  function createMenu(){
-    setBodyModal("create")
-    setInput("");
-    setModal(true);
-  }
 
-  function deleteMenu(){
-    setBodyModal("delete")
-    setModal(true);
-  }
-
-  function renameMenu(){
-    setBodyModal("rename")
-    setInput(PageService.name);
-    setModal(true);
-  }
-
-
-
-  function optionsMenu(){
-    setBodyModal("options")
-    setModal(true)
-  }
-
-  async function nextTheme(){
-    let newTheme = !lightTheme
-    setLightTheme(null)
-    await Server.saveTheme(db,user.uid, newTheme)
-    setLightTheme(newTheme)
-  }
-
-
-
-
-  function aboutMenu(bodyStr){
-    setBodyModal(bodyStr)
-    setModal(true)
-  }
-
-  function hintMenu(){
-    setHint(1)
-  }
-
-
-  function getModalBody(par){
-    switch (par){
-      case "create":
+  function getModalBody(par) {
+    switch (par) {
+      case createMB:
         return (<SimpleForm
           btnFunc={createPage}
           btnName="Create"
-
+          err={errCreate.message}
           inputProps={{
             type: "text",
-            value: input,
-            onChange: e=>setInput(e.target.value)
+            value: inputName,
+            onChange: e => setInputName(e.target.value),
+            autoFocus: true
           }}
         />)
-      case "delete":
-        return (<Confirm btnFuncYES={deletePage} btnFuncNO={()=>setModal(false)} question="Are you sure?"/>)
-      case "rename":
+      case deleteMB:
+        return (<Confirm btnFuncYES={deletePage} btnFuncNO={() => setModal(false)} question="Are you sure?"/>)
+      case renameMB:
         return (<SimpleForm
-          btnFunc={renamePage}
-          btnName="Rename"
-
-          inputProps={{
-            type: "text",
-            value: input,
-            onChange: e=>setInput(e.target.value)
-          }}
-        />)
-      case "options":
+            btnFunc={renamePage}
+            btnName="Rename"
+            err={errRename.message}
+            inputProps={{
+              type: "text",
+              value: inputName,
+              onChange: e => setInputName(e.target.value),
+              autoFocus: true
+            }}
+          />)
+      case optionsMB:
         return (<Options settings={settings} setSettings={setSettings}/>)
 
-      case "about me":
+      case aboutMB:
         return (<div className={cls.aboutMe}>
-                  <a href={linkGH}>Git hub</a>
-                  <a href={linkVK}>VK</a>
-                  <a href={linkTG}>Telegram</a>
-                </div>)
-      case "why you need":
+          <a href={linkGH}>Git hub</a>
+          <a href={linkVK}>VK</a>
+          <a href={linkTG}>Telegram</a>
+        </div>)
+      case needMB:
         return (<div>
-                  YOU NEED IT!!
-                </div>)
-
-
-
+          YOU NEED IT!!
+        </div>)
       default:
         return <div>NONE</div>
     }
   }
-
 
 
   return (
@@ -224,43 +198,28 @@ const Header = (props) => {
           <ButtonHidePanel panel={sidePanel} setPanel={setPanel}/>
         </div>
 
-        <MenuHeader name="File">
-          <ElemMenu func={save}>save</ElemMenu>
-          <ElemMenu func={createMenu}>create</ElemMenu>
-          <ElemMenu func={deleteMenu}>delete</ElemMenu>
-          <ElemMenu func={renameMenu}>rename</ElemMenu>
-        </MenuHeader>
-        <MenuHeader name="Options">
-          <ElemMenu func={nextTheme}>theme</ElemMenu>
-          <ElemMenu func={optionsMenu}>options</ElemMenu>
-        </MenuHeader>
-        <MenuHeader name="About">
-          <ElemMenu func={()=>aboutMenu("why you need")}>why you need</ElemMenu>
-          <ElemMenu func={()=>hintMenu()}>how work</ElemMenu>
-          <ElemMenu func={()=>aboutMenu("about me")}>about me</ElemMenu>
-        </MenuHeader>
+        <HeaderAllMenu
+          setModal={setModal}
+          setInputName={setInputName}
+          setBodyModal={setBodyModal}
+          setHint={setHint}
+          fetchSave={fetchSave}
+        />
 
-        {(isCreating || isRenaming || isDeleting || isSaving) &&
-          <div className={cls.loader}><Loader/></div>
-        }
-        {(errRename || errSave || errDelete || errCreate) &&
-          <div style={{color:"red"}}>HAVE PROBLEM</div>
-        }
-        <div className={cls.timerAndExit}>
-          <Timer act={props.act} sound={props.sound} setSound={props.setSound}/>
-          <div className={cls.exit}>
-            <ButtonExit/>
-          </div>
-        </div>
-
+        <HeaderNotification isSaving={isSaving} isCreating={isCreating}
+                            isDeleting={isDeleting} isRenaming={isRenaming}
+                            errDelete={errDelete} errCreate={errCreate}
+                            errRename={errRename} errSave={errSave}
+        />
+        <HeaderTimer setSound={setSound} sound={sound} act={act}/>
       </div>
 
 
       {hint
-        ?<Hint setHint={setHint} hint={hint} sidePanel={sidePanel} setPanel={setPanel}/>
-        :<Modal visible={modal} setVisible={setModal}>
+        ? <Hint setHint={setHint} hint={hint} sidePanel={sidePanel} setPanel={setPanel}/>
+        : <Modal visible={modal} setVisible={setModal} setBodyModal={setBodyModal}>
           {getModalBody(bodyModal)}
-        </Modal>
+          </Modal>
       }
 
     </div>

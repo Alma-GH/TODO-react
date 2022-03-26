@@ -1,11 +1,11 @@
 import React from 'react';
 import PageService from "../../../tools/services/PageService";
-import {changeOnPage, isDigit, isTime, newSave, toTime} from "../../../tools/func";
+import {changeOnPage, toTime} from "../../../tools/utils/func";
 import cls from "./Descriptoin.module.css"
+import MyInput from "../../UI/MyInput/MyInput";
 
 const Description = (props) => {
 
-  let name = props.elem.description
   let idEl = props.elem.id
   let mod = props.mod
 
@@ -15,30 +15,28 @@ const Description = (props) => {
 
   let setIsSave = props.setIsSave
 
-  function change(e){
-    let TA = e.target
-    let newVal = TA.value
-
-    PageService.setNameDescription(idEl, newVal)
-    changeOnPage(setPageElements,setIsSave)
-
-  }
-
   function setTime(e){
     let val = e.target.value
     if(isSchedule){
       val = toTime(val)
       PageService.setNameDescription(idEl, val)
       changeOnPage(setPageElements,setIsSave)
+      props.setElemDesc(PageService.getPropsElement(idEl).description)
     }
   }
-
-
 
   return (
     <div className={cls.description}>
       <span className="prefixDescription">-</span>
-      <input  type="text" value={name} onChange={change} onBlur={setTime} disabled={!mod}/>
+      <MyInput inputProps={{
+        type:"text",value: props.elemDesc,
+        onBlur:setTime, disabled:!mod, autoFocus:true
+      }}
+               setValue={props.setElemDesc}
+               setPageElements={setPageElements}
+               setIsSave={setIsSave} parentCls={cls.description} idEl={idEl}
+               setter={PageService.setNameDescription.bind(PageService)}
+      />
     </div>
   );
 };

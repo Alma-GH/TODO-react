@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Element from "./Element";
 import {typeNumberList, typeScheduleList, typeSymbolList} from "../../../tools/globalConstants";
 import cls from "./List.module.css"
+import {SettingsContext} from "../../../context/settings";
 
 const List = (props) => {
 
+  const {settings} = useContext(SettingsContext)
+
   let list = props.list.elements
   let type = props.list.type
-
-  let idList = props.idList
 
   let pageElements = props.pageElements
   let setPageElements = props.setPageElements
@@ -20,9 +21,9 @@ const List = (props) => {
   function getPrefix(prefix1, prefix2){
     switch (type){
       case typeNumberList:
-        return prefix1
+        return +prefix1.slice(0,prefix1.length-1) % 100 + ")"
       case typeSymbolList:
-        return prefix2
+        return prefix2.slice(0,3)
     }
   }
 
@@ -32,7 +33,7 @@ const List = (props) => {
         {list.map((el,ind)=>{
             return <li key={el.id} style={{display: "flex"}}>
               {type && type !== typeScheduleList
-                ? <span className={cls.prefixEl}>{getPrefix((ind+1) + ")", "-")}</span>
+                ? <span className={cls.prefixEl}>{getPrefix((ind+1) + ")", settings.symbolForList)}</span>
                 : ""
               }
               <Element

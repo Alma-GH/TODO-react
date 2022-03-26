@@ -1,14 +1,10 @@
 import "./style/App.css"
 import {Route, Routes} from "react-router-dom";
-import {useContext, useEffect, useState} from "react";
-import {SettingsContext} from "./context/settings";
-import {ThemeContext} from "./context/theme";
+import {useContext} from "react";
 import {privateRoutes, publicRoutes} from "./router/routes";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {DatabaseContext} from "./context/db";
-import AppLoad from "./components/compounds/AppLoad";
-import Server from "./tools/services/Server";
-
+import AppLoad from "./components/compounds/App/AppLoad";
 
 
 /*STATE:
@@ -33,44 +29,16 @@ import Server from "./tools/services/Server";
 
 function App() {
 
-  const {auth,db} = useContext(DatabaseContext)
+  const {auth} = useContext(DatabaseContext)
   const [user,loader,err] = useAuthState(auth)
 
-  const [lightTheme, setLightTheme] = useState(null)
-  const [settings, setSettings] = useState({
-    autoFolding: true,
-    autoFilling: true,
-  })
 
-  //TODO: fix theme delay
-  useEffect(()=>{
-    async function loadTheme(){
-      //theme
-      if(user === null) setLightTheme(false)
-      else{
-        let newTheme = await Server.getTheme(db,user.uid)
-        setLightTheme(newTheme)
-      }
-
-    }
-    loadTheme()
-      .catch(e=>console.log(e.message))
-  })
-
-  let routes = user?privateRoutes:publicRoutes
+  let routes = (user && user.emailVerified)?privateRoutes:publicRoutes
 
   if(err) console.log(err)
-  if(loader || lightTheme===null) return <div className="App"><AppLoad/></div>
+  if(loader) return <div className="App"><AppLoad/></div>
 
   return (
-      <SettingsContext.Provider value={{
-        settings,
-        setSettings
-      }}>
-        <ThemeContext.Provider value={{
-          lightTheme,
-          setLightTheme
-        }}>
           <div className="App">
             <Routes>
               {routes.map(route=>(
@@ -78,13 +46,10 @@ function App() {
                   key={route.path}
                   path={route.path}
                   element={route.element}
-                  exact={route.exact}
                 />))
               }
             </Routes>
           </div>
-        </ThemeContext.Provider>
-      </SettingsContext.Provider>
   );
 }
 

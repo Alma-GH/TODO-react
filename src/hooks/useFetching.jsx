@@ -1,21 +1,27 @@
-import {useState} from "react";
-
+import {useEffect, useState} from "react";
+import {errTimer} from "../tools/utils/wrappers"
 
 export const useFetching = (cb)=>{
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(null)
   const [err, setErr] = useState("")
+  const [didMount, setDidMount] = useState(false);
 
-  const fetching = async () => {
+  useEffect(() => {
+    setDidMount(true);
+    return () => setDidMount(false);
+  }, [])
+
+  const fetching = async (...args) => {
     try{
       setIsLoading(true)
-      await cb()
+      await cb(...args)
     }catch(e){
       console.log(e.message)
-      setErr(e.message)
-      setTimeout(()=>setErr(""), 4000)
+      setErr(e)
+      errTimer(()=>setErr(""), 4000)
     }finally {
       setIsLoading(false)
     }
   }
-  return [fetching, isLoading, err]
+  return [fetching, isLoading, err,didMount]
 }

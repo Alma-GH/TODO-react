@@ -9,7 +9,19 @@
 .elemHead{
     display: flex;
     align-items: center;
+    height: 25px;
+}
 
+.elemMain{
+    display: flex;
+    align-items:center;
+}
+
+.elemMain input{
+    height: 100%;
+}
+.elemMain:focus-within input{
+    outline: 1px solid #6c58dc ;
 }
 
 .elemHeadHover:hover{
@@ -26,16 +38,17 @@
 }
 
 .elemName{
-    width: 300px;
+    max-width: 500px;
 }
 
 .descBlock{
     margin-left: 30px;
     width: 100%;
+    display: flex;
+    align-items: center;
 }
 
 .threePoint{
-    background-color: yellow;
     height: 80%;
     width: 20px;
 
@@ -44,14 +57,19 @@
     justify-content: center;
 
     border-radius: 90%/20px;
-    border: 2px solid;
-    color: black;
+    border: 2px solid var(--color-head-menu1-d);
+    color: var(--color1-bg-d);
+    background-color: var(--color-head-d);
+}
+
+.threePoint p{
+    font-size: 0.6rem;
 }
 
 .lightElemHead .threePoint{
     color: var(--main1-color-font);
-    background-color: var(--color1-bg-body-l);
-    border-color: var(--color1-bg-body-l);
+    background-color: var(--color1-bg-body-l-h);
+    border-color: rgba(196, 146, 135, 0.9);;
 }
 
 

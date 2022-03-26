@@ -1,13 +1,15 @@
-import {orderLinks} from "../globalConstants";
+import {defaultSettings, orderLinks} from "../globalConstants";
 import {child, get, ref, set} from "firebase/database";
+import PageService from "./PageService";
 
 const EMPTY_PAGE = [""]
-//TODO:try catch
+
 //TODO: fix save with order
 class Server{
 
- //WARNING: no use
-  async getAllFiles(){ //TODO: mb
+  //WARNING: no use
+  // TODO: mb
+  async getAllFiles(){
     try {
       let arr;
       await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
@@ -29,8 +31,8 @@ class Server{
 
 
   async getAllNameFiles(db,user){
-    try {
-      let arr;
+      let arr = [];
+
       await get(child(ref(db),`users/${user}/data/files`))
         .then(res=>{
           if(!res.exists()){
@@ -39,18 +41,27 @@ class Server{
           }else{
             arr = Object.keys(res.val())
           }
-          if(!localStorage.getItem(orderLinks)) localStorage.setItem(orderLinks, JSON.stringify(arr))
+          // if(!localStorage.getItem(orderLinks)) localStorage.setItem(orderLinks, JSON.stringify(arr))
         })
-      return arr
-    }catch (e){
-      console.log(e.message)
-      return []
+        .catch((e)=> console.log(e.message))
+
+    let res = await get(child(ref(db),`users/${user}/data/orderFiles`))
+      .catch(e=>console.log(e.message))
+
+    if(res.exists()){
+      localStorage.setItem(orderLinks, JSON.stringify(res.val()))
+    }else{
+      await set(ref(db,`users/${user}/data/orderFiles`),arr)
+      localStorage.setItem(orderLinks, JSON.stringify(arr))
     }
+
+
+    return arr
   }
 
 
   async getElementsByParams(db,user,name){
-    let arr;
+    let arr = [];
     await get(child(ref(db),`users/${user}/data/files/${name}`))
       .then(res=>{
         if(!res.exists() || (res.val())[0] === "") arr = []
@@ -61,49 +72,61 @@ class Server{
   }
 
 
+  saveOrder(db,user){
+    return set(ref(db,`users/${user}/data/orderFiles`),JSON.parse(localStorage.getItem(orderLinks)))
+  }
+
 
   saveElements(db,user,elements, file){
     if(!elements.length) elements = EMPTY_PAGE
     return set(ref(db,`users/${user}/data/files/${file}`), elements)
   }
 
-  addPage(db,user, name, elements){
-    return set(ref(db,`users/${user}/data/files/${name}`), (elements && elements.length)?elements:EMPTY_PAGE)
-      .then(()=>{
-        let oldSt = JSON.parse(localStorage.getItem(orderLinks))
-        let newSt = [...oldSt, name]
-        localStorage.setItem(orderLinks, JSON.stringify(newSt))
-      })
+  async addPage(db,user, name, elements){
+    let oldSt = JSON.parse(localStorage.getItem(orderLinks))
+    let newSt = [...oldSt, name]
+
+    await set(ref(db,`users/${user}/data/files/${name}`), (elements && elements.length)?elements:EMPTY_PAGE)
+    await set(ref(db,`users/${user}/data/orderFiles`),newSt)
+    localStorage.setItem(orderLinks, JSON.stringify(newSt))
   }
 
-  deletePage(db,user,name){
-    return set(ref(db,`users/${user}/data/files/${name}`), null)
-      .then(()=>{
-        let oldSt = JSON.parse(localStorage.getItem(orderLinks))
-        oldSt.splice(oldSt.indexOf(name),1)
-        localStorage.setItem(orderLinks, JSON.stringify(oldSt))
-      })
+  async deletePage(db,user,name) {
+    let oldSt = JSON.parse(localStorage.getItem(orderLinks))
+    oldSt.splice(oldSt.indexOf(name), 1)
+
+    await set(ref(db, `users/${user}/data/files/${name}`), null)
+    await set(ref(db,`users/${user}/data/orderFiles`),oldSt)
+    localStorage.setItem(orderLinks, JSON.stringify(oldSt))
   }
 
-  renamePage(){   //TODO:mb
+  //TODO:optimization
+  async renamePage(db,user,oldName,newName) {
+    let posPage = JSON.parse(localStorage.getItem(orderLinks)).indexOf(oldName)
 
+    await this.deletePage(db,user, oldName)
+    await this.addPage(db,user, newName, PageService.pageElements)
+
+    let newPages = JSON.parse(localStorage.getItem(orderLinks))
+    newPages.splice(posPage,0,newPages.pop())
+
+    await set(ref(db,`users/${user}/data/orderFiles`),newPages)
+    localStorage.setItem(orderLinks, JSON.stringify(newPages))
   }
 
   async getSettings(db,user){
-    let arr;
+    let arr=[];
     await get(child(ref(db),`users/${user}/data/settings`))
       .then(res=>{
         if(res.exists()){
           arr = res.val()
         }else{
-          arr = {
-            autoFolding: true,
-            autoFilling: true,
-          }
+          arr = defaultSettings
           console.log(`NO SETTINGS FOR USER ${user}`)
         }
 
       })
+      .catch(e=>console.log(e.message))
     return arr
   }
 
@@ -114,7 +137,7 @@ class Server{
 
 
   async getTheme(db,user){
-    let str;
+    let str = false;
     await get(child(ref(db),`users/${user}/data/LTheme`))
       .then(res=>{
         if(res.exists()){
@@ -124,6 +147,7 @@ class Server{
           console.log(`NO THEME FOR USER ${user}`)
         }
       })
+      .catch(e=>console.log(e.message))
     return str
   }
 

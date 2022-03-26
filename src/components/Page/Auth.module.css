@@ -1,18 +1,13 @@
-.center{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.authPage{
+    background-color: var(--color1-bg-body-d) !important;
     height: 100vh;
 }
 
-.form{
-    border: 2px solid black;
-    padding: 10px 25px;
-    background-color: white;
-    border-radius: 16px;
-    min-width: 250px;
-    min-height: 100px;
+.authContent{
+    /*height: 200px;*/
 }
+
 
 .right{
     position: absolute;
@@ -22,3 +17,4 @@
     display: flex;
     justify-content: space-around;
 }
+

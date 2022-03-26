@@ -1,4 +1,4 @@
-import {myCopyObj, takeAllElements, toTime} from "../func";
+import {myCopyObj, takeAllElements, toTime} from "../utils/func";
 import {typeScheduleList} from "../globalConstants";
 
 class PageService{

@@ -10,9 +10,14 @@ const Modal = (props) => {
   let style = [cls.modal]
   if(vis === true) style.push(cls.active)
 
+  function hideModal(){
+    setVis(false)
+    props.setBodyModal("")
+  }
+
 
   return (
-    <div className={style.join(" ")} onClick={()=>setVis(false)}>
+    <div className={style.join(" ")} onClick={hideModal}>
       <div className={cls.modalContent}  onClick={e=>e.stopPropagation()}>
         {props.children}
       </div>

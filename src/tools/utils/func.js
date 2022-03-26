@@ -1,5 +1,7 @@
-import PageService from "./services/PageService";
-import SaveService from "./services/SaveService";
+import PageService from "../services/PageService";
+import SaveService from "../services/SaveService";
+import {NF} from "../globalConstants";
+import Server from "../services/Server";
 
 
 export const takeAllElements = (arr,func, depth)=>{
@@ -78,7 +80,7 @@ export const newSave  = (val, setter, bool=false)=>{
   setter(val)
 }
 
-export const changeOnPage = (setElements, saveArg)=>{
+export const changeOnPage = (setElements=NF, saveArg)=>{
   function validArg(){
     if(saveArg.length < 2) return false
     if(typeof saveArg[0] !== "object" || typeof saveArg[1] !== "function") return false
@@ -109,6 +111,44 @@ export const splitCamelCase = (str)=>{
     }
   }
   return arr.join("")
+}
+
+export const createMyTimer = ()=>{
+  let timer
+  return (func,time)=>{
+    if(timer) clearTimeout(timer)
+    timer = setTimeout(func, time)
+  }
+}
+
+
+export const createThrottling = (func, ms)=>{
+
+  let isThrottled = false,
+    savedArgs,
+    savedThis;
+
+  return function wrapper() {
+
+    if (isThrottled) { // (2)
+      savedArgs = arguments;
+      savedThis = this;
+      return new Promise(res=>"im wait")
+    }
+
+    let res = func.apply(this, arguments); // (1)
+
+    isThrottled = true;
+
+    setTimeout(function() {
+      isThrottled = false; // (3)
+      if (savedArgs) {
+        wrapper.apply(savedThis, savedArgs);
+        savedArgs = savedThis = null;
+      }
+    }, ms);
+    return res
+  }
 }
 
 

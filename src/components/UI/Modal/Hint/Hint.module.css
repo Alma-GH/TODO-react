@@ -10,6 +10,12 @@
     min-width: 100px;
     min-height: 100px;
     position: fixed;
+    font-family: initial;
+}
+.hintDef div,
+.hintDef ul,
+.hintDef li{
+    font-family: initial;
 }
 
 .hint1{
@@ -90,11 +96,22 @@
     clip-path: polygon(calc(var(--width-hint) - 10px) 15px, 100% 15px,
                 100% 100%, 0 100%, 0 15px, calc(var(--width-hint) - 30px)  15px, calc(var(--width-hint) - 20px) 0);
 }
+.hint7 li{
+    padding: 0;
+    margin-bottom: 7px;
+}
 
 
 .xCenter{
     display:flex;
     justify-content:center;
+}
+
+
+@media (max-width: 670px) {
+    .hint7{
+        display: none;
+    }
 }
 
 

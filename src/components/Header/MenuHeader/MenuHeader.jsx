@@ -26,9 +26,11 @@ const MenuHeader = (props) => {
       <div className={style.join(" ")} >
         {props.name}
       </div>
-      {isShow
-        ? <div className={cls.menu} onClick={hideMenu}>{props.children}</div>
-        : ""
+
+      {isShow &&
+        <div className={cls.menu} onClick={hideMenu}>
+          {props.children}
+        </div>
       }
     </div>
 

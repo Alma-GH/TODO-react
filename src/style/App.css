@@ -1,13 +1,16 @@
 :root{
     --main1-color-font: rgb(65,11,5);
     --main2-color-font: rgb(255,255,255);
+    --color-bg-loader: #1d2630;
 
+    /* ***LIGHT*** */
 
+    /*head*/
     --color-head-l: rgb(144,93,128);
     --color-head-menu1: rgb(216,107,182);
     --color-head-menu2: rgb(206, 86, 169);
 
-
+    /*links*/
     --color-border-l: rgb(137,56,60);
 
     --color1-bg-l:rgb(196,123,127);
@@ -16,8 +19,33 @@
     --color1-bg-take-l: rgb(193,75,81);
     --color2-bg-take-l: rgb(166,69,75);
 
-    --color1-bg-body-l: rgba(196, 146, 135, 0.57);
-    --color2-bg-body-l:rgb(255,249,247);
+    /*bodies*/
+    --color1-bg-body-l: #DDC1BB;
+    --color1-bg-body-l-h: rgba(196, 146, 135, 0.57);
+    --color2-bg-body-l: rgb(255,249,247);
+
+
+
+    /* ***DARK*** */
+
+
+    /*head*/
+    --color-head-d: rgb(204,204,204);
+    --color-head-menu1-d: rgb(141,152,164);
+    --color-head-menu2-d: rgb(98, 104, 115);
+    /*links*/
+    --color-border-d: rgb(12, 20, 28);
+
+    --color1-bg-d:rgb(34,48,64);
+    --color2-bg-d:rgb(24,38,54);
+
+    --color1-bg-take-d: #6c58dc;
+    --color2-bg-take-d: #324056;
+
+
+    /*bodies*/
+    --color1-bg-body-d: rgba(43,43, 43, 1);
+
 
 }
 
@@ -25,12 +53,14 @@
     margin:0;
     padding: 0;
     box-sizing: border-box;
+    font-family: monospace;
 
     font-size: 16px;
 }
 
 .App{
     height: 100vh;
+    background-color: var(--color-bg-loader);
 }
 
 ul{
@@ -57,6 +87,7 @@ button{
 input, textarea{
     background: none;
     border: none;
+    outline: none;
 
     font-size: 1rem;
     font-weight: bold;
@@ -76,15 +107,17 @@ input, textarea{
         left: 150px;
         right: 0;
 
-        border: 3px solid black;
-        background: url("/src/img_svg/BlackBG.jpg");
+        /*border: 3px solid black;*/
+        background-color: var(--color1-bg-body-d);
+        /*background: url("/src/img_svg/BlackBG.jpg");*/
         background-size: 300px 300px;
 
         transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
     }
 
     .lightBody{
-        background: url("/src/img_svg/WhiteBG.jpg");
+        background-color: rgba(255,248,247,1);
+        /*background: url("/src/img_svg/WhiteBG.jpg");*/
     }
 
     .notSidePanel{

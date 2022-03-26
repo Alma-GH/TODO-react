@@ -16,7 +16,7 @@
     transition: width 0.3s ease-in-out;
 }
 
-.img:active{
-    width: 55%;
+.img:active img{
+    width: 45%;
     transition: width 0.3s ease-in-out;
 }

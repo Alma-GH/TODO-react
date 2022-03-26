@@ -10,7 +10,7 @@
 }
 
 .page.lightPage{
-    background-color: rgba(255,248,247,1);
+    background-color: rgba(255,248,247,0);
     color: var(--main1-color-font);
 }
 

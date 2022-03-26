@@ -1,23 +1,24 @@
 import React, {useContext, useEffect, useState} from 'react';
-import ButtonCreateElement from "../UI/ButtonCreateElement/ButtonCreateElement";
-import Element from "./PageStructure/Element";
-import {orderLinks, typeScheduleList} from "../../tools/globalConstants";
+import {typeScheduleList} from "../../tools/globalConstants";
 import Panel from "./PageStructure/Panel";
 import PageService from "../../tools/services/PageService";
 import {useParams} from "react-router-dom";
-import {changeOnPage, isClock, takeAllElements} from "../../tools/func";
+import {changeOnPage, isClock, takeAllElements} from "../../tools/utils/func";
+import {keyboardTimer} from "../../tools/utils/wrappers";
 import Server from "../../tools/services/Server";
 import cls from "./Page.module.css"
 import SaveService from "../../tools/services/SaveService";
 import {useFetching} from "../../hooks/useFetching";
 import Loader from "../UI/Loader/Loader";
-import srcAudio from  "../../sound/nextAct.mp3"
+import srcAudio from "../../sound/nextAct.mp3"
 import {ThemeContext} from "../../context/theme";
 import {DatabaseContext} from "../../context/db";
 import {useAuthState} from "react-firebase-hooks/auth";
+import PageBody from "../compounds/Page/PageBody";
+
+const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
 
 
-const Page = (props) => {
   /*structure element
   {
     id:
@@ -33,19 +34,15 @@ const Page = (props) => {
   const {auth,db} = useContext(DatabaseContext)
   const [user] = useAuthState(auth)
 
-  let mod = props.mod
-  let setAct = props.setAct
+  const {lightTheme} = useContext(ThemeContext)
 
-  const setTakeArr = props.setTakeArr
 
-  let isSound = props.sound
-  let setIsSave = props.setIsSave
   let save = setIsSave[0]
   let params = useParams()
 
   const [elements, setElements] = useState([])
   const [isFolding, setIsFolding] = useState(false)
-  const {lightTheme,setLightTheme} = useContext(ThemeContext)
+
   const [fetchElements, isElLoading, errEl] = useFetching(async ()=>{
     setAct(null)
     let elems
@@ -74,9 +71,6 @@ const Page = (props) => {
   useEffect(()=>{
     fetchElements()
       .catch(e=>console.log(e.message))
-    let str = localStorage.getItem(orderLinks)?localStorage.getItem(orderLinks):"[]"
-    let links = Object.fromEntries(JSON.parse(str).map(link=>[link, false]))
-    setTakeArr({...links, [params.name]:true})
     return ()=>console.log("unmount page")
   }, [params.name])
 
@@ -132,31 +126,35 @@ const Page = (props) => {
     return ()=>clearInterval(timer)
   }, [elements])
 
-  //TODO:Save file by keyboard
+  //Roll up lists
   useEffect(()=>{
 
-    // let timeID
     function keyDownEvent(e){
       if(e.ctrlKey || e.metaKey){
-        e.preventDefault()
-        // if(timeID) clearTimeout(timeID)
+
+        let keyN = +e.key
+        let isKeyNum = !isNaN(keyN)
+
+        if(e.key === "k+" || isKeyNum) e.preventDefault()
+
         if(e.key === "k"){
           setIsFolding(true)
-          // timeID = setTimeout(()=>setIsFolding(false), 3000)
-        }else if(isFolding){
-          let res = +e.key
-          if(!isNaN(res)){
-            PageService.invisibleListsByDepth(res)
+          keyboardTimer(()=>setIsFolding(false), 5000)
+        }
+        else if(isFolding){
+          if(isKeyNum){
+            PageService.invisibleListsByDepth(keyN)
             changeOnPage(setElements,setIsSave)
           }
           setIsFolding(false)
-        }
+        }        
       }
     }
 
     document.addEventListener("keydown", keyDownEvent)
     return ()=>document.removeEventListener("keydown",keyDownEvent)
-  }, [isFolding])
+  }, [isFolding, setIsSave])
+
 
   PageService.setElements(elements, params.name)
   window.page = [PageService.name, PageService.pageElements]
@@ -169,18 +167,7 @@ const Page = (props) => {
           <div className={cls.page + ` ${lightTheme && cls.lightPage}`}>
             <div className={cls.wrapPage}>
               <Panel mod={mod} elements={elements} setElements={setElements} setIsSave={setIsSave}/>
-
-              <div className={cls.bodyPage}>
-                {elements.map(el=>
-                  <Element elem={el} mod={mod} pageElements={elements}
-                           setPageElements={setElements} setAct={setAct}
-                           key={el.id} setIsSave={setIsSave}/>)
-                }
-                {mod &&
-                <ButtonCreateElement elements={elements} setElements={setElements} setIsSave={setIsSave}/>
-                }
-              </div>
-
+              <PageBody mod={mod} elements={elements} setElements={setElements} setIsSave={setIsSave} setAct={setAct}/>
             </div>
           </div>
         }

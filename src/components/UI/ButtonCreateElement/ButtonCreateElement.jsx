@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import cls from "./ButtonCreateElement.module.css"
 import PageService from "../../../tools/services/PageService";
-import {changeOnPage} from "../../../tools/func";
+import {changeOnPage} from "../../../tools/utils/func";
 import {ThemeContext} from "../../../context/theme";
 
 const ButtonCreateElement = ({elements,setElements,idList, setIsSave, disable}) => {
@@ -18,8 +18,8 @@ const ButtonCreateElement = ({elements,setElements,idList, setIsSave, disable}) 
   }
 
   return (
-    <button tabIndex="1000" className={style.join(" ")} onClick={disable?()=>console.log("not work"):createElementList}>
-      +
+    <button tabIndex="-1" className={style.join(" ")} onClick={disable?()=>console.log("not work"):createElementList}>
+      <span>+</span>
     </button>
   );
 };

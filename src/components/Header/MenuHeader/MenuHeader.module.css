@@ -14,8 +14,8 @@
 }
 
 .popUp:hover{
-    background-color: #caedfc;
-    border: 2px solid #9ceeff;
+    background-color: var(--color-head-menu1-d);
+    border: 2px solid var(--color-head-menu2-d);
 }
 
 .lightPopUp{
@@ -29,15 +29,14 @@
 
 
 .menu{
-    min-height: 3vh;
-    width: 10vw;
+    min-width: 100px;
 
     position: absolute;
-    top: 29px;
+    top: 30px;
     z-index: 3;
     background-color: white;
 
     display: flex;
     flex-direction: column;
-
+    overflow: hidden;
 }

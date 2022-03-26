@@ -2,11 +2,10 @@
 .btn2 {
     outline: none;
     border: 2px solid black;
-
-    font-size: 1.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
+
 
     border-radius: 50%;
     height: 21px;
@@ -15,7 +14,7 @@
     font-weight: normal;
     text-decoration: none;
     color: black;
-    background-color: white;
+    background-color: var(--color1-bg-take-d);
     cursor: pointer;
     user-select: none;
     appearance: none;
@@ -35,4 +34,9 @@
 .lightBtn2{
     border-color: var(--color-border-l);
     background-color: var(--color1-bg-take-l);
+}
+
+.btn2 span{
+    font-size: 1rem;
+
 }
