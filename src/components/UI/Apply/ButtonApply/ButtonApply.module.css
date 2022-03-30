@@ -10,11 +10,33 @@
     cursor: pointer;
 }
 
-
-.button:hover{
-    background-color: yellow;
+.btn {
+    margin-right: 5px;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    aspect-ratio: 2/1;
+    text-transform: uppercase;
+    font-weight: normal;
+    text-decoration: none;
+    color: #444;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(65 ,132 ,144,0.10), 0 1px 3px rgba(0 ,0 ,0 , 0.8);
+    cursor: pointer;
+    user-select: none;
+    appearance: none;
+    touch-action: manipulation;
+    vertical-align: top;
+    transition: box-shadow 0.2s;
 }
-
-.button:active{
-    background-color: red;
+.btn:focus-visible {
+    border: 1px solid #4c51f9;
+    outline: none;
+}
+.btn:hover {
+    transition: all 0.2s;
+    box-shadow: 0 7px 14px rgba(65 ,132 ,144,0.10), 0 3px 6px rgba(0 ,0 ,0 , 0.8);
+}
+.btn:active {
+    background-color: #808080;
 }

@@ -12,12 +12,18 @@ import AppContext from "./AppContext";
 
 const AppPrivate = () => {
 
+  //auth data
   const {auth,db} = useContext(DatabaseContext)
   const [user] = useAuthState(auth)
 
+  //context
   const [lightTheme, setLightTheme] = useState(null)
   const [settings, setSettings] = useState(defaultSettings)
+  const [isOnPage, setIsOnPage] = useState(false)
+
+  //store
   const [pages, setPages] = useState([])
+
 
   const [isGetData, setIsGetData] = useState(false)
   const [optionMod, setOptionMod] = useState(false)
@@ -25,8 +31,9 @@ const AppPrivate = () => {
   const [sound, setSound] = useState(false)
 
   const [sidePanel, setSidePanel] = useState(true)
-
   const [isSave, setSave] = useState(null)
+
+
   const [fetchPagesNames, isNamesLoading, errNames] = useFetching(async () => {
 
     SaveService.init()
@@ -112,6 +119,7 @@ const AppPrivate = () => {
     <AppContext
       lightTheme={lightTheme} setLightTheme={setLightTheme}
       settings={settings} setSettings={setSettings}
+      isOnPage={isOnPage} setIsOnPage={setIsOnPage}
     >
       <AppMain pages={pages} setPages={setPages}
                optionMod={optionMod} setOptionMod={setOptionMod}

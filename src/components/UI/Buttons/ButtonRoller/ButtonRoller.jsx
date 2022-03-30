@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import cls from "./ButtonRoller.module.css"
-import PageService from "../../../tools/services/PageService";
-import {changeOnPage} from "../../../tools/utils/func";
-import {SettingsContext} from "../../../context/settings";
+import PageService from "../../../../tools/services/PageService";
+import {changeOnPage} from "../../../../tools/utils/func";
+import {SettingsContext} from "../../../../context/settings";
 
 const ButtonRoller = (props) => {
 

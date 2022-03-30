@@ -6,6 +6,7 @@ import {DatabaseContext} from "./context/db";
 import {initializeApp} from "firebase/app";
 import {getAuth} from "firebase/auth";
 import {getDatabase} from "firebase/database"
+import {compareTimeOfDay} from "./tools/utils/func";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA2P5Ubd1CXr6ZEghyCrHHpr6U5rm5sQsI",
@@ -21,6 +22,8 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 const db = getDatabase(app);
+
+
 
 
 ReactDOM.render(

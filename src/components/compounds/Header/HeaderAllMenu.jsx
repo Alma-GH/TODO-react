@@ -7,6 +7,7 @@ import {DatabaseContext} from "../../../context/db";
 import {useAuthState} from "react-firebase-hooks/auth";
 import {ThemeContext} from "../../../context/theme";
 import {aboutMB, createMB, deleteMB, needMB, optionsMB, renameMB} from "../../../tools/globalConstants";
+import {OnPageContext} from "../../../context/onPage";
 
 const HeaderAllMenu = ({setModal,setInputName,setBodyModal,
                    setHint,fetchSave}) => {
@@ -16,6 +17,7 @@ const HeaderAllMenu = ({setModal,setInputName,setBodyModal,
   const [user] = useAuthState(auth)
 
   const {lightTheme, setLightTheme} = useContext(ThemeContext)
+  const {isOnPage} = useContext(OnPageContext)
 
 
   function save() {
@@ -62,14 +64,13 @@ const HeaderAllMenu = ({setModal,setInputName,setBodyModal,
     setHint(1)
   }
 
-
   return (
     <>
       <MenuHeader name="File">
-        <ElemMenu func={save}>save</ElemMenu>
+        <ElemMenu func={save} disabled={!isOnPage}>save</ElemMenu>
         <ElemMenu func={createMenu}>create</ElemMenu>
-        <ElemMenu func={deleteMenu}>delete</ElemMenu>
-        <ElemMenu func={renameMenu}>rename</ElemMenu>
+        <ElemMenu func={deleteMenu} disabled={!isOnPage}>delete</ElemMenu>
+        <ElemMenu func={renameMenu} disabled={!isOnPage}>rename</ElemMenu>
       </MenuHeader>
       <MenuHeader name="Options">
         <ElemMenu func={nextTheme}>theme</ElemMenu>

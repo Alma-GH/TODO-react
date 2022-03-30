@@ -3,7 +3,7 @@ import cls from "../../Navbar/Navbar.module.css";
 import imgSave from "../../../img_svg/menu.png";
 import imgNotSave from "../../../img_svg/black-circle.png";
 import {NavLink} from "react-router-dom";
-import ButtonLink from "../ButtonLink/ButtonLink";
+import ButtonLink from "../Buttons/ButtonLink/ButtonLink";
 
 const MyLink = ({isSave,link}) => {
 

@@ -1,27 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PageService from "../../../tools/services/PageService";
 import {changeOnPage, toTime} from "../../../tools/utils/func";
 import cls from "./Descriptoin.module.css"
 import MyInput from "../../UI/MyInput/MyInput";
 
-const Description = (props) => {
+const Description = ({elem,mod,setPageElements,isSchedule,setIsSave,elemDesc,setElemDesc}) => {
 
-  let idEl = props.elem.id
-  let mod = props.mod
+  let idEl = elem.id
 
-  let setPageElements = props.setPageElements
+  const [lastVal, setLastVal] = useState(null)
 
-  let isSchedule = props.isSchedule
+  function saveLast(e){
+    setLastVal(e.target.value)
+  }
 
-  let setIsSave = props.setIsSave
 
   function setTime(e){
     let val = e.target.value
+    //optimization
+    if(lastVal===val) return
     if(isSchedule){
       val = toTime(val)
       PageService.setNameDescription(idEl, val)
       changeOnPage(setPageElements,setIsSave)
-      props.setElemDesc(PageService.getPropsElement(idEl).description)
+      setElemDesc(PageService.getPropsElement(idEl).description)
     }
   }
 
@@ -29,10 +31,10 @@ const Description = (props) => {
     <div className={cls.description}>
       <span className="prefixDescription">-</span>
       <MyInput inputProps={{
-        type:"text",value: props.elemDesc,
-        onBlur:setTime, disabled:!mod, autoFocus:true
+        type:"text",value: elemDesc,
+        onBlur:setTime, onFocus:saveLast, disabled:!mod, autoFocus:true
       }}
-               setValue={props.setElemDesc}
+               setValue={setElemDesc}
                setPageElements={setPageElements}
                setIsSave={setIsSave} parentCls={cls.description} idEl={idEl}
                setter={PageService.setNameDescription.bind(PageService)}

@@ -25,6 +25,7 @@ const Navbar = ({mod,setMod,sidePanel,isSave,isLoading:[isLoading,err], links, s
         <NavbarBody err={err}  links={links} setLinks={setLinks} isLoading={isLoading}>
           {arrLinks}
         </NavbarBody>
+
         <NavbarBtn mod={mod} setMod={setMod}/>
       </div>
   );

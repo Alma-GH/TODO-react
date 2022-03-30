@@ -1,10 +1,10 @@
 import React from 'react';
 import cls from "./ElemMenu.module.css"
 
-const ElemMenu = (props) => {
+const ElemMenu = ({disabled,func,children}) => {
   return (
-    <button className={cls.btn} onClick={props.func}>
-      {props.children}
+    <button className={cls.btn} onClick={func} disabled={disabled}>
+      {children}
     </button>
   );
 };

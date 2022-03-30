@@ -7,6 +7,9 @@ const AppMain = ({pages,setPages,   optionMod,setOptionMod,
                    act,setAct,   sidePanel,setSidePanel,
                    sound,setSound, isSave,setSave,
                    isNamesLoading,errNames}) => {
+
+
+
   return (
     <div>
       <Header setPanel={setSidePanel} sidePanel={sidePanel}

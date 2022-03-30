@@ -1,9 +1,9 @@
 import React, {useEffect} from 'react';
 import clsModal from "../Modal.module.css"
 import clsHint from "./Hint.module.css"
-import ButtonCreateElement from "../../ButtonCreateElement/ButtonCreateElement";
+import ButtonCreateElement from "../../Buttons/ButtonCreateElement/ButtonCreateElement";
 import ElemOptions from "../../ElemOptions/ElemOptions";
-import ButtonRoller from "../../ButtonRoller/ButtonRoller";
+import ButtonRoller from "../../Buttons/ButtonRoller/ButtonRoller";
 
 const Hint = ({hint,setHint,sidePanel,setPanel}) => {
 

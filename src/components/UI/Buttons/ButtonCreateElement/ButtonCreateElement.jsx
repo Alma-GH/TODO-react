@@ -1,8 +1,8 @@
 import React, {useContext} from 'react';
 import cls from "./ButtonCreateElement.module.css"
-import PageService from "../../../tools/services/PageService";
-import {changeOnPage} from "../../../tools/utils/func";
-import {ThemeContext} from "../../../context/theme";
+import PageService from "../../../../tools/services/PageService";
+import {changeOnPage} from "../../../../tools/utils/func";
+import {ThemeContext} from "../../../../context/theme";
 
 const ButtonCreateElement = ({elements,setElements,idList, setIsSave, disable}) => {
 

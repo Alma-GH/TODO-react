@@ -1,10 +1,8 @@
 import React, {useContext} from 'react';
 import ButtonToggleBool from "../ButtonToggleBool";
-import {AuthContext} from "../../../../context/auth";
 import cls from "./ButtonExit.module.css"
 import cancel from "./../../../../img_svg/cancel.png"
 import {DatabaseContext} from "../../../../context/db";
-import {useAuthState} from "react-firebase-hooks/auth";
 
 
 const ButtonExit = X => {

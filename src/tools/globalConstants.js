@@ -22,9 +22,33 @@ export const needMB = "why you need modal body"
 export const defaultSettings = {
   autoFolding: true,
   autoFilling: true,
-  sound: true,
-  initialNumberElement: "5",
+  initialNumberElement: 5,
   symbolForList: "-",
+}
+
+export const validFunctionsForSettings = {
+  autoFolding: (val)=>val,
+  autoFilling: (val)=>val,
+  initialNumberElement: (val)=>{
+    val = parseInt(val)
+    return (!isNaN(val) && 0<=val && val<100) ? val : defaultSettings.initialNumberElement
+  },
+  symbolForList: (val)=>{
+    return (val.length<4) ? val : defaultSettings.symbolForList
+  },
+}
+
+export const strHintSettings = {
+  tooltip:{
+    autoFolding: "automatic collapse of lists when the parent is collapsed",
+    autoFilling: "automatic completion of fields on creation",
+    initialNumberElement: "Number of lines per page when created",
+    symbolForList: "insert before element when creating list with symbol",
+  },
+  limitation:{
+    initialNumberElement: "(max 99)",
+    symbolForList: "(max 3 symbols)",
+  },
 }
 
 export const NF = ()=>{}

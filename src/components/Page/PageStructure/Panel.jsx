@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {takeAllElements, takeAllElementsWithReturn} from "../../../tools/utils/func";
-import ButtonRoller from "../../UI/ButtonRoller/ButtonRoller";
+import ButtonRoller from "../../UI/Buttons/ButtonRoller/ButtonRoller";
 import cls from "./Panel.module.css"
 import {ThemeContext} from "../../../context/theme";
 

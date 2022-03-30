@@ -1,13 +1,11 @@
 import React from 'react';
-import Loader from "../../UI/Loader/Loader";
+import Loader from "../../Loader/Loader";
+
 
 const AppLoad = () => {
   return (
-    <div style={{display:"grid", placeItems:"center", height:"100%", backgroundColor:"#1d2630"}}>
-      <div style={{width:"30%", aspectRatio:"1/1"}}>
-        <Loader/>
-      </div>
-    </div>
+        <Loader styleBG={{display:"grid", placeItems:"center", height:"100%", backgroundColor:"#1d2630"}}
+                styleWrap={{width:"30%", aspectRatio:"1/1"}}/>
   );
 };
 

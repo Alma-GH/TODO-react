@@ -4,31 +4,7 @@ import PageService from "./PageService";
 
 const EMPTY_PAGE = [""]
 
-//TODO: fix save with order
 class Server{
-
-  //WARNING: no use
-  // TODO: mb
-  async getAllFiles(){
-    try {
-      let arr;
-      await fetch("https://mytodo-4d40f-default-rtdb.europe-west1.firebasedatabase.app/files.json")
-        .then(response=>response.json())
-        .then(res=>{
-          for(let file in res){
-            if(res[file] === null || res[file][0] === "") res[file].length = 0
-          }
-          arr = res
-        })
-      return arr
-    }catch (e){
-      console.log(e.message)
-      return []
-    }
-
-  }
-
-
 
   async getAllNameFiles(db,user){
       let arr = [];
@@ -100,7 +76,6 @@ class Server{
     localStorage.setItem(orderLinks, JSON.stringify(oldSt))
   }
 
-  //TODO:optimization
   async renamePage(db,user,oldName,newName) {
     let posPage = JSON.parse(localStorage.getItem(orderLinks)).indexOf(oldName)
 

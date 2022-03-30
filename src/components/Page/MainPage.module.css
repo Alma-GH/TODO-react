@@ -1,8 +1,16 @@
 .main{
-    padding: 1rem;
-    background-color: dimgray;
-    color: black;
+
+    display:grid;
+    place-items: center;
 
     width: 100%;
-    height: calc(100vh - 36px);
+    height: calc(100vh - 30px);
+
+    padding: 1rem;
+    /*background-color: var(--color-bg-loader);*/
+    color: black;
+}
+
+.main div p{
+    margin: 10px 0;
 }

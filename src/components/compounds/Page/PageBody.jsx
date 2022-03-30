@@ -1,7 +1,7 @@
 import React from 'react';
 import cls from "../../Page/Page.module.css";
 import Element from "../../Page/PageStructure/Element";
-import ButtonCreateElement from "../../UI/ButtonCreateElement/ButtonCreateElement";
+import ButtonCreateElement from "../../UI/Buttons/ButtonCreateElement/ButtonCreateElement";
 
 const PageBody = ({elements,setElements, mod, setAct, setIsSave}) => {
 

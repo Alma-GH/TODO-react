@@ -1,6 +1,6 @@
 import React from 'react';
 import ElemOptions from "../../UI/ElemOptions/ElemOptions";
-import ButtonCreateElement from "../../UI/ButtonCreateElement/ButtonCreateElement";
+import ButtonCreateElement from "../../UI/Buttons/ButtonCreateElement/ButtonCreateElement";
 
 const ElementMenu = ({style,setElemName,setElemDesc,
                        idEl, type, setPageElements, pageElements, elements,

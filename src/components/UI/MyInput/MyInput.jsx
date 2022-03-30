@@ -19,6 +19,11 @@ const MyInput = ({inputProps,setter,idEl,setValue,setPageElements,setIsSave,pare
 
   function nextIndex(e){
 
+    if(e.ctrlKey && e.key === "s"){
+      e.stopPropagation()
+      e.preventDefault()
+    }
+
     if(!["ArrowUp","ArrowDown","Enter"].includes(e.key)) return
 
     if(e.key === "Enter"){

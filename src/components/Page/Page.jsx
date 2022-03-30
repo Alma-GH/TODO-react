@@ -1,20 +1,21 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {typeScheduleList} from "../../tools/globalConstants";
+import {orderLinks, typeScheduleList} from "../../tools/globalConstants";
 import Panel from "./PageStructure/Panel";
 import PageService from "../../tools/services/PageService";
 import {useParams} from "react-router-dom";
-import {changeOnPage, isClock, takeAllElements} from "../../tools/utils/func";
+import {changeOnPage, compareTimeOfDay, isClock, takeAllElements} from "../../tools/utils/func";
 import {keyboardTimer} from "../../tools/utils/wrappers";
 import Server from "../../tools/services/Server";
 import cls from "./Page.module.css"
 import SaveService from "../../tools/services/SaveService";
 import {useFetching} from "../../hooks/useFetching";
-import Loader from "../UI/Loader/Loader";
+import Loader from "../Loader/Loader";
 import srcAudio from "../../sound/nextAct.mp3"
 import {ThemeContext} from "../../context/theme";
 import {DatabaseContext} from "../../context/db";
 import {useAuthState} from "react-firebase-hooks/auth";
 import PageBody from "../compounds/Page/PageBody";
+import {OnPageContext} from "../../context/onPage";
 
 const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
 
@@ -35,6 +36,7 @@ const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
   const [user] = useAuthState(auth)
 
   const {lightTheme} = useContext(ThemeContext)
+  const {setIsOnPage} = useContext(OnPageContext)
 
 
   let save = setIsSave[0]
@@ -67,6 +69,13 @@ const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
     audio.autoplay = true;
   }
 
+  //On page state
+  useEffect(()=>{
+    const on = !!JSON.parse(localStorage.getItem(orderLinks)).includes(params.name);
+    setIsOnPage(on)
+    return ()=>{setIsOnPage(false)}
+  },[params.name])
+
   //Get elements
   useEffect(()=>{
     fetchElements()
@@ -75,7 +84,7 @@ const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
   }, [params.name])
 
   //Schedule
-  //TODO: fix bag
+  //TODO: optimization
   useEffect(()=>{
     let timer;
     let schElements = []
@@ -99,22 +108,30 @@ const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
       arrDate.sort((a,b)=>a[1]-b[1])
 
       let act
+
       timer = setInterval(()=>{
         if(!arrDate.length){
           setAct(null)
           return
         }
         let now = new Date()
-        now.setSeconds(0)
+        // now.setSeconds(0)
         let lastAct = act
-        if(now<arrDate[0][1]) act = arrDate[arrDate.length-1][0]
+
+        //now<arrDate[0][1]
+        if(compareTimeOfDay("<", now,arrDate[0][1])) act = arrDate[arrDate.length-1][0]
+
         for(let i = 0; i<arrDate.length; i++){
-          if(now>=arrDate[i][1]){
+          //now>=arrDate[i][1]
+          if(compareTimeOfDay(">=",now,arrDate[i][1])){
             if(i+1 < arrDate.length){                     //arrDate[i] not last
-              if(now<arrDate[i+1][1]) act = arrDate[i][0]
-            }else                     act = arrDate[i][0]
+              //now<arrDate[i+1][1]
+              if(compareTimeOfDay("<", now, arrDate[i+1][1])) {act = arrDate[i][0]; break}
+            }else                                                  {act = arrDate[i][0]; break}
           }
         }
+
+
         if(act !== lastAct && lastAct !== undefined){
           console.log(act, lastAct)
           sound()
@@ -135,7 +152,7 @@ const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
         let keyN = +e.key
         let isKeyNum = !isNaN(keyN)
 
-        if(e.key === "k+" || isKeyNum) e.preventDefault()
+        if(e.key === "k" || isKeyNum) e.preventDefault()
 
         if(e.key === "k"){
           setIsFolding(true)
@@ -162,7 +179,7 @@ const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
   return (
     <div>
         {isElLoading
-          ?<div className={cls.loaderBG}><div className={cls.loader}><Loader/></div></div>
+          ?<Loader classBG={cls.loaderBG} classWrap={cls.loader}/>
           :
           <div className={cls.page + ` ${lightTheme && cls.lightPage}`}>
             <div className={cls.wrapPage}>

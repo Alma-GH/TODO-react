@@ -172,7 +172,7 @@ const Header = ({ pages,setPanel,sidePanel,
             }}
           />)
       case optionsMB:
-        return (<Options settings={settings} setSettings={setSettings}/>)
+        return (<Options settings={settings} setSettings={setSettings} setModal={setModal}/>)
 
       case aboutMB:
         return (<div className={cls.aboutMe}>

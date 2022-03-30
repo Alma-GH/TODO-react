@@ -1,6 +1,7 @@
 import React from 'react';
 import cls from "../../Header/Header.module.css";
-import Loader from "../../UI/Loader/Loader";
+import Loader from "../../Loader/Loader";
+import ErrorMessage from "../../ErrorMessage/ErrorMessage";
 
 const HeaderNotification = ({isCreating, isRenaming, isDeleting, isSaving,
                             errRename,errSave,errDelete,errCreate}) => {
@@ -9,10 +10,10 @@ const HeaderNotification = ({isCreating, isRenaming, isDeleting, isSaving,
   return (
     <>
       {(isCreating || isRenaming || isDeleting || isSaving) &&
-      <div className={cls.loader}><Loader/></div>
+      <Loader classWrap={cls.loader}/>
       }
       {(errRename || errSave || errDelete || errCreate) &&
-      <div className={cls.error}>HAVE PROBLEM</div>
+      <ErrorMessage addClass={cls.error}>HAVE PROBLEM</ErrorMessage>
       }
     </>
   );

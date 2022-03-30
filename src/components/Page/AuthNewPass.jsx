@@ -5,7 +5,7 @@ import {useFetching} from "../../hooks/useFetching";
 import {DatabaseContext} from "../../context/db";
 import {useNavigate} from "react-router-dom";
 import cls from "./../UI/Forms/Form.module.css"
-import Loader from "../UI/Loader/Loader";
+import Loader from "../Loader/Loader";
 
 const AuthNewPass = () => {
 
