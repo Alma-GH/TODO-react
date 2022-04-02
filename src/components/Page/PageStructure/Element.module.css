@@ -60,6 +60,8 @@
     border: 2px solid var(--color-head-menu1-d);
     color: var(--color1-bg-d);
     background-color: var(--color-head-d);
+
+    user-select: none;
 }
 
 .threePoint p{

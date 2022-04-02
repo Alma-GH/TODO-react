@@ -8,6 +8,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {ThemeContext} from "../../../context/theme";
 import {aboutMB, createMB, deleteMB, needMB, optionsMB, renameMB} from "../../../tools/globalConstants";
 import {OnPageContext} from "../../../context/onPage";
+import cls from "./../../Header/Header.module.css"
 
 const HeaderAllMenu = ({setModal,setInputName,setBodyModal,
                    setHint,fetchSave}) => {
@@ -64,6 +65,8 @@ const HeaderAllMenu = ({setModal,setInputName,setBodyModal,
     setHint(1)
   }
 
+
+
   return (
     <>
       <MenuHeader name="File">
@@ -76,7 +79,7 @@ const HeaderAllMenu = ({setModal,setInputName,setBodyModal,
         <ElemMenu func={nextTheme}>theme</ElemMenu>
         <ElemMenu func={optionsMenu}>options</ElemMenu>
       </MenuHeader>
-      <MenuHeader name="About">
+      <MenuHeader className={cls.aboutMenu} name="About">
         <ElemMenu func={() => aboutMenu(needMB)}>why you need</ElemMenu>
         <ElemMenu func={() => hintMenu()}>how work</ElemMenu>
         <ElemMenu func={() => aboutMenu(aboutMB)}>about me</ElemMenu>

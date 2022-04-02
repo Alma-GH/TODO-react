@@ -53,7 +53,9 @@
 
 .btnHidePanel{
     width: 30px;
+    min-width: 30px;
     background-color: rgba(0,0,0,0.2);
+
 }
 
 
@@ -74,4 +76,19 @@
     .error{
         display: none;
     }
+}
+
+
+
+@media (max-width: 500px) {
+    .aboutMenu{
+        display: none;
+    }
+}
+
+.test1{
+    color:red
+}
+.test2{
+    color:blue
 }

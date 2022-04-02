@@ -4,13 +4,13 @@
     left: 0;
 
     background-color: #1d2630;
-    width: 150px;
+    width: var(--width-nav);
     height: calc(100vh - 30px);
 
     display: flex;
     flex-direction: column;
 
-    transition: left 0.5s ease-in-out;
+    transition: left 0.5s ease-in-out, width 0.5s ease-in-out;
 
 
 
@@ -138,7 +138,7 @@
 
 
 .notSidePanel{
-    left: -150px;
+    left: calc(0px - var(--width-nav));
     transition: left 0.5s ease-in-out;
 }
 
@@ -202,6 +202,12 @@
     padding: 0;
 }
 
+
+@media (max-width: 670px) {
+    :root{
+        --width-nav: 80px;
+    }
+}
 
 
 /*.navTitle{*/

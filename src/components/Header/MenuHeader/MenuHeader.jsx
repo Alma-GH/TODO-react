@@ -22,7 +22,7 @@ const MenuHeader = (props) => {
 
 
   return (
-    <div onMouseOver={showMenu} onMouseLeave={hideMenu}>
+    <div onMouseOver={showMenu} onMouseLeave={hideMenu} className={props.className}>
       <div className={style.join(" ")} >
         {props.name}
       </div>

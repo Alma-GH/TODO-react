@@ -101,6 +101,8 @@
     border-radius: 5px;
     border: 2px solid black;
     z-index: 2;
+
+    user-select: none;
 }
 
 .headList .bgHead{

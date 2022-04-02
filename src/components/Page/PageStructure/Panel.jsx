@@ -26,7 +26,7 @@ const Panel = ({elements,setElements,setIsSave}) => {
     let button = <ButtonRoller  idEl={el.id}  pageElements={elements} setElements={setElements} key={el.id} setIsSave={setIsSave}/>
     let none = <div className={cls.wrapNum}  key={el.id}/>
 
-    return (el.elements && el.elements.length) ? button : none
+    return (el.elements && el.elements.length) ? <div key={el.id} className={cls.wrapRoll}>{button}</div>  : none
   })
 
   let stylePanel = [cls.panel]

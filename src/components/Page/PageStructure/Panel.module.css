@@ -1,22 +1,28 @@
 .panel{
-    width: 50px;
+    /*width: 50px;*/
     /*border: 2px solid darkgrey;*/
 
     display: grid;
     grid-template-columns: 1fr 1fr;
     color: rgba(144,145,139,1);
 }
-.panel div{
+.panel>div{
     display: flex;
     flex-direction: column;
 }
 .wrapNum{
     height: 25px;
-    width: 100%;
+    width: 30px;
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    justify-content: flex-end;
     /*border: 2px solid white*/
+}
+
+.wrapRoll{
+    height: 25px;
+    width: 30px;
+    display: grid;
+    place-items: center;
 }
 
 .lightPanel{
