@@ -7,14 +7,14 @@ import ElementMenu from "./ElementMenu";
 const ElementMain = ({elemName,setElemName, pageElements, setPageElements, elements,
                        idEl, type, style, mod, setIsSave, setElemDesc}) => {
   return (
-    <div className={cls.elemMain}>
+    <div className={cls.elemMain+" elementParent"}>
       <MyInput inputProps={{
         type:"text", value: elemName,
         disabled:!mod, className:cls.elemName
       }}
                setValue={setElemName}
                setPageElements={setPageElements}
-               setIsSave={setIsSave} parentCls={cls.elemMain} idEl={idEl}
+               setIsSave={setIsSave} parentCls={"elementParent"} idEl={idEl}
                setter={PageService.setName.bind(PageService)}
       />
       {mod &&

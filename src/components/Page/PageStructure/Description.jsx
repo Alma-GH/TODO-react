@@ -28,7 +28,7 @@ const Description = ({elem,mod,setPageElements,isSchedule,setIsSave,elemDesc,set
   }
 
   return (
-    <div className={cls.description}>
+    <div className={cls.description+" descriptionParent"}>
       <span className="prefixDescription">-</span>
       <MyInput inputProps={{
         type:"text",value: elemDesc,
@@ -36,7 +36,7 @@ const Description = ({elem,mod,setPageElements,isSchedule,setIsSave,elemDesc,set
       }}
                setValue={setElemDesc}
                setPageElements={setPageElements}
-               setIsSave={setIsSave} parentCls={cls.description} idEl={idEl}
+               setIsSave={setIsSave} parentCls={"descriptionParent"} idEl={idEl}
                setter={PageService.setNameDescription.bind(PageService)}
       />
     </div>
