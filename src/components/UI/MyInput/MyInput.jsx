@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {changeOnPage} from "../../../tools/utils/func";
-import PageService from "../../../tools/services/PageService";
 
 const MyInput = ({inputProps,setter,idEl,setValue,setPageElements,setIsSave,parentCls}) => {
 
@@ -19,6 +18,7 @@ const MyInput = ({inputProps,setter,idEl,setValue,setPageElements,setIsSave,pare
 
   function nextIndex(e){
 
+
     if(e.ctrlKey && e.key === "s"){
       e.stopPropagation()
       e.preventDefault()
@@ -35,12 +35,20 @@ const MyInput = ({inputProps,setter,idEl,setValue,setPageElements,setIsSave,pare
     for(let i=0; i<allInputs.length; i++){
       if(allInputs[i] !== e.target) continue
       if(e.key === "ArrowUp" && i-1>=0){
+        console.log("NEW FOCUS:")
+        console.log(allInputs[i-1])
         allInputs[i-1].focus()
       }
       if(e.key === "ArrowDown" && i+1<allInputs.length){
         allInputs[i+1].focus()
       }
     }
+
+    console.log("target:")
+    console.log(e.target)
+    console.log("allInputs:");
+    console.log(allInputs)
+    console.log("selector:" + `.${parentCls} input`)
   }
 
 
