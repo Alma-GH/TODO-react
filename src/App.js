@@ -7,25 +7,6 @@ import {DatabaseContext} from "./context/db";
 import AppLoad from "./components/compounds/App/AppLoad";
 
 
-/*STATE:
-{
-  pages:{
-    pagesNames:["...", ...]
-    pagesElements: [[{...},...],...]
-  }
-
-  optionMod: bool
-  act: "..."
-
-  timer:{time: Date}
-  menuHeader:[{isShow: bool},...]
-
-  stylesButtonsOption: [{style: "..."}, ...]
-  stylesButtonsRoller: [{style: bool}, ...]
-  stylesElements:      [{style: {...}}, ...]
-}
- */
-
 
 function App() {
 

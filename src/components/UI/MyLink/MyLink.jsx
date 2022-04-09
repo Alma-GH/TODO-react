@@ -21,7 +21,6 @@ const MyLink = ({isSave,link}) => {
   let styleLink = [cls.grab]
   if(active) styleLink.push(cls.take)
 
-
   return (
     <div className={styleLink.join(" ")}>
       <span className={cls.save}>
@@ -31,7 +30,7 @@ const MyLink = ({isSave,link}) => {
         }
       </span>
       <div className={cls.pageName}>
-        <NavLink className={styleFunc} to={"/page/" + link}>
+        <NavLink className={styleFunc} to={"/page/" + encodeURI(link)}>
           <ButtonLink isSave={isSave}>{link}</ButtonLink>
         </NavLink>
       </div>

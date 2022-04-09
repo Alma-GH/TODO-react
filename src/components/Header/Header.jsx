@@ -43,9 +43,6 @@ const Header = ({ pages,setPanel,sidePanel,
 
   const nav = useNavigate()
 
-  // const path = useLocation().pathname
-  // const fileName = path.slice(path.lastIndexOf("/") + 1)
-
   const [modal, setModal] = useState(false)
   const [inputName, setInputName] = useState(null)
   const [bodyModal, setBodyModal] = useState("")

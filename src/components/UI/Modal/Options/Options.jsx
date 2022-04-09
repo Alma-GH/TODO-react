@@ -3,7 +3,6 @@ import cls from "./Options.module.css"
 import {splitCamelCase} from "../../../../tools/utils/func";
 import OptionToggle from "./OptionToggle";
 import OptionInput from "./OptionInput";
-import {strHintSettings, validFunctionsForSettings} from "../../../../tools/globalConstants";
 import {useFetching} from "../../../../hooks/useFetching";
 import Server from "../../../../tools/services/Server";
 import {DatabaseContext} from "../../../../context/db";
@@ -12,6 +11,8 @@ import ButtonApply from "../../Apply/ButtonApply/ButtonApply";
 import ErrorMessage from "../../../ErrorMessage/ErrorMessage";
 import Loader from "../../../Loader/Loader";
 import ReactHintFactory from 'react-hint'
+import Settings from "../../../../tools/services/Settings";
+
 const ReactHint = ReactHintFactory(React)
 
 const Options = ({settings,setSettings,setModal}) => {
@@ -24,7 +25,7 @@ const Options = ({settings,setSettings,setModal}) => {
   const [fetchSettings,load,err] = useFetching(async ()=>{
     let newSettings = {}
     for(let key in copySettings){
-      newSettings[key] = validFunctionsForSettings[key](copySettings[key])
+      newSettings[key] = Settings.validFunctionsForSettings[key](copySettings[key])
     }
 
     await Server.saveSettings(db,user.uid,newSettings)
@@ -48,10 +49,10 @@ const Options = ({settings,setSettings,setModal}) => {
 
     rows.push(
       <div className={cls.row} key={key}>
-        <div data-custom data-custom-title={strHintSettings.tooltip[key]} style={{width:"50%"}}>
+        <div data-custom data-custom-title={Settings.strHintSettings.tooltip[key]} style={{width:"50%"}}>
           {splitCamelCase(key[0].toUpperCase()+key.slice(1))}
           <br/>
-          <div className={cls.limitation}>{strHintSettings.limitation[key]}</div>
+          <div className={cls.limitation}>{Settings.strHintSettings.limitation[key]}</div>
         </div>
         {typeof copySettings[key] === "boolean"
           ?<OptionToggle k={key} settings={copySettings} setSettings={setCopySettings}/>

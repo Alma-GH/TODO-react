@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import AppMain from "./AppMain";
 import {useFetching} from "../../../hooks/useFetching";
-import {defaultSettings, orderLinks} from "../../../tools/globalConstants";
+import {orderLinks} from "../../../tools/globalConstants";
 import SaveService from "../../../tools/services/SaveService";
 import Server from "../../../tools/services/Server";
 import {DatabaseContext} from "../../../context/db";
@@ -9,6 +9,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import {updateOrderThrottle} from "../../../tools/utils/wrappers";
 import AppLoad from "./AppLoad";
 import AppContext from "./AppContext";
+import Settings from "../../../tools/services/Settings";
 
 const AppPrivate = () => {
 
@@ -18,7 +19,7 @@ const AppPrivate = () => {
 
   //context
   const [lightTheme, setLightTheme] = useState(null)
-  const [settings, setSettings] = useState(defaultSettings)
+  const [settings, setSettings] = useState(Settings.defaultS)
   const [isOnPage, setIsOnPage] = useState(false)
 
   //store

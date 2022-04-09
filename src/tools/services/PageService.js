@@ -1,5 +1,5 @@
 import {myCopyObj, takeAllElements, toTime} from "../utils/func";
-import {typeScheduleList} from "../globalConstants";
+import {MAX_DEPTH, typeScheduleList} from "../globalConstants";
 
 class PageService{
 
@@ -49,8 +49,15 @@ class PageService{
   }
 
   addListById(id, type,autoFill){
-    takeAllElements(this.pageElements, (el)=>{
+    takeAllElements(this.pageElements, (el,depth)=>{
       if(el.id === id) {
+
+        //limit
+        if(depth>MAX_DEPTH){
+          alert("Превышено максимальное значение глубины")
+          return
+        }
+
         el.type = type
         if(!el.elements || !el.elements.length){
           el.visibleList = true

@@ -1,6 +1,7 @@
-import {defaultSettings, orderLinks} from "../globalConstants";
+import {orderLinks} from "../globalConstants";
 import {child, get, ref, set} from "firebase/database";
 import PageService from "./PageService";
+import Settings from "./Settings";
 
 const EMPTY_PAGE = [""]
 
@@ -96,7 +97,7 @@ class Server{
         if(res.exists()){
           arr = res.val()
         }else{
-          arr = defaultSettings
+          arr = Settings.defaultS
           console.log(`NO SETTINGS FOR USER ${user}`)
         }
 

@@ -41,7 +41,6 @@ const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
 
   let save = setIsSave[0]
   let params = useParams()
-
   const [elements, setElements] = useState([])
   const [isFolding, setIsFolding] = useState(false)
 
