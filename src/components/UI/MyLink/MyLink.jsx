@@ -11,8 +11,6 @@ const MyLink = ({isSave,link}) => {
   const [active, setActive] = useState(null)
 
 
-  //TODO:
-  // does not work for links that have non-english letters
   const styleFunc = function ({isActive}){
     if(isActive) setTimeout(()=>setActive(true),0)
     else         setTimeout(()=>setActive(false),0)

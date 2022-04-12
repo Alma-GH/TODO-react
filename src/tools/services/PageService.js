@@ -19,22 +19,25 @@ class PageService{
     return obj
   }
 
-  addElement(id){
-
+  addElement(id, autoFill){
     const newEl = {id: Date.now(), name:""}
 
-    function add(el){
-      if(el.id === id){
-        el.elements.push(newEl)
-      }
+    if(id === undefined){
+      this.pageElements = [...this.pageElements, newEl]
+      return
     }
 
-    if(id !== undefined){
-      takeAllElements(this.pageElements, add)
+    function add(el,dp,arr){
+
+      if(el.id === id){
+        if(autoFill && dp>1)
+          newEl.description = ""
+        arr.splice(arr.indexOf(el)+1,0,newEl)
+      }
+
+
     }
-    else{
-      this.pageElements = [...this.pageElements, newEl]
-    }
+    takeAllElements(this.pageElements, add)
   }
   deleteElement(id){
     function del(el){
@@ -61,11 +64,26 @@ class PageService{
         el.type = type
         if(!el.elements || !el.elements.length){
           el.visibleList = true
+          const firstEl = {id: Date.now(), name:autoFill?"new":""}
           if(autoFill){
             if(el.name.length) el.name += (el.name[el.name.length-1]!==":") ? ":" : ""
             else               el.name += (type===typeScheduleList)?"Schedule:":"List:"
+            firstEl.description = "description"
           }
-          el.elements = [{id: Date.now(), name:autoFill?"new":""}]
+
+          if(type===typeScheduleList && autoFill){
+            const schedule = []
+            for(let i=10; i<=23;i++){
+              schedule.push({id: Date.now()+i, name:i===10?"Wake up":"", description:`${i}:00`})
+            }
+            schedule.push({id: Date.now()+24, name:"", description:`00:00`})
+            schedule.push({id: Date.now()+25, name:"Sleep", description:`01:00`})
+            el.elements = schedule
+          }else{
+            el.elements = [firstEl]
+          }
+
+
         }
       }
     })

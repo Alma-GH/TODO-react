@@ -1,6 +1,6 @@
 import React from 'react';
 import cls from "./Auth.module.css"
-import clsModal from "../UI/Modal/Modal.module.css"
+import clsModal from "../../UI/Modal/Modal.module.css"
 
 const Auth = (props) => {
 

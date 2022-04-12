@@ -1,10 +1,9 @@
-import {changeOnPage, createThrottling} from "./func";
+import {createMyTimer, createThrottling} from "./func";
 import Server from "../services/Server";
-import {createMyTimer} from "./func"
 
 export const errTimer = createMyTimer()
 export const keyboardTimer = createMyTimer()
-export const yetTimer = createMyTimer()
+// export const nextTimer = createMyTimer()
 
 
 export const updateOrderThrottle = createThrottling(Server.saveOrder,1000)

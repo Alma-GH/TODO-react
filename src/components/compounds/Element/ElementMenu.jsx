@@ -12,9 +12,7 @@ const ElementMenu = ({style,setElemName,setElemDesc,
   return (
     <div style={{...style,height:"100%", display:"flex",alignItems:"center",justifyContent:"space-between"}}>
       <ElemOptions setters={[setElemName,setElemDesc]} id={idEl} type={type} setPageElements={setPageElements} style={style} setIsSave={setIsSave}/>
-      {visBtnCrateCondition &&
-        <ButtonCreateElement elements={pageElements} setElements={setPageElements} idList={idEl} setIsSave={setIsSave}/>
-      }
+      <ButtonCreateElement elements={pageElements} setElements={setPageElements} idList={idEl} setIsSave={setIsSave}/>
     </div>
   );
 };

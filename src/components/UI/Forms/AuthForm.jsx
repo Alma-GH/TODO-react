@@ -21,23 +21,20 @@ const AuthForm = ({reg}) => {
       let user
 
       if (isCreate) {
-
         ({user} = await createUserWithEmailAndPassword(auth, userN, pass))
         await sendEmailVerification(user)
-        push("/auth/login")
       } else {
         ({user} = await signInWithEmailAndPassword(auth, userN, pass))
         push("/page")
       }
-      console.log(user)
+      console.log(auth)
+      if(auth?.currentUser && !auth?.currentUser?.emailVerified) push("/auth/wait")
+
 
   })
 
   function sendForm(){
     fetchForm(reg)
-  }
-  function sendVerif(){
-    sendEmailVerification(auth?.currentUser)
   }
 
   const strErr = errForm?.code?.slice(errForm.code.indexOf("/") + 1).split("").map(ch => {
@@ -70,11 +67,6 @@ const AuthForm = ({reg}) => {
             </Link> If you don't have an account yet.</>
           }
         </p>
-          {auth?.currentUser && !auth?.currentUser?.emailVerified &&
-            <p>Please reload page when you confirm your email.
-              <Link className={cls.wrapLink} to={"/auth/login"} onClick={sendVerif}> CLICK! </Link>
-              for send confirm again</p>
-          }
         {!reg && <p><Link className={cls.wrapLink} to={"/auth/newpass"}>CLICK!</Link> If you forgot password. </p>
 
         }

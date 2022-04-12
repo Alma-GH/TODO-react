@@ -32,7 +32,7 @@ const Description = ({elem,mod,setPageElements,isSchedule,setIsSave,elemDesc,set
       <span className="prefixDescription">-</span>
       <MyInput inputProps={{
         type:"text",value: elemDesc,
-        onBlur:setTime, onFocus:saveLast, disabled:!mod, autoFocus:true
+        onBlur:setTime, onFocus:saveLast, disabled:!mod
       }}
                setValue={setElemDesc}
                setPageElements={setPageElements}

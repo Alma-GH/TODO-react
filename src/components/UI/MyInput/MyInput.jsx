@@ -19,7 +19,7 @@ const MyInput = ({inputProps,setter,idEl,setValue,setPageElements,setIsSave,pare
   function nextIndex(e){
 
 
-    if(e.ctrlKey && e.key === "s"){
+    if(e.ctrlKey && e.code === "KeyS"){
       e.stopPropagation()
       e.preventDefault()
     }

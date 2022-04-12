@@ -4,10 +4,11 @@ import clsHint from "./Hint.module.css"
 import ButtonCreateElement from "../../Buttons/ButtonCreateElement/ButtonCreateElement";
 import ElemOptions from "../../ElemOptions/ElemOptions";
 import ButtonRoller from "../../Buttons/ButtonRoller/ButtonRoller";
+import img from "../../../../img_svg/example-schedule.png"
 
 const Hint = ({hint,setHint,sidePanel,setPanel}) => {
 
-  const hintMax = 8
+  const hintMax = 9
   let style = [clsModal.modal]
   style.push(clsHint.activeHint)
 
@@ -23,20 +24,21 @@ const Hint = ({hint,setHint,sidePanel,setPanel}) => {
       case 1:
         styleH.push(clsHint.hint1)
         return (<div className={styleH.join(" ")}>
-          Наведите для работы со страницами
-          <br/> (сохранение/удаление/
-          <br/> создание/переименование)
+          Hover to work with pages
+          (save/delete/create/rename)
         </div>)
       case 2:
         styleH.push(clsHint.hint2)
         return (<div className={styleH.join(" ")}>
-          -Здесь храняться ваши страницы со списками.
-          <br/><br/> -Нажмите для перемещения на страницу
-          <br/><br/> -Можно перемещать, взявшись за левый значек
+          -Your pages with lists are stored here
+          <br/><br/>
+          -Click to move to the page
+          <br/>
+          -Can be moved by holding the left icon
         </div>)
       case 3:
         styleH.push(clsHint.hint3)
-        return <div className={styleH.join(" ")}>Нажмите для редактирования страницы<br/>(добавлениия/удаления списков)</div>
+        return <div className={styleH.join(" ")}>Click to edit the page<br/>(add/remove lists)</div>
       case 4:
         styleH.push(clsHint.hint4)
         return (<div className={styleH.join(" ")}>
@@ -44,8 +46,7 @@ const Hint = ({hint,setHint,sidePanel,setPanel}) => {
                     <ButtonCreateElement disable={true}/>
                   </div>
                   <div>
-                    -Создает строку на странице.
-                    <br/><br/> -Для списка создает новый внутренний элемент
+                    - Creates a line on the page
                   </div>
                 </div>)
       case 5:
@@ -55,19 +56,31 @@ const Hint = ({hint,setHint,sidePanel,setPanel}) => {
                     <ElemOptions disable={true}/>
                   </div>
                   <div>
-                    <ul>Управление элементом страницы:
-                      <li><div>1:</div> Создание нумерованного списка</li>
-                      <li><div>S:</div>  Создание списка с символом вначале</li>
-                      <li><div>-:</div>  Создание обычного списка</li>
-                      <li><div>SCH:</div>  Создание графика</li>
+                    <ul>Page element control:
+                      <li><div>1:</div> Create a numbered list</li>
+                      <li><div>S:</div> Create a list with a prefix</li>
+                      <li><div>-:</div> Create a normal list</li>
+                      <li><div>SCH:</div> Creating a schedule</li>
                       <br/>
-                      <li><div>D:</div> Добвление описания/Времени</li>
-                      <li><div>X:</div> Удаление</li>
+                      <li><div>D:</div> Add Description/Time</li>
+                      <li><div>X:</div> Delete</li>
                     </ul>
                   </div>
                 </div>)
       case 6:
         styleH.push(clsHint.hint6)
+        return <div className={styleH.join(" ")}>
+          <div>
+            For scheduling<br/>
+            add description with time to lines
+          </div>
+          <div>
+            <img src={img} alt=""/>
+          </div>
+
+        </div>
+      case 7:
+        styleH.push(clsHint.hint7)
         return (<div className={styleH.join(" ")}>
           <div className={clsHint.xCenter} >
             <div style={{width:"25px"}}>
@@ -78,29 +91,25 @@ const Hint = ({hint,setHint,sidePanel,setPanel}) => {
             </div>
           </div>
           <div>
-            Для сворачивания/разворачивания элементов списка
-            <br/> (нажатие/ctrl + k + (num))
+            To collapse/expand list items
+            <br/> (press - ctrl + k + (num))
           </div>
         </div>)
-      case 7:
-        styleH.push(clsHint.hint7)
+      case 8:
+        styleH.push(clsHint.hint8)
         return (<div className={styleH.join(" ")}>
                   <ul>
-                    <li>-Текущее занятие(соответсвующее поставленному графику)</li>
-                    <li>-Переключатель звукового оповещения о смене занятия</li>
-                    <li>-Время на данный момент</li>
-                    <li>-Выход</li>
-                    <li></li>
+                    <li>-Current activity (corresponding to the set schedule)</li>
+                    <li>-Switch of the sound notification about the change of activity</li>
+                    <li>-Current time</li>
+                    <li>-Exit</li>
                   </ul>
-
-                  {/*<br/><br/>*/}
-                  {/*<br/> */}
-                  {/*<br/><br/>*/}
-
                 </div>)
 
       default:
-        return <div>0</div>
+        return <div>ERROR</div>
+
+      // return <div className={styleH.join(" ")}>{child}</div>
     }
   }
 

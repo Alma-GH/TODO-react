@@ -151,9 +151,9 @@ const Page = ({mod,setAct,sound:isSound,setIsSave}) => {
         let keyN = +e.key
         let isKeyNum = !isNaN(keyN)
 
-        if(e.key === "k" || isKeyNum) e.preventDefault()
+        if(e.code === "KeyK" || isKeyNum) e.preventDefault()
 
-        if(e.key === "k"){
+        if(e.code === "KeyK"){
           setIsFolding(true)
           keyboardTimer(()=>setIsFolding(false), 5000)
         }

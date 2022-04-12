@@ -8,7 +8,7 @@ export const takeAllElements = (arr,func, depth)=>{
   if(depth === undefined) depth = 1
 
   arr.forEach(el=>{
-    func(el, depth)
+    func(el, depth, arr)
     if('elements' in el)  takeAllElements(el.elements, func, depth + 1)
   })
 

@@ -18,6 +18,7 @@ const Form = ({btnFunc, btnName, children, err, loading}) => {
         {loading &&
             <Loader classWrap={cls.loader} classBG={cls.loaderBG}/>
         }
+
         {children}
 
         <ErrorMessage addClass={cls.error}>

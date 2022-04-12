@@ -1,11 +1,9 @@
 import React, {useContext, useState} from 'react';
-import SimpleForm from "../UI/Forms/SimpleForm";
+import SimpleForm from "../../UI/Forms/SimpleForm";
 import {sendPasswordResetEmail} from "firebase/auth";
-import {useFetching} from "../../hooks/useFetching";
-import {DatabaseContext} from "../../context/db";
+import {useFetching} from "../../../hooks/useFetching";
+import {DatabaseContext} from "../../../context/db";
 import {useNavigate} from "react-router-dom";
-import cls from "./../UI/Forms/Form.module.css"
-import Loader from "../Loader/Loader";
 
 const AuthNewPass = () => {
 
@@ -16,7 +14,6 @@ const AuthNewPass = () => {
 
   const [fetchPass, load, err] = useFetching(async ()=>{
     await sendPasswordResetEmail(auth, email)
-    console.log("newPass")
     push("/auth/login")
   })
 

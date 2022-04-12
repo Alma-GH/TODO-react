@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {NavLink, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Server from "../../tools/services/Server";
 import PageService from "../../tools/services/PageService";
 import Modal from "../UI/Modal/Modal";
@@ -30,6 +30,7 @@ import {useAuthState} from "react-firebase-hooks/auth";
 import HeaderAllMenu from "../compounds/Header/HeaderAllMenu";
 import HeaderTimer from "../compounds/Header/HeaderTimer";
 import HeaderNotification from "../compounds/Header/HeaderNotification";
+import {OnPageContext} from "../../context/onPage";
 
 const Header = ({ pages,setPanel,sidePanel,
                   setIsSave:[isSave,setSave],
@@ -40,6 +41,7 @@ const Header = ({ pages,setPanel,sidePanel,
 
   const {settings, setSettings} = useContext(SettingsContext)
   const {lightTheme} = useContext(ThemeContext)
+  const {isOnPage} = useContext(OnPageContext)
 
   const nav = useNavigate()
 
@@ -51,7 +53,8 @@ const Header = ({ pages,setPanel,sidePanel,
 
 
   const messageForInvalidFileName = function (name) {
-    if (!name || [name[0], name[name.length - 1]].includes(" ")) return "name must not contain spaces at the end and beginning"
+    if(!name.length)                                              return "name must not be empty"
+    if (!name || [name[0], name[name.length - 1]].includes(" "))  return "name must not contain spaces at the end and beginning"
     if (JSON.parse(localStorage.getItem(orderLinks)).includes(name)) return "name must be unique"
     if (name.includes(".") || name.includes("/")) return "name must not contain '.' or '/'"
     return false
@@ -103,22 +106,22 @@ const Header = ({ pages,setPanel,sidePanel,
     newSave(isSave, setSave, true)
   })
 
-  //Save on "ctrl + s"
-  useEffect(() => {
 
+  //Save on "ctrl + s"
+
+
+  useEffect(() => {
     function keyDownEventSave(e) {
       if (e.ctrlKey || e.metaKey) {
-
-        if (e.key === "s") {
+        if (e.code === "KeyS" && isOnPage) {
           e.preventDefault()
           save()
         }
       }
     }
-
     document.addEventListener("keydown", keyDownEventSave)
     return () => document.removeEventListener("keydown", keyDownEventSave)
-  }, [save])
+  }, [save,isOnPage])
 
 
 
@@ -179,7 +182,15 @@ const Header = ({ pages,setPanel,sidePanel,
         </div>)
       case needMB:
         return (<div>
-          YOU NEED IT!!
+          Here you can create lists of different types
+          <br/>
+          with different nesting and add descriptions to all entries.
+          <br/>
+          <br/>
+          All lists can be collapsed for easy reading.
+          <br/>
+          <br/>
+          Create your own schedules.
         </div>)
       default:
         return <div>NONE</div>
@@ -188,7 +199,7 @@ const Header = ({ pages,setPanel,sidePanel,
 
 
   return (
-    <div className={cls.head + ` ${lightTheme && cls.lightHead}`}>
+    <div className={cls.head + ` ${lightTheme && cls.lightHead}`} >
       <div className={cls.menu}>
 
         <div className={cls.btnHidePanel}>
