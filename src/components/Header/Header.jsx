@@ -99,7 +99,11 @@ const Header = ({ pages,setPanel,sidePanel,
 
     let ind = pages.indexOf(PageService.name)
     let newPageName = pages[(!ind) ? 1 : ind - 1]
-    nav("./page/" + newPageName)
+
+    if(newPageName)
+      nav("./page/" + newPageName)
+    else
+      nav("./page/")
   })
   const [fetchSave, isSaving, errSave] = useFetching(async () => {
     await Server.saveElements(db, user.uid, PageService.pageElements, PageService.name)
