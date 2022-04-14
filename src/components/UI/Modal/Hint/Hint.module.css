@@ -11,6 +11,7 @@
     min-height: 100px;
     position: fixed;
     font-family: initial;
+    user-select: none;
 }
 .hintDef div,
 .hintDef ul,

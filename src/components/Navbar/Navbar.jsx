@@ -21,7 +21,7 @@ const Navbar = ({mod,setMod,sidePanel,isSave,isLoading:[isLoading,err], links, s
 
 
   return (
-      <div className={style.join(" ")}>
+      <div className={style.join(" ")} onMouseDown={e=>e.preventDefault()}>
         <NavbarBody err={err}  links={links} setLinks={setLinks} isLoading={isLoading}>
           {arrLinks}
         </NavbarBody>

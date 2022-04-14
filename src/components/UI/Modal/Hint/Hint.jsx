@@ -114,7 +114,7 @@ const Hint = ({hint,setHint,sidePanel,setPanel}) => {
   }
 
   return (
-    <div className={style.join(" ")} onClick={()=>setHint((hint+1)%hintMax)}>
+    <div className={style.join(" ")} onClick={()=>setHint((hint+1)%hintMax)} onMouseDown={e=>e.preventDefault()}>
         {getBodyHint(hint)}
     </div>
   );
