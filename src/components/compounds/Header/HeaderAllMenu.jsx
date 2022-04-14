@@ -69,7 +69,7 @@ const HeaderAllMenu = ({setModal,setInputName,setBodyModal,
 
   return (
     <>
-      <MenuHeader name="File">
+      <MenuHeader name="Page">
         <ElemMenu func={save} disabled={!isOnPage}>save</ElemMenu>
         <ElemMenu func={createMenu}>create</ElemMenu>
         <ElemMenu func={deleteMenu} disabled={!isOnPage}>delete</ElemMenu>
