@@ -4,14 +4,12 @@ import {changeOnPage} from "../../../tools/utils/func";
 const MyInput = ({inputProps,setter,idEl,setValue,setPageElements,setIsSave,parentCls}) => {
 
 
-
   function change(e){
-    e.target.size = e.target.value.length<20 ?20:e.target.value.length
     setValue(e.target.value)
   }
+
   //optimization
   function globalChange(e){
-    e.target.size = e.target.value.length<20 ?20:e.target.value.length
     setter(idEl, e.target.value)
     changeOnPage(setPageElements,setIsSave)
   }
@@ -46,7 +44,8 @@ const MyInput = ({inputProps,setter,idEl,setValue,setPageElements,setIsSave,pare
 
 
   return (
-    <input  {...inputProps} size={20} onChange={change} onKeyDown={nextIndex} onKeyUp={globalChange} />
+    <input  {...inputProps} size={inputProps.value.length<20 ?20:inputProps.value.length}
+            onChange={change} onKeyDown={nextIndex} onKeyUp={globalChange} />
   );
 };
 
