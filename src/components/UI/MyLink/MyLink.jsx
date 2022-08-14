@@ -29,7 +29,12 @@ const MyLink = ({isSave,link}) => {
       </span>
       <div className={cls.pageName}>
         <NavLink className={styleFunc} to={"/page/" + encodeURI(link)}>
-          <ButtonLink isSave={isSave}>{link}</ButtonLink>
+          <ButtonLink isSave={isSave}>
+            {link.length <= 10
+              ? link
+              : link.slice(0,10) + '…'
+            }
+          </ButtonLink>
         </NavLink>
       </div>
     </div>
